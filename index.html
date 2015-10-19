@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="theme-next use-motion ">
+<html class="theme-next use-motion theme-next-mist">
 <head>
   
 
@@ -58,7 +58,7 @@
 
 <script type="text/javascript" id="hexo.configuration">
   var CONFIG = {
-    scheme: '',
+    scheme: 'Mist',
     sidebar: 'always'
   };
 </script>
@@ -223,7 +223,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2015-10-19T10:28:56+08:00" content="2015-10-19">
+            <time itemprop="dateCreated" datetime="2015-10-19T10:51:04+08:00" content="2015-10-19">
               2015-10-19
             </time>
           </span>
@@ -233,8 +233,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Hash函数-xor-shift-scheme-HashCollections-BloomFilter/" itemprop="url" rel="index">
-                    <span itemprop="name">Hash函数 xor-shift scheme HashCollections BloomFilter</span>
+                  <a href="/categories/JDK-Details/" itemprop="url" rel="index">
+                    <span itemprop="name">JDK Details</span>
                   </a>
                 </span>
 
@@ -434,174 +434,6 @@
             
             
               
-                <a class="post-title-link" href="/2015/10/11/Binary IndexedTree/" itemprop="url">
-                  Binary Indexed Tree 树状数组
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            发表于
-            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
-              2015-10-11
-            </time>
-          </span>
-
-          
-            <span class="post-category" >
-              &nbsp; | &nbsp; 分类于
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/BinaryIndexTree-树状数组-算法/" itemprop="url" rel="index">
-                    <span itemprop="name">BinaryIndexTree, 树状数组, 算法</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-              <p>#Binary Indexed Tree 树状数组</p>
-<p>做Leetcode 做到MeetingRoomII的时候我知道不用线段树或者树状数组是不太好搞了。还是来学习一下吧。</p>
-<p>树状数组算是线段树的一种特殊情况（子集），所以树状数组能解决的问题线段树一定能做，但线段树能做的树状数组不一定能做。</p>
-<p>##引入的问题</p>
-<p>##问题1<br>    对一个数组进行如下操作<br>    update(i1,i2,operation)<br>    求 value(i)=？</p>
-<pre><code>例如：<span class="keyword">int</span>[] <span class="keyword">ar</span>=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="keyword">N</span>]
-<span class="keyword">update</span>(<span class="keyword">ar</span>,<span class="number">2</span>,<span class="number">5</span>,+,<span class="number">4</span>) //(<span class="number">2</span> <span class="keyword">to</span> <span class="number">5</span>).<span class="built_in">map</span>(<span class="keyword">ar</span>(_)+=<span class="number">4</span>)
-<span class="keyword">return</span> <span class="keyword">ar</span>(<span class="keyword">k</span>)
-</code></pre><p>##问题2<br>    对一个数组进行如下操作 update（index,operation,value）<br>    求 sum（i1，i2）=？</p>
-<pre><code>例如：<span class="keyword">int</span>[] <span class="keyword">ar</span>=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="keyword">N</span>]
-<span class="keyword">update</span>(<span class="keyword">ar</span>,<span class="number">3</span>,+,<span class="number">5</span>);     //<span class="keyword">ar</span>[<span class="number">3</span>]+=<span class="number">5</span>
-<span class="keyword">update</span>(<span class="keyword">ar</span>,<span class="number">11</span>,-,<span class="number">3</span>);  //<span class="keyword">ar</span>[<span class="number">11</span>]-=<span class="number">3</span>
-。。。。。。
-求：sum（<span class="keyword">ar</span>,<span class="number">0</span>,<span class="number">12</span>）? //(<span class="number">0</span> <span class="keyword">to</span> <span class="number">12</span>).<span class="built_in">map</span>(<span class="keyword">ar</span>(_)).sum
-</code></pre><p>应用线段树的思路，对问题1，可以在中间节点缓存操作O(lgn)，求解时再计算出结果。</p>
-<p>对问题2，可以直接缓存sum，每次操作时都对sum附带进行操作O(lgn)，而求结果时，直接使用缓存的sum结果O(lgn)。</p>
-<p>##树状数组的解法</p>
-<p>按照刚才的解题分析，应当使用线段树进行操作，但线段树操作效率比较低，是否一种折中的办法呢？</p>
-<blockquote>
-<blockquote>
-<p>例如:把线段树的每个节点映射到一个额外的数组上？</p>
-</blockquote>
-</blockquote>
-<p>那么问题很明确，如何将一颗有N个叶子节点的树映射到一个长度为N的数组上？</p>
-<p>最直观的思路显然是这样:</p>
-<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/BinaryIndexTree1.png" alt="图1"></p>
-<p>图看上去很容易理解，我们希望将中间结果（1~2）（5~8）等存在另外一个数组B[]里，剩下的问题只有一个，怎么把这些节点向数组的index映射？而且这个映射显然是算法可描述的，这样在计算时才能容易找到各个节点。</p>
-<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/binaryIndexTree2.png" alt="图2"></p>
-<p>究竟怎样想出来的这种映射方式已经不得而知，但的确是个很神妙的构想，这也是Binary Index Tree的精髓了。</p>
-<p>###基本设计</p>
-<p>图2中黄色的块被废弃了,如果用a-&gt;b表示a存入b则：</p>
-<pre><code>(<span class="number">1</span>~<span class="number">2</span>)-&gt;<span class="number">2</span>
-(<span class="number">1</span>~<span class="number">4</span>)-&gt;<span class="number">4</span>
-(<span class="number">5</span>~<span class="number">6</span>)-&gt;<span class="number">6</span>
-(<span class="number">1</span>~<span class="number">8</span>)-&gt;<span class="number">8</span>
-
-<span class="number">1</span>-&gt;<span class="number">1</span>
-<span class="number">3</span>-&gt;<span class="number">3</span>
-<span class="number">5</span>-&gt;<span class="number">5</span>
-<span class="number">7</span>-&gt;<span class="number">7</span>
-</code></pre><p>是不是有点规律了？</p>
-<ol>
-<li>奇数点全部存原数组值</li>
-<li>偶书点K存入的位数与K&amp;(-K)后面的0相关，由M个0就存了1&lt;&lt;M个数字</li>
-</ol>
-<p>###求解问题2</p>
-<p>如果希望计算（st,ed）的sum时，如何计算呢？直接计算st到ed之间的数据相当难算，但是</p>
-<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sum</span>（<span class="keyword">st</span>，<span class="keyword">ed</span>）=<span class="literal">sum</span>(1,<span class="keyword">ed</span>)-<span class="literal">sum</span>(1,<span class="keyword">st</span>-1)</span><br></pre></td></tr></table></figure>
-<p>这时候再看一下图2是不是明白了？<br>从新定义一个函数sumFromStart(k）表示从1加到K的和。</p>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">sum</span><span class="params">(st,ed)</span></span>=<span class="function"><span class="title">sumFromStart</span><span class="params">(ed)</span></span>-<span class="function"><span class="title">sumFromStart</span><span class="params">(st-<span class="number">1</span>)</span></span></span><br></pre></td></tr></table></figure>
-<p>最后看看这个sumFromStart写法吧其实很容易想到：</p>
-<ul>
-<li>2 是10计算1~2的和</li>
-<li>4 是100计算了1~4的和</li>
-<li>8 是1000计算了1~8的和</li>
-</ul>
-<p>如果我们想算1~7 </p>
-<p>7=111=100+10+1</p>
-<p>而且1~7=(1~4)+(5~6)+7</p>
-<p>所以sumFromStart(7)=B(4)+B(6)+B(7)</p>
-<p>再写清楚点，如果是二进制:</p>
-<p>sumFromStart(111)=B(100)+B(110)+B(111)</p>
-<p>想明白了？ 还没有？那就看图吧</p>
-<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/BinaryIndexTree3.png" alt="图3"></p>
-<p>所以，sumFromStart(k)定义如下</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sumFromStart</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span>[] b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(k!=<span class="number">0</span>)&#123;</span><br><span class="line">		sum+=b[k];</span><br><span class="line">		k=k-(k&amp;(-k));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后还有一个更新操作，因为是单个更新，所以注意要把上面的点也更新了,以对A[5]，操作为例，需要更新B(5),B(6),B(8)。写出来这三个</p>
-<p>B(101)<br>B(110)<br>B(1000)</p>
-<p>看不出啥太明显的规律啊？</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">101</span> +<span class="number">1</span> =<span class="number">110</span></span><br><span class="line"><span class="number">110</span> +<span class="number">10</span>=<span class="number">1000</span></span><br></pre></td></tr></table></figure>
-<p>明白了么？ k+k&amp;(-k)啊，所以update写出来</p>
-<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> update(<span class="keyword">int</span> <span class="keyword">index</span>,<span class="keyword">int</span> v,Operation=add,<span class="keyword">int</span>[] b)&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">index</span>&lt;b.length)&#123;</span><br><span class="line">		b[<span class="keyword">index</span>]+=v;</span><br><span class="line">		<span class="keyword">index</span>=<span class="keyword">index</span>+<span class="keyword">index</span>&amp;(~<span class="keyword">index</span>);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//问题2返回</span></span><br><span class="line"><span class="keyword">void</span> <span class="keyword">sum</span>(<span class="keyword">int</span> st,<span class="keyword">int</span> ed,<span class="keyword">int</span>[]b)&#123;</span><br><span class="line">	<span class="keyword">return</span> sumFromStart(ed,b)-sumFromStart(st-<span class="number">1</span>,b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>###求解问题1</p>
-<p>问题1是段累加，单点求值，所以可以把段累加过程加入B数组（复杂度lgn），求解时再算单点（复杂度lgn）</p>
-<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] b=<span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line"><span class="keyword">void</span> update(<span class="keyword">int</span> st,<span class="keyword">int</span> ed,<span class="keyword">int</span> added,)&#123;</span><br><span class="line">	updateFromStart(st-<span class="number">1</span>,-added,b);</span><br><span class="line">	updateFromStart(ed,added,b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> updateFromStart(<span class="keyword">int</span> <span class="keyword">index</span>,<span class="keyword">int</span> added,<span class="keyword">int</span>[] b)&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">index</span>&lt;b.length)&#123;</span><br><span class="line">		b[<span class="keyword">index</span>]+=added;</span><br><span class="line">		<span class="keyword">index</span>-=<span class="keyword">index</span>&amp;(-<span class="keyword">index</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> getV(<span class="keyword">int</span> <span class="keyword">index</span>)&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">sum</span>=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">index</span>&lt;b.length)&#123;</span><br><span class="line">		<span class="keyword">sum</span>+=b[<span class="keyword">index</span>];</span><br><span class="line">		<span class="keyword">index</span>+=<span class="keyword">index</span>&amp;(-<span class="keyword">index</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>###求解MeetingRoomII</p>
-<p>最后给出meeting RoomII代码，很遗憾，这个题最后求最大重叠，所以遍历了每个点找最大，时间复杂度O(nlgn)</p>
-<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> minMeetingRooms(Interval[] ins) &#123;</span><br><span class="line">        <span class="built_in">int</span> st=<span class="type">Integer</span>.MAX_VALUE;</span><br><span class="line">        <span class="built_in">int</span> ed=<span class="type">Integer</span>.MIN_VALUE;</span><br><span class="line">        for(Interval <span class="type">in</span>: ins)&#123;</span><br><span class="line">            st=Math.<span class="built_in">min</span>(st,<span class="type">in</span>.start);</span><br><span class="line">            ed=Math.<span class="built_in">max</span>(ed,<span class="type">in</span>.<span class="keyword">end</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span>[] bis=new <span class="built_in">int</span>[ed-st+<span class="number">5</span>];</span><br><span class="line">        <span class="built_in">int</span> delta=st-<span class="number">1</span>;</span><br><span class="line">        for(Interval <span class="type">in</span>:ins)&#123;</span><br><span class="line">            add(<span class="type">in</span>.start-delta,-<span class="number">1</span>,bis);</span><br><span class="line">            add(<span class="type">in</span>.<span class="keyword">end</span>-delta,<span class="number">1</span>,bis);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">max</span>=<span class="number">0</span>;</span><br><span class="line">        for(<span class="built_in">int</span> i=<span class="number">1</span>;i&lt;bis.length;i++)&#123;</span><br><span class="line">            <span class="built_in">max</span>=Math.<span class="built_in">max</span>(<span class="built_in">max</span>,getFrom(bis,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">max</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> getFrom(<span class="built_in">int</span>[] bis, <span class="built_in">int</span> i) &#123;</span><br><span class="line">        <span class="built_in">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;bis.length)&#123;</span><br><span class="line">            res+=bis[i];</span><br><span class="line">            i+=i&amp;(-i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> void add(<span class="built_in">int</span> <span class="built_in">index</span>,<span class="built_in">int</span> added,<span class="built_in">int</span>[] b)&#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">index</span>&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            b[<span class="built_in">index</span>]+=added;</span><br><span class="line">            <span class="built_in">index</span>-=<span class="built_in">index</span>&amp;(-<span class="built_in">index</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-            
-          </span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
                 <a class="post-title-link" href="/2015/10/11/kafka_producer_代码阅读/" itemprop="url">
                   Kafka 新版Producer Java版代码阅读
                 </a>
@@ -623,8 +455,8 @@
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Kafka-Details-DistributedSystem-Producer/" itemprop="url" rel="index">
-                    <span itemprop="name">Kafka Details DistributedSystem Producer</span>
+                  <a href="/categories/Kafka/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka</span>
                   </a>
                 </span>
 
@@ -1012,8 +844,8 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Garbage-Collection-C4/" itemprop="url" rel="index">
-                    <span itemprop="name">Garbage Collection, C4</span>
+                  <a href="/categories/JDK-Details/" itemprop="url" rel="index">
+                    <span itemprop="name">JDK Details</span>
                   </a>
                 </span>
 
@@ -1120,8 +952,8 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Borg-翻译-理解-Google/" itemprop="url" rel="index">
-                    <span itemprop="name">Borg 翻译 理解 Google</span>
+                  <a href="/categories/Google/" itemprop="url" rel="index">
+                    <span itemprop="name">Google</span>
                   </a>
                 </span>
 
@@ -1275,8 +1107,8 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Heron-DistributedSystem-翻译-Storm/" itemprop="url" rel="index">
-                    <span itemprop="name">Heron DistributedSystem 翻译 Storm</span>
+                  <a href="/categories/DistributedSystem/" itemprop="url" rel="index">
+                    <span itemprop="name">DistributedSystem</span>
                   </a>
                 </span>
 
@@ -1465,8 +1297,8 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Paxos-DistributedSystem-翻译-Storm/" itemprop="url" rel="index">
-                    <span itemprop="name">Paxos DistributedSystem 翻译 Storm</span>
+                  <a href="/categories/DistributedSystem/" itemprop="url" rel="index">
+                    <span itemprop="name">DistributedSystem</span>
                   </a>
                 </span>
 
@@ -1643,8 +1475,8 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Kafka-Details-DistributedSystem/" itemprop="url" rel="index">
-                    <span itemprop="name">Kafka Details DistributedSystem</span>
+                  <a href="/categories/Kafka/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka</span>
                   </a>
                 </span>
 
@@ -1891,8 +1723,8 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
               &nbsp; | &nbsp; 分类于
               
                 <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/Garbage-Collection-C4/" itemprop="url" rel="index">
-                    <span itemprop="name">Garbage Collection, C4</span>
+                  <a href="/categories/JVM/" itemprop="url" rel="index">
+                    <span itemprop="name">JVM</span>
                   </a>
                 </span>
 
@@ -2002,6 +1834,174 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
 
 
     
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/08/11/Binary IndexedTree/" itemprop="url">
+                  Binary Indexed Tree 树状数组
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-08-11T00:00:00+08:00" content="2015-08-11">
+              2015-08-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/算法/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>#Binary Indexed Tree 树状数组</p>
+<p>做Leetcode 做到MeetingRoomII的时候我知道不用线段树或者树状数组是不太好搞了。还是来学习一下吧。</p>
+<p>树状数组算是线段树的一种特殊情况（子集），所以树状数组能解决的问题线段树一定能做，但线段树能做的树状数组不一定能做。</p>
+<p>##引入的问题</p>
+<p>##问题1<br>    对一个数组进行如下操作<br>    update(i1,i2,operation)<br>    求 value(i)=？</p>
+<pre><code>例如：<span class="keyword">int</span>[] <span class="keyword">ar</span>=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="keyword">N</span>]
+<span class="keyword">update</span>(<span class="keyword">ar</span>,<span class="number">2</span>,<span class="number">5</span>,+,<span class="number">4</span>) //(<span class="number">2</span> <span class="keyword">to</span> <span class="number">5</span>).<span class="built_in">map</span>(<span class="keyword">ar</span>(_)+=<span class="number">4</span>)
+<span class="keyword">return</span> <span class="keyword">ar</span>(<span class="keyword">k</span>)
+</code></pre><p>##问题2<br>    对一个数组进行如下操作 update（index,operation,value）<br>    求 sum（i1，i2）=？</p>
+<pre><code>例如：<span class="keyword">int</span>[] <span class="keyword">ar</span>=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="keyword">N</span>]
+<span class="keyword">update</span>(<span class="keyword">ar</span>,<span class="number">3</span>,+,<span class="number">5</span>);     //<span class="keyword">ar</span>[<span class="number">3</span>]+=<span class="number">5</span>
+<span class="keyword">update</span>(<span class="keyword">ar</span>,<span class="number">11</span>,-,<span class="number">3</span>);  //<span class="keyword">ar</span>[<span class="number">11</span>]-=<span class="number">3</span>
+。。。。。。
+求：sum（<span class="keyword">ar</span>,<span class="number">0</span>,<span class="number">12</span>）? //(<span class="number">0</span> <span class="keyword">to</span> <span class="number">12</span>).<span class="built_in">map</span>(<span class="keyword">ar</span>(_)).sum
+</code></pre><p>应用线段树的思路，对问题1，可以在中间节点缓存操作O(lgn)，求解时再计算出结果。</p>
+<p>对问题2，可以直接缓存sum，每次操作时都对sum附带进行操作O(lgn)，而求结果时，直接使用缓存的sum结果O(lgn)。</p>
+<p>##树状数组的解法</p>
+<p>按照刚才的解题分析，应当使用线段树进行操作，但线段树操作效率比较低，是否一种折中的办法呢？</p>
+<blockquote>
+<blockquote>
+<p>例如:把线段树的每个节点映射到一个额外的数组上？</p>
+</blockquote>
+</blockquote>
+<p>那么问题很明确，如何将一颗有N个叶子节点的树映射到一个长度为N的数组上？</p>
+<p>最直观的思路显然是这样:</p>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/BinaryIndexTree1.png" alt="图1"></p>
+<p>图看上去很容易理解，我们希望将中间结果（1~2）（5~8）等存在另外一个数组B[]里，剩下的问题只有一个，怎么把这些节点向数组的index映射？而且这个映射显然是算法可描述的，这样在计算时才能容易找到各个节点。</p>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/binaryIndexTree2.png" alt="图2"></p>
+<p>究竟怎样想出来的这种映射方式已经不得而知，但的确是个很神妙的构想，这也是Binary Index Tree的精髓了。</p>
+<p>###基本设计</p>
+<p>图2中黄色的块被废弃了,如果用a-&gt;b表示a存入b则：</p>
+<pre><code>(<span class="number">1</span>~<span class="number">2</span>)-&gt;<span class="number">2</span>
+(<span class="number">1</span>~<span class="number">4</span>)-&gt;<span class="number">4</span>
+(<span class="number">5</span>~<span class="number">6</span>)-&gt;<span class="number">6</span>
+(<span class="number">1</span>~<span class="number">8</span>)-&gt;<span class="number">8</span>
+
+<span class="number">1</span>-&gt;<span class="number">1</span>
+<span class="number">3</span>-&gt;<span class="number">3</span>
+<span class="number">5</span>-&gt;<span class="number">5</span>
+<span class="number">7</span>-&gt;<span class="number">7</span>
+</code></pre><p>是不是有点规律了？</p>
+<ol>
+<li>奇数点全部存原数组值</li>
+<li>偶书点K存入的位数与K&amp;(-K)后面的0相关，由M个0就存了1&lt;&lt;M个数字</li>
+</ol>
+<p>###求解问题2</p>
+<p>如果希望计算（st,ed）的sum时，如何计算呢？直接计算st到ed之间的数据相当难算，但是</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sum</span>（<span class="keyword">st</span>，<span class="keyword">ed</span>）=<span class="literal">sum</span>(1,<span class="keyword">ed</span>)-<span class="literal">sum</span>(1,<span class="keyword">st</span>-1)</span><br></pre></td></tr></table></figure>
+<p>这时候再看一下图2是不是明白了？<br>从新定义一个函数sumFromStart(k）表示从1加到K的和。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">sum</span><span class="params">(st,ed)</span></span>=<span class="function"><span class="title">sumFromStart</span><span class="params">(ed)</span></span>-<span class="function"><span class="title">sumFromStart</span><span class="params">(st-<span class="number">1</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>最后看看这个sumFromStart写法吧其实很容易想到：</p>
+<ul>
+<li>2 是10计算1~2的和</li>
+<li>4 是100计算了1~4的和</li>
+<li>8 是1000计算了1~8的和</li>
+</ul>
+<p>如果我们想算1~7 </p>
+<p>7=111=100+10+1</p>
+<p>而且1~7=(1~4)+(5~6)+7</p>
+<p>所以sumFromStart(7)=B(4)+B(6)+B(7)</p>
+<p>再写清楚点，如果是二进制:</p>
+<p>sumFromStart(111)=B(100)+B(110)+B(111)</p>
+<p>想明白了？ 还没有？那就看图吧</p>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/BinaryIndexTree3.png" alt="图3"></p>
+<p>所以，sumFromStart(k)定义如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sumFromStart</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span>[] b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(k!=<span class="number">0</span>)&#123;</span><br><span class="line">		sum+=b[k];</span><br><span class="line">		k=k-(k&amp;(-k));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后还有一个更新操作，因为是单个更新，所以注意要把上面的点也更新了,以对A[5]，操作为例，需要更新B(5),B(6),B(8)。写出来这三个</p>
+<p>B(101)<br>B(110)<br>B(1000)</p>
+<p>看不出啥太明显的规律啊？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">101</span> +<span class="number">1</span> =<span class="number">110</span></span><br><span class="line"><span class="number">110</span> +<span class="number">10</span>=<span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<p>明白了么？ k+k&amp;(-k)啊，所以update写出来</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> update(<span class="keyword">int</span> <span class="keyword">index</span>,<span class="keyword">int</span> v,Operation=add,<span class="keyword">int</span>[] b)&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">index</span>&lt;b.length)&#123;</span><br><span class="line">		b[<span class="keyword">index</span>]+=v;</span><br><span class="line">		<span class="keyword">index</span>=<span class="keyword">index</span>+<span class="keyword">index</span>&amp;(~<span class="keyword">index</span>);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//问题2返回</span></span><br><span class="line"><span class="keyword">void</span> <span class="keyword">sum</span>(<span class="keyword">int</span> st,<span class="keyword">int</span> ed,<span class="keyword">int</span>[]b)&#123;</span><br><span class="line">	<span class="keyword">return</span> sumFromStart(ed,b)-sumFromStart(st-<span class="number">1</span>,b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###求解问题1</p>
+<p>问题1是段累加，单点求值，所以可以把段累加过程加入B数组（复杂度lgn），求解时再算单点（复杂度lgn）</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] b=<span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line"><span class="keyword">void</span> update(<span class="keyword">int</span> st,<span class="keyword">int</span> ed,<span class="keyword">int</span> added,)&#123;</span><br><span class="line">	updateFromStart(st-<span class="number">1</span>,-added,b);</span><br><span class="line">	updateFromStart(ed,added,b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> updateFromStart(<span class="keyword">int</span> <span class="keyword">index</span>,<span class="keyword">int</span> added,<span class="keyword">int</span>[] b)&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">index</span>&lt;b.length)&#123;</span><br><span class="line">		b[<span class="keyword">index</span>]+=added;</span><br><span class="line">		<span class="keyword">index</span>-=<span class="keyword">index</span>&amp;(-<span class="keyword">index</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> getV(<span class="keyword">int</span> <span class="keyword">index</span>)&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">sum</span>=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">index</span>&lt;b.length)&#123;</span><br><span class="line">		<span class="keyword">sum</span>+=b[<span class="keyword">index</span>];</span><br><span class="line">		<span class="keyword">index</span>+=<span class="keyword">index</span>&amp;(-<span class="keyword">index</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###求解MeetingRoomII</p>
+<p>最后给出meeting RoomII代码，很遗憾，这个题最后求最大重叠，所以遍历了每个点找最大，时间复杂度O(nlgn)</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> minMeetingRooms(Interval[] ins) &#123;</span><br><span class="line">        <span class="built_in">int</span> st=<span class="type">Integer</span>.MAX_VALUE;</span><br><span class="line">        <span class="built_in">int</span> ed=<span class="type">Integer</span>.MIN_VALUE;</span><br><span class="line">        for(Interval <span class="type">in</span>: ins)&#123;</span><br><span class="line">            st=Math.<span class="built_in">min</span>(st,<span class="type">in</span>.start);</span><br><span class="line">            ed=Math.<span class="built_in">max</span>(ed,<span class="type">in</span>.<span class="keyword">end</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span>[] bis=new <span class="built_in">int</span>[ed-st+<span class="number">5</span>];</span><br><span class="line">        <span class="built_in">int</span> delta=st-<span class="number">1</span>;</span><br><span class="line">        for(Interval <span class="type">in</span>:ins)&#123;</span><br><span class="line">            add(<span class="type">in</span>.start-delta,-<span class="number">1</span>,bis);</span><br><span class="line">            add(<span class="type">in</span>.<span class="keyword">end</span>-delta,<span class="number">1</span>,bis);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">max</span>=<span class="number">0</span>;</span><br><span class="line">        for(<span class="built_in">int</span> i=<span class="number">1</span>;i&lt;bis.length;i++)&#123;</span><br><span class="line">            <span class="built_in">max</span>=Math.<span class="built_in">max</span>(<span class="built_in">max</span>,getFrom(bis,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">max</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> getFrom(<span class="built_in">int</span>[] bis, <span class="built_in">int</span> i) &#123;</span><br><span class="line">        <span class="built_in">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;bis.length)&#123;</span><br><span class="line">            res+=bis[i];</span><br><span class="line">            i+=i&amp;(-i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> void add(<span class="built_in">int</span> <span class="built_in">index</span>,<span class="built_in">int</span> added,<span class="built_in">int</span>[] b)&#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">index</span>&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            b[<span class="built_in">index</span>]+=added;</span><br><span class="line">            <span class="built_in">index</span>-=<span class="built_in">index</span>&amp;(-<span class="built_in">index</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
   </section>
 
   
@@ -2045,14 +2045,14 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-count">32</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -2101,7 +2101,7 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
 <div class="theme-info">
   主题 -
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
-    NexT
+    NexT.Mist
   </a>
 </div>
 
