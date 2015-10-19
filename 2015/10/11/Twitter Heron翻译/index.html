@@ -1,0 +1,780 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="喜欢写作的码农" />
+
+
+
+  <meta name="keywords" content="Heron DistributedSystem 翻译 Storm," />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="#Heron 论文翻译及理解
+#背景介绍：
+Heron是号称Twitter流数据处理的新一代实现，是StormV2。我们首先回顾一下Storm系统的问题
+
+worker日志混乱，如果一个bolt日志过大，会冲掉其他bolt的日志
+worker之间因为没有资源隔离，因此会出现不确定的worker间相互影响
+Nimbus单点故障
+背压(Back-Pressure)问题:receiver无法处理消息时，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Heron 论文翻译及理解">
+<meta property="og:url" content="http://yoursite.com/2015/10/11/Twitter Heron翻译/index.html">
+<meta property="og:site_name" content="码农牧场">
+<meta property="og:description" content="#Heron 论文翻译及理解
+#背景介绍：
+Heron是号称Twitter流数据处理的新一代实现，是StormV2。我们首先回顾一下Storm系统的问题
+
+worker日志混乱，如果一个bolt日志过大，会冲掉其他bolt的日志
+worker之间因为没有资源隔离，因此会出现不确定的worker间相互影响
+Nimbus单点故障
+背压(Back-Pressure)问题:receiver无法处理消息时，">
+<meta property="og:updated_time" content="2015-10-19T02:31:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Heron 论文翻译及理解">
+<meta name="twitter:description" content="#Heron 论文翻译及理解
+#背景介绍：
+Heron是号称Twitter流数据处理的新一代实现，是StormV2。我们首先回顾一下Storm系统的问题
+
+worker日志混乱，如果一个bolt日志过大，会冲掉其他bolt的日志
+worker之间因为没有资源隔离，因此会出现不确定的worker间相互影响
+Nimbus单点故障
+背压(Back-Pressure)问题:receiver无法处理消息时，">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'always'
+  };
+</script>
+
+
+
+  <title> Heron 论文翻译及理解 | 码农牧场 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">码农牧场</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Heron 论文翻译及理解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Heron-DistributedSystem-翻译-Storm/" itemprop="url" rel="index">
+                    <span itemprop="name">Heron DistributedSystem 翻译 Storm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>#Heron 论文翻译及理解</p>
+<p>#背景介绍：</p>
+<p>Heron是号称Twitter流数据处理的新一代实现，是StormV2。我们首先回顾一下Storm系统的问题</p>
+<ol>
+<li>worker日志混乱，如果一个bolt日志过大，会冲掉其他bolt的日志</li>
+<li>worker之间因为没有资源隔离，因此会出现不确定的worker间相互影响</li>
+<li>Nimbus单点故障</li>
+<li>背压(Back-Pressure)问题:receiver无法处理消息时，sender会丢弃消息。这种情况下如果没有ack将无法得知是否所有消息是否被处理，在最极端的情况下，系统会不同的消耗资源但得不到任何结果。</li>
+</ol>
+<p>针对这些问题，我们实现了Heron：</p>
+<p>数据模型：支持At Most once 以及At least once</p>
+<p>工作模型：</p>
+<p>####0. 调度器（基于Mesos的Aurora）：<br>用于对每个topology使用的资源进行分配。</p>
+<p>####1. Topology Master （TM）</p>
+<p>在调度器分配资源后，topology内部有一个类似选主的过程，主通过在zk上锁定一个公认的node以标示自己为主。同时，TopologyMaster也作为监控中心收集topology内部运行状态。但不作为数据流的中心，因此topology Master不会成为瓶颈。</p>
+<p>####2. Stream Manager（SM） 以及Heron Instance（HI）</p>
+<p>被分配到同一个topology中的SM之间建立全连接，即O（N*N）的连接，可见单个topology规模越大，SM建立的连接数量也会成倍增加。</p>
+<p>HI则为分配到SM内部的处理单元，HI通过SM的信息通路进行通信。</p>
+<p>####3. Topology Back Pressure</p>
+<p>背压机制主要用于流量控制，该机制保证了不同的组件可以以不同的速度处理事件。<br>举例而言：拓扑中有上游组件以及下游组件，当下游组件因为意外处理速度变慢时，上游组件依然以原速度发送事件，则会导致事件出现堆积。无论是中间丢弃事件还是把消息队列撑爆，显然都是我们不希望看到的情况。<br>这时候，背压机制的作用就是调节上游组件，让其减慢速度。</p>
+<p>#####3.1 尝试1：TCP 背压</p>
+<p>我们尝试在TCP连接的层面对该问题进行调整。SM之间通过TCP进行连接，二者之间都有Sending Buffer以及Receiver Buffer。当receiver处理速度变慢时，Receiver Buffer会随之变满，而后SendingBuffer也会慢，这时候上游组件是可以察觉到这种情况的。而后可以进行其他措施进行处理，如发送给其他的SM，或者调整自己的处理速度，直到下游SM速度赶上来位置。</p>
+<p>这种方式实现简单，但实际效果并不理想。Because multiple logical channels (between HIs) are overlaid on top of the physical connections between SMs. 因为HI之间的多个逻辑连接都建立在SM的连接至上，该策略不仅降低了上游SM的发送速度，同时也降低了下游被背压的HI的处理速度。</p>
+<p>其结果是，任何处理速度下降引起的TCP背压都会导致一连串的连锁反应导致系统处于长期的动荡调整阶段。</p>
+<p>#####3.2 尝试2: Spout 背压：</p>
+<p>这种方式同样结合了Sending Buffer以及Receiver Buffer进行。当SM意识到自己内部的某个HI处理速度变慢时，SM找到对应HI的spout并停止从该Spout中读取数据。而该Spout的发送缓存也因此会被填满并最终导致阻塞。与次同时SM会发送“开始背压消息”（Start BackPressure Message）到该topology的其他SM中。收到“开始背压消息”的SM则全部停止从自己上游获取消息的举措。<br>即：让其他所有的组件全部停下等待速度慢的组件消化完自己Receiver Buffer中的消息之后大家在一起继续。<br>当缓慢的HI速度赶上来之后，SM再次发送“停止背压消息”，收到消息的SM从新进入正常工作状态。</p>
+<p>分析：该方式就是让其他所有快的都等慢的。同时隐含着系统被大量 stop start back pressure冲毁的风险。但其好处也是显而易见的，无论topology的层次有多深，该方式都能够保证足够低的处理延时。</p>
+<p>#####3.3 尝试3：</p>
+<p>层层背压：没懂，还好 也没用</p>
+<p>#####3.4实现：</p>
+<p>我们最终实现的是Spout背压机制。该机制在实践中工作良好且可以轻易得出哪里是问题的root cause。<br>在实现上，每个socket连接都具有两个界限值，即高水位界限值以及低水位界限值。当receiver buffer到达高水位界限值时触发背压策略，直到Buffer回复到低水位时终止背压。设计成这种策略主要是防止系统反复震荡。<br>因为有了背压策略，所以系统不会在丢弃tuple，因此系统只有在出现组件故障时才回丢弃tuple，这使得tuple的丢弃更具有确定性。</p>
+<p>当此时注意到，一旦进入背压模式，整个系统的处理速度与系统中最慢的组件速度相当。</p>
+<p>####4. HI 的实现</p>
+<p>HI 抛弃Storm原有的多个Spout或者bolt可以共享一个JVM的思路，每个HI单独使用一个JVM，因此这样可以方便的调试各个组件的性能。</p>
+<p>与此同时，因为传输事件的任务交由SM完成，因此对于我们而言，HI可以是以任意语言编写的代码。</p>
+<p>对于HI的实现，我们主要有两种设计思路：单线程的实现以及多线程的实现。下面我们将分述两种实现。</p>
+<p>######4.1 单线程实现</p>
+<p>在单线程的实现中，线程维护一个与其所属的SM的TCP连接。一旦有事件到达，users logic代码会被调用，如果user的代码会生成tuple，则该线程同样负责将该tuple传递给所属的SM。</p>
+<p>该代码虽然简单，但存在诸多问题，最主要原因是usercode可能会各种原因被block</p>
+<ol>
+<li>为了减速小睡一会</li>
+<li>调用系统IO，TCP连接，文件操作等需要上下文切换频繁的工作</li>
+<li>调用一些同步线程（synchronization）方法</li>
+</ol>
+<p>这些block最关键的问题是会导致一些定时操作被耽误，例如性能状态监控。因为这些block时间不够确定，因此可能导致性能状态metric收集不及时，让master以为HI处于非良好状态。</p>
+<p>######4.2 双线程实现</p>
+<p>如名所属，该方式下每个HI通过两个thread实现，一个GateWay Thread一个Task Execution Thread。</p>
+<p>如图所示GateWay Thread负责与SM以及状态监控的MM进行通信，收发消息。Task Excurtion Thread 负责执行用户的逻辑代码。</p>
+<p>两个线程之前通过三条单向有界队列（unidirection Queue）进行连接。当Data in 队列满时，GateWay不再从SM中读取消息，与此同时触发其所在SM的背压机制。同样，当dataout队列满时（由此可知队列buffer应该都由gate thread维护），GateWay同样认为此时TaskExcution线程不能接收更多的消息从而定制发送消息。与此同时TaskE线程也不再向dateout队列发送消息。</p>
+<p>对TaskE线程而言，如果他是spout，则该线程不停地执行nextTuple方法并向data out队列推送消息。如果是bolt，则每个从datain 进入的消息都会触发 execute方法。</p>
+<p>GC问题：<br>当我们使用topology的有界队列执行大型topology时，我们进场遇到GC问题。正当一切都正常的时候，一个网络中断（network outage）发生了，因此SM无法消费GateWay发出的消息因此dataout队列会发生堆积，且因为这些事件需要被处理，因此无法被GC回收。因此很容易导致HI达到其内存极限。<br>此时，当网络恢复时，Gateway从SM读入新的tuple的同时也向SM发送堆积在outqueue中的消息。如果GateWay读入消息在前，新object的生成占用更多内存从而触发GC，而之前outqueue因为堆积占用了所有内存，因此会导致更严重的性能下降(Performance degradation)。</p>
+<p>为了解决此类GC问题，我们主要的思路是定期检查datain queue 以及dataout queue的大小，并动态更改其capacity。如果这些队列的capacity超过了某个设定的极限，则系统以折半的方式减小其capacity。<br>（这里没有说具体减小的方式，个人认为对于缩减datain queue，就是不在从SM中读取数据，知道datain queue中的tuple被消耗到一半之后完成一次折半capacity的过程。同样，对于out queue，也是先停in queue，然后直到out queue中消息被发出去一半之后再继续）。<br>这种折半减少capacity的方式被定时的调用直到：queue的capacity到达一个稳定的状况或者queue的大小减到0。如果queue的大小减到0，显然对于大多数的情况下，没有tuple可以被生产以及消费，（系统进入一个类似无状态的过程），此时进行GC会变得容易得多。</p>
+<p>相反如果queue中的tuple数量小于设置值，系统会（通过GateWay从SM中读入更多的数据）增加queue中tuple的数量，知道到达极限值或者设置值。</p>
+<p>####6. MetricManager</p>
+<p>MM负责收集并发送所有的状态。包括系统状态以及用户定义的的状态。</p>
+<p>####7. 开始过程以及异常处理</p>
+<ul>
+<li><p>启动过程：</p>
+<p>  在提交一个topology之后调度器（Aurora）allocate必须的资源并在这些机器上启动topology container。Topology container中选出Topology Master，并在zk上通过锁住一个公认的节点宣布其为Master。与此同时，所有的SM（Stream Master）通过zk发现TM并与之进行定期心跳。<br>当所有SM与TM全部连接完毕(不需要两两互联)，TM开始运行一个部署算法将topology中不同的components分配到不同的container中。在我们的术语中，我们称之为physical plan。完成Physical Plan之后SM与TM通信获得其按照Plan应该与之互联的SM。此时，SM已经完成了一个完全互通的网络。HI启动并按照Plan获得其需要执行的任务，至此，整个topoloogy构建完毕，数据按照规定开始流动。<br>为了保险起见，TM可以Plan写入ZK以防止TM单点故障。</p>
+</li>
+<li><p>异常处理：</p>
+<p>  在Topology执行的过程中，有几种故障情况可能引起topology的整个执行过程。</p>
+</li>
+<li><p>TM Die：</p>
+<p>  当TM挂掉时，container会重启TM进程，TM进程则会自动从ZK回复状态。<br>（个人问题1： TM实时将状态写入ZK？包括哪些状态？）<br>如果存在Standby TM，则主备切换。与TM建立Channel的SM全部与之前的备建立Channel。</p>
+</li>
+<li><p>SM Die：</p>
+<p>  与TM类似，SM死掉时，它会被其所在的Container重启，被重启之后的SM首先联系ZK找TM，之后与TM通信下载Plan，以查看是否有任务变化。同时，与该死掉的SM互联的SM在与其失去连接后，同样连接TM下载新Plan查看是否应该找个新的SM连接还是等待其重启。</p>
+</li>
+<li><p>HI Die：</p>
+<p>  HI重启之后则直接与自己的SM连接获取plan并重新工作。</p>
+</li>
+</ul>
+<p>##译者补充:</p>
+<p>这里讲的比较模糊，有几个问题没有讲清楚：</p>
+<ol>
+<li>ZK里存得Plan是一个什么形式？</li>
+<li>TM实时更新了哪些状态？</li>
+<li>SM。HI挂了的时候，当前正在发送的消息和SM内部的消息是怎么处理的？</li>
+</ol>
+<ul>
+<li>总结</li>
+</ul>
+<ol>
+<li><p>cluster Manager（Nimbus）的任务被明确的分开了</p>
+</li>
+<li><p>每个HI仅仅执行一个任务，所以debug log变得简单了</p>
+</li>
+<li>因为设计将整个执行过程变得透明化，当topology变慢时，可以清晰的找到问题的根源。</li>
+<li>资源隔离</li>
+<li>每个topology都具有自己的TM</li>
+<li>背压机制</li>
+</ol>
+<p>##译者总结：</p>
+<p>###改变1：<br>对照 原来的storm</p>
+<p> HI-&gt;woker</p>
+<p> container-&gt;Supervisor。</p>
+<p>而SM则是从原来的worker中提出来的通信组件。原来的模式中每个woker负责与其他worker通信，在我们实际使用中，一个woker里能开到100多个线程，其中发送接收都开了很多线程。每个worker都开这么多与其他机器的连接显然是很消耗资源而且很不可靠的方式。</p>
+<p>而，参考现在的方式，SM被单独提出来负责所有通信，每个HI只需要跟SM建立本地连接。所以，此时，一旦出现单点故障，只需要SM负责通信上的问题即可。HI完全不受影响。而现在的storm立刻出现大量连接断开，甚至出现雪崩现象。</p>
+<p>###改变2：<br>Nimbus抽象到TM和schedule两部分，并且通过ZK维护整个Topology的状态。因为我们的使用规模依然较小，并没有遇到TM需要解决问题的痛点，不过多评论。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Heron-DistributedSystem-翻译-Storm/" rel="tag">#Heron DistributedSystem 翻译 Storm</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/11/borg论文翻译及理解/" rel="prev">
+                <i class="fa fa-chevron-left"></i> Borg论文翻译及理解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/11/Paxos/" rel="next">
+                对Paxos一点浅薄的认识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="孟由" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">孟由</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">喜欢写作的码农</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孟由</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

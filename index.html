@@ -1,79 +1,1681 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html class="theme-next use-motion ">
 <head>
-  <meta charset="utf-8">
-  
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
-<meta name="twitter:description">
-  
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  <link rel="stylesheet" href="/css/style.css" type="text/css">
   
 
-</head>
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
   
-    <article id="post-Kakfa_structure" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/16/Kakfa_structure/" class="article-date">
-  <time datetime="2015-10-16T01:38:11.000Z" itemprop="datePublished">2015-10-16</time>
-</a>
-    
+    <link href='//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="喜欢写作的码农" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="喜欢写作的码农">
+<meta property="og:type" content="website">
+<meta property="og:title" content="码农牧场">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="码农牧场">
+<meta property="og:description" content="喜欢写作的码农">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="码农牧场">
+<meta name="twitter:description" content="喜欢写作的码农">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'always'
+  };
+</script>
+
+
+
+  <title> 码农牧场 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
   </div>
-  <div class="article-inner">
-    
-    
-    <div class="article-entry" itemprop="articleBody">
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">码农牧场</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
       
-        <h1 id="Kafka_几个实现细节">Kafka 几个实现细节</h1><p>关于Kafka大方向上的介绍已经很多了，infoq上面不少不错的资源</p>
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/10/19/HashAndRelatedCollections/" itemprop="url">
+                  Hash and related Collections
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-19T10:28:56+08:00" content="2015-10-19">
+              2015-10-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hash函数-xor-shift-scheme-HashCollections-BloomFilter/" itemprop="url" rel="index">
+                    <span itemprop="name">Hash函数 xor-shift scheme HashCollections BloomFilter</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>##Hash函数与xor-shift scheme，HashCollections，BloomFilter</p>
+<p>根据定义，Hashcode用于帮助Equals更快速的鉴定两个对象是否相同，于此同时，HashCode也广泛运用于很多基于Hash的Collections。本文简要分析了HashCode的实现以及用于。</p>
+<p>###1. HashCode</p>
+<p>####1.1 来自hashcode的思考</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * <span class="type">Returns</span> a hash code value <span class="keyword">for</span> the <span class="keyword">object</span>. <span class="type">This</span> <span class="keyword">method</span> <span class="keyword">is</span></span><br><span class="line"> * supported <span class="keyword">for</span> the benefit <span class="keyword">of</span> hash tables such <span class="keyword">as</span> those provided by</span><br><span class="line"> * &#123;@link java.util.<span class="type">HashMap</span>&#125;.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * <span class="type">The</span> general contract <span class="keyword">of</span> &#123;@code hashCode&#125; <span class="keyword">is</span>:</span><br><span class="line"> * &lt;ul&gt;</span><br><span class="line"> * &lt;li&gt;<span class="type">Whenever</span> it <span class="keyword">is</span> invoked on the same <span class="keyword">object</span> more than once during</span><br><span class="line"> *     an execution <span class="keyword">of</span> a <span class="type">Java</span> application, the &#123;@code hashCode&#125; <span class="keyword">method</span></span><br><span class="line"> *     must consistently <span class="keyword">return</span> the same integer, provided no information</span><br><span class="line"> *     used <span class="keyword">in</span> &#123;@code equals&#125; comparisons on the <span class="keyword">object</span> <span class="keyword">is</span> modified.</span><br><span class="line"> *     <span class="type">This</span> integer need <span class="keyword">not</span> remain consistent <span class="keyword">from</span> one execution <span class="keyword">of</span> an</span><br><span class="line"> *     application to another execution <span class="keyword">of</span> the same application.</span><br><span class="line"> * &lt;li&gt;<span class="type">If</span> two objects are equal according to the &#123;@code equals(<span class="type">Object</span>)&#125;</span><br><span class="line"> *     <span class="keyword">method</span>, then calling the &#123;@code hashCode&#125; <span class="keyword">method</span> on each <span class="keyword">of</span></span><br><span class="line"> *     the two objects must produce the same integer <span class="literal">result</span>.</span><br><span class="line"> * &lt;li&gt;<span class="type">It</span> <span class="keyword">is</span> &lt;em&gt;<span class="keyword">not</span>&lt;/em&gt; required that <span class="keyword">if</span> two objects are unequal</span><br><span class="line"> *     according to the &#123;@link java.lang.<span class="type">Object</span><span class="comment">#equals(java.lang.Object)&#125;</span></span><br><span class="line"> *     <span class="keyword">method</span>, then calling the &#123;@code hashCode&#125; <span class="keyword">method</span> on each <span class="keyword">of</span> the</span><br><span class="line"> *     two objects must produce <span class="keyword">distinct</span> integer results.  <span class="type">However</span>, the</span><br><span class="line"> *     programmer should be aware that producing <span class="keyword">distinct</span> integer results</span><br><span class="line"> *     <span class="keyword">for</span> unequal objects may improve the performance <span class="keyword">of</span> hash tables.</span><br><span class="line"> * &lt;/ul&gt;</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * <span class="type">As</span> much <span class="keyword">as</span> <span class="keyword">is</span> reasonably practical, the hashCode <span class="keyword">method</span> defined by</span><br><span class="line"> * class &#123;@code <span class="type">Object</span>&#125; does <span class="keyword">return</span> <span class="keyword">distinct</span> integers <span class="keyword">for</span> <span class="keyword">distinct</span></span><br><span class="line"> * objects. (<span class="type">This</span> <span class="keyword">is</span> typically implemented by converting the internal</span><br><span class="line"> * address <span class="keyword">of</span> the <span class="keyword">object</span> into an integer, but this implementation</span><br><span class="line"> * technique <span class="keyword">is</span> <span class="keyword">not</span> required by the</span><br><span class="line"> * <span class="type">Java</span>&lt;font size=<span class="string">"-2"</span>&gt;&lt;sup&gt;<span class="type">TM</span>&lt;/sup&gt;&lt;/font&gt; programming language.)</span><br><span class="line"> *</span><br><span class="line"> * @<span class="keyword">return</span>  a hash code value <span class="keyword">for</span> this <span class="keyword">object</span>.</span><br><span class="line"> * @see     java.lang.<span class="type">Object</span><span class="comment">#equals(java.lang.Object)</span></span><br><span class="line"> * @see     java.lang.<span class="type">System</span><span class="comment">#identityHashCode</span></span><br><span class="line"> */</span><br><span class="line">public native <span class="type">int</span> hashCode();</span><br></pre></td></tr></table></figure>
+<p>注释说的太清楚我居然无言以对….</p>
+<ol>
+<li>对一个对象调用多次hashcode，其返回值应当相同。</li>
+<li>如果o1.equals(o2),那么o1.hashcode==o2.hashcode</li>
+<li>(不是必须但try best)，if(!o1.equals(o2)) o1.hashcode可以=o2.hashcode,但应该尽可能避免该情况。</li>
+</ol>
+<p>但我有几个问题之前一直没想明白：</p>
+<ul>
+<li>问题1. 简单类型和其他类型的实现不同么：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Integer i1=<span class="number">1</span>;</span><br><span class="line">Integer i2=<span class="number">1</span>;</span><br><span class="line">i1.hashcode=i2.hascode?</span><br><span class="line"></span><br><span class="line">Entry o1=Entry(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">Entry o2=Entry(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">o2.hashcode=o2.hashcode?</span><br></pre></td></tr></table></figure>
+<p>后来我看到Integer.hashcode方法…</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">value</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题2. 对象的引用更改时，Hashcode变么？</li>
+</ul>
+<p>这个问题源自我对一个很长的链表上某个元素做hash的时候，让我不得不考虑会不会每次做hash都会遍历一遍整个链表。</p>
+<p>结果很蛋疼，更改引用甚至值的话，如果你不重写hashcode方法，hashcode值是不会变的</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">TmpOB o1=new TmpOB(1,<span class="string">"aaa"</span>);</span><br><span class="line">TmpOB o2=new TmpOB(1,<span class="string">"aaa"</span>);</span><br><span class="line">System.out.println(o1.hashCode());</span><br><span class="line">o2.a=3;</span><br><span class="line">System.out.println(o1.hashCode());</span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">//result:</span><br><span class="line">727129599</span><br><span class="line">727129599</span><br></pre></td></tr></table></figure>
+<p>####1.2 hashcode的实现</p>
+<p>因为Object 的hashcode方法是native的，所以参考一些别人的文章，大致意思是JVM里C++实现的，代码大体如下，其返回值就是hashcode。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> intptr_t <span class="title">get_next_hash</span><span class="params">(Thread * Self, oop obj)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">intptr_t</span> value = <span class="number">0</span> ;</span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">0</span>) &#123;</span><br><span class="line">     <span class="comment">// This form uses an unguarded global Park-Miller RNG,</span></span><br><span class="line">     <span class="comment">// so it's possible for two threads to race and generate the same RNG.</span></span><br><span class="line">     <span class="comment">// On MP system we'll have lots of RW access to a global, so the</span></span><br><span class="line">     <span class="comment">// mechanism induces lots of coherency traffic.</span></span><br><span class="line">     value = os::random() ;</span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">1</span>) &#123;</span><br><span class="line">     <span class="comment">// This variation has the property of being stable (idempotent)</span></span><br><span class="line">     <span class="comment">// between STW operations.  This can be useful in some of the 1-0</span></span><br><span class="line">     <span class="comment">// synchronization schemes.</span></span><br><span class="line">     <span class="keyword">intptr_t</span> addrBits = <span class="keyword">intptr_t</span>(obj) &gt;&gt; <span class="number">3</span> ;</span><br><span class="line">     value = addrBits ^ (addrBits &gt;&gt; <span class="number">5</span>) ^ GVars.stwRandom ;</span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">2</span>) &#123;</span><br><span class="line">     value = <span class="number">1</span> ;            <span class="comment">// for sensitivity testing</span></span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">3</span>) &#123;</span><br><span class="line">     value = ++GVars.hcSequence ;</span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">4</span>) &#123;</span><br><span class="line">     value = <span class="keyword">intptr_t</span>(obj) ;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     <span class="comment">// Marsaglia's xor-shift scheme with thread-specific state</span></span><br><span class="line">     <span class="comment">// This is probably the best overall implementation -- we'll</span></span><br><span class="line">     <span class="comment">// likely make this the default in future releases.</span></span><br><span class="line">     <span class="keyword">unsigned</span> t = Self-&gt;_hashStateX ;</span><br><span class="line">     t ^= (t &lt;&lt; <span class="number">11</span>) ;</span><br><span class="line">     Self-&gt;_hashStateX = Self-&gt;_hashStateY ;</span><br><span class="line">     Self-&gt;_hashStateY = Self-&gt;_hashStateZ ;</span><br><span class="line">     Self-&gt;_hashStateZ = Self-&gt;_hashStateW ;</span><br><span class="line">     <span class="keyword">unsigned</span> v = Self-&gt;_hashStateW ;</span><br><span class="line">     v = (v ^ (v &gt;&gt; <span class="number">19</span>)) ^ (t ^ (t &gt;&gt; <span class="number">8</span>)) ;</span><br><span class="line">     Self-&gt;_hashStateW = v ;</span><br><span class="line">     value = v ;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  value &amp;= markOopDesc::hash_mask;</span><br><span class="line">  <span class="keyword">if</span> (value == <span class="number">0</span>) value = <span class="number">0xBAD</span> ;</span><br><span class="line">  assert (value != markOopDesc::no_hash, <span class="string">"invariant"</span>) ;</span><br><span class="line">  TEVENT (hashCode: GENERATE) ;</span><br><span class="line">  <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原谅我C++学艺不精，完全不知道他在做什么。还好我找到了一些大神的讨论</p>
+<p><a href="http://hllvm.group.iteye.com/group/topic/39183" target="_blank" rel="external">ITEYE上的讨论</a></p>
+<p><a href="http://stackoverflow.com/questions/2427631/how-is-hashcode-calculated-in-java" target="_blank" rel="external">StackOverFlow上的讨论</a></p>
+<blockquote>
+<p>The hashCode() method is often used for identifying an object. I think the Object implementation returns the pointer (not a real pointer but a unique id or something like that) of the object. But most classes override the method. Like the String class. Two String objects have not the same pointer but they are equal:</p>
+<p>new String(“a”).hashCode() == new String(“a”).hashCode()<br>I think the most common use for hashCode() is in Hashtable, HashSet, etc..</p>
+<p>Java API Object hashCode()</p>
+<p>Edit: (due to a recent downvote and based on an article I read about JVM parameters)</p>
+<p>With the JVM parameter -XX:hashCode you can change the way how the hashCode is calculated (see the Issue 222 of the Java Specialists’ Newsletter).</p>
+<p>HashCode==0: Simply returns random numbers with no relation to where in memory the object is found. As far as I can make out, the global read-write of the seed is not optimal for systems with lots of processors.</p>
+<p>HashCode==1: Counts up the hash code values, not sure at what value they start, but it seems quite high.</p>
+<p>HashCode==2: Always returns the exact same identity hash code of 1. This can be used to test code that relies on object identity. The reason why JavaChampionTest returned Kirk’s URL in the example above is that all objects were returning the same hash code.</p>
+<p>HashCode==3: Counts up the hash code values, starting from zero. It does not look to be thread safe, so multiple threads could generate objects with the same hash code.</p>
+<p>HashCode==4: This seems to have some relation to the memory location at which the object was created.</p>
+<p>HashCode&gt;=5: This is the default algorithm for Java 8 and has a per-thread seed. It uses Marsaglia’s xor-shift scheme to produce pseudo-random numbers.</p>
+</blockquote>
+<p>可以看到HashCode&gt;=5是默认实现,可是这个XorShift是个虾米？</p>
+<p>感谢<a href="https://en.wikipedia.org/wiki/Xorshift" target="_blank" rel="external">wikipedia上的资料</a></p>
+<p>上面讲的很清楚，弗罗里达州立大学一位叫做George Marsaglia的老师发表了一篇使用位移以及亦或运算生成随机数的方法，并发表了<a href="http://www.jstatsoft.org/v08/i14/paper" target="_blank" rel="external">论文</a>在一篇统计学杂志上。</p>
+<p>最简单的实现是这样</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* These state variables must be initialized so that they are not all zero. */</span></span><br><span class="line"><span class="keyword">uint32_t</span> x, y, z, w;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uint32_t</span> xorshift128(<span class="keyword">void</span>) &#123;</span><br><span class="line">    <span class="keyword">uint32_t</span> t = x ^ (x &lt;&lt; <span class="number">11</span>);</span><br><span class="line">    x = y; y = z; z = w;</span><br><span class="line">    <span class="keyword">return</span> w = w ^ (w &gt;&gt; <span class="number">19</span>) ^ t ^ (t &gt;&gt; <span class="number">8</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>哈哈 这次和C++代码总算对上了。先不管为什么，先看看wiki上继续的讨论。</p>
+<p>####1.3 随机数</p>
+<p>因为随机数是密码学的基础，因此关于随机数生成，测试，比较，坑很深，不再过多解释。</p>
+<p>随机数大体可分为物理产生的真正的随机数，以及一些函数生成的伪随机数，部分Intel的芯片里就带有物理产生随机数的方法</p>
+<p>来自hcwang的<a href="http://www.cnblogs.com/hcwang/p/3701438.html" target="_blank" rel="external">关于随机数的笔记</a></p>
+<blockquote>
+<ul>
+<li>真随机数</li>
+</ul>
+<p>真随机数只能用某些随机物理过程来产生。例如：放射性衰变、电子设备的热噪音、宇宙射线的触发时间等等。如果采用随机物理过程来产生蒙特卡洛计算用的随机数，理论上不存在问题，但是实际应用中，要做出速度很快而又准确的随机物理过程产生器是很困难的。Intel810RNG的原理大概是：利用热噪声(是由导体中电子的热震动引起的)放大后，影响一个由电压控制的振荡器，通过另一个高频振荡器来收集数据。</p>
+<ul>
+<li>伪随机数</li>
+</ul>
+<p>实际应用的随机数通常都是通过某些数学公式计算而产生的伪随机数。这样的伪随机数从数学意义上讲已经一点不是随机的了。但是，只要伪随机数能够通过随机数的一系列的统计检验，我们就可以把它当作真随机数而放心地使用。这样我们就可以很经济地、重复地产生出随机数。理论上要求伪随机数产生器要具备以下特征：良好的统计分布特性、高效率的伪随机数产生、伪随机数产生的循环周期长，产生程序可移植性好和伪随机数可以重复产生。其中满足良好的统计特性是最重要的。</p>
+</blockquote>
+<p>摘自知乎的部分测试随机数生成算法的一些测试思想：</p>
+<p>来自<a href="http://www.zhihu.com/question/20222653" target="_blank" rel="external">知乎-如何评价一个伪随机数生成算法的优劣？</a></p>
+<blockquote>
+<ul>
+<li>频数测试：测试二进制序列中，“0”和“1” 数目是否近似相等。如果是，则序列是随机的。</li>
+<li>块内频数测试：目的是确定在待测序列中，所有非重叠的 长度为M位的块内的“0”和“1”的数目是否表现为随机分布。如果是，则序列是随机的。</li>
+<li>游程测试：目的是确定待测序列中，各种特定长度的 “0”和“1”的游程数目是否如真随机序列期望的那样。如果是，则序列是随机的。</li>
+<li>块内最长连续“1”测试：目的是确定待测序列中， 最长连“1”串的长度是否与真随机序列中最长连“1”串的 长度近似一致。如果是，则序列是随机的。</li>
+<li>矩阵秩的测试：目的是检测待测序列中，固定长度子序列的线性相关性。如果线性相关性较小，则序列是随机的。</li>
+<li>离散傅里叶变换测试：目的是通过检测待测序列的周期性质，并与真随机序列周期性质相比较，通过它们之间的偏离程度来确定待测序列随机性。如果偏离程度较小，序列是随机的。</li>
+<li>非重叠模板匹配测试：目的是检测待测序列中，子序列是否与太多的非周期模板相匹配。太多就意味着待测序列是非随机的。</li>
+<li>重叠模板匹配测试：目的是统计待测序列中，特定长度的连续“1”的数目，是否与真随机序列的情况偏离太大。太大是非随机的。</li>
+<li>通用统计测试：目的是检测待测序列是否能在信息不丢失的情况下被明显压缩。一个不可被明显压缩的序列是随机的。</li>
+<li>压缩测试：目的是确定待测序列能被压缩的程度，如果能被显著压缩，说明不是随机序列。</li>
+<li>线性复杂度测试：目的是确定待测序列是否足够复杂，如果是，则序列是随机的。</li>
+<li>连续性测试：目的是确定待测序列所有可能的m位比特的组合子串出现的次数是否与真随机序列中的情况近似相同，如果是，则序列是随机的。</li>
+<li>近似熵测试：目的是通过比较m位比特串与m-1位比特串在待测序列中出现的频度，再与正态分布的序列中的情况相对比，从而确定随机性。</li>
+<li>部分和测试：目的确定待测序列中的部分和是否太大或太小。太大或太小都是非随机的。</li>
+<li>随机游走测试：目的是确定在一个随机游程中，某个特定状态出现的次数是否远远超过真随机序列中的情况。如果是，则序列是非随机的。</li>
+<li>随机游走变量测试：目的是检测待测序列中，某一特定状态在一个游机游程中出现次数与真随机序列的偏离程度。如果偏离程度较大，则序列是非随机的。</li>
+</ul>
+</blockquote>
+<p>####1.4  xor-shift scheme</p>
+<p>好了，我们还是来看看xor-shift scheme吧。根据Wiki上的描述，该方法在计算机上奇快，比较好，只是有一些统计学测试点没过……但如果通过该方法加上一些非线性函数就可以轻松过所有测试点，轻松虐 <a href="https://en.wikipedia.org/wiki/Mersenne_Twister" target="_blank" rel="external">Mersenne Twister</a>以及<a href="https://en.wikipedia.org/wiki/Well_equidistributed_long-period_linear" target="_blank" rel="external">WELL</a>。</p>
+<p>当然该方法不是没有问题，x,y,z几个变量的初始值还得好好选选。估计人家搞加密的比较关系这些问题，咱们是在算hash冲突啊！</p>
+<p>O(∩<em>∩)O我们是在写Hash是吧，怎么越写越远啊O(∩</em>∩)O</p>
+<p>####1.5 小结</p>
+<p>总之可以看到，目前对于一个Object的hashCode方法的第一次计算，默认情况下是通过xor-shift scheme的一个伪随机函数生成的。</p>
+<p>那么第二次调用呢？事实上，hashcode值在第一次生成后会写入到内存里，和Object存储在一起（存在Object的头部），之后的调用直接从object里当一个property读出来就可以了。</p>
+<p>当然，还有部分陈旧的实现（老版本的JDK里）是通过使用Object存储的地址实现的。但这也存在一个问题，就算你第一次是按照当前Object的地址生成，以后都直接读取，但你GC要是用并行GC或者 SerialGC的时候Object是会被移动的，移动之后原来的地址上再生成Object会不会很容易Hash冲突呢？</p>
+<p>所以我觉得如果使用地址实现，至少也要再和GC Times进行一下位运算减少冲突次数。</p>
+<p>至此为止，一个Object的Hashcode生成方法就是这样了。</p>
+<p>###2. HashMap &amp;&amp; HashSet</p>
+<p>HashSet通过HashMap实现，这就不用说啥了。</p>
+<p>####2.1 HashMap里的hash函数<br>唯一值得说一说的就是HashMap.hash(int)方法。该方法输入key.hashCode又进行了很多位运算才返回HashMap里给Key使用的Hash值。</p>
+<p>为什么？</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">final int hash(Object k) &#123;</span><br><span class="line">    int <span class="keyword">h</span> = hashSeed;</span><br><span class="line">    <span class="keyword">if</span> (0 != <span class="keyword">h</span> &amp;&amp; k instanceof String) &#123;</span><br><span class="line">        <span class="keyword">return</span> sun.misc.Hashing.stringHash32((String) k);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">h</span> ^= k.hashCode();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This function ensures that hashCodes that differ only by</span></span><br><span class="line">    <span class="comment">// constant multiples at each bit position have a bounded</span></span><br><span class="line">    <span class="comment">// number of collisions (approximately 8 at default load factor).</span></span><br><span class="line">    <span class="keyword">h</span> ^= (<span class="keyword">h</span> &gt;&gt;&gt; 20) ^ (<span class="keyword">h</span> &gt;&gt;&gt; 12);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">h</span> ^ (<span class="keyword">h</span> &gt;&gt;&gt; 7) ^ (<span class="keyword">h</span> &gt;&gt;&gt; 4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遗憾，还是没想明白，看别人的<a href="http://www.iteye.com/topic/709945" target="_blank" rel="external">blog</a>才明白的。</p>
+<p>基本思路很简单，与HashMap自身结合也很紧密。</p>
+<blockquote>
+<p>首先，hashMap是用一些桶存key，然后用拉链解决冲突的。而且每次扩容的时候是成倍扩容，所以通数量一定是1&lt;&lt;k的形式。</p>
+<p>那么我们假设某时刻，一个hashmap.tablesize=1&lt;&lt;11,这时 两个objectkey要入库，一个是hashvalue=M,另一个是M+(1&lt;&lt;13)。我们算index函数：</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">indexFor</span><span class="params">(<span class="keyword">int</span> h, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">      <span class="comment">// assert Integer.bitCount(length) == 1 : "length must be a non-zero power of 2";</span></span><br><span class="line">      <span class="keyword">return</span> h &amp; (length-<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>index函数直接取前10位，显然M&amp;(1&lt;&lt;12-1)==(M+(1&lt;&lt;13))&amp;(1&lt;&lt;12-1)<br>因为他们的低11位本来就相同啊！</p>
+<p>看到问题了吧，虽然hash函数将每个obj与1&lt;&lt;32或者1&lt;&lt;64对应起来了，而且对应的很离散。但只要HashMap的size不是1&lt;&lt;32,那么就要把原hashcode 向一个更小的集合映射。而这个映射过程，就是这个HashMap里的hash过程。</p>
+<p>该过程保证了任何一个高位（比如前面例子里M 与 M+1&lt;&lt;13）的移动，都会在低位产生对应的影响。而不是直接截取Hashcode里的低位，从而使冲突变得显而易见。</p>
+<p>具体过程看图吧，太清楚了，感谢marystone。</p>
+</blockquote>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/hashprocess.jpg" alt="图"></p>
+<blockquote>
+<p>其中h^(h&gt;&gt;&gt;7)^(h&gt;&gt;&gt;4) 结果中的位运行标识是把h&gt;&gt;&gt;7 换成 h&gt;&gt;&gt;8来看。</p>
+<p>即最后h^(h&gt;&gt;&gt;8)^(h&gt;&gt;&gt;4) 运算后hashCode值每位数值如下： </p>
+<p>8=8 </p>
+<p>7=7^8 </p>
+<p>6=6^7^8</p>
+<p>5=5^8^7^6 </p>
+<p>4=4^7^6^5^8 </p>
+<p>3=3^8^6^5^8^4^7 </p>
+<p>2=2^7^5^4^7^3^8^6 </p>
+<p>1=1^6^4^3^8^6^2^7^5 </p>
+<p>结果中的1、2、3三位出现重复位^运算 </p>
+<p>3=3^8^6^5^8^4^7     -&gt;   3^6^5^4^7 </p>
+<p>2=2^7^5^4^7^3^8^6   -&gt;   2^5^4^3^8^6 </p>
+<p>1=1^6^4^3^8^6^2^7^5 -&gt;   1^4^3^8^2^7^5</p>
+<p>算法中是采用(h&gt;&gt;&gt;7)而不是(h&gt;&gt;&gt;8)的算法，应该是考虑1、2、3三位出现重复位^运算的情况。使得最低位上原hashCode的8位都参与了^运算，所以在table.length为默认值16的情况下面，hashCode任意位的变化基本都能反应到最终hash table 定位算法中，这种情况下只有原hashCode第3位高1位变化不会反应到结果中。</p>
+</blockquote>
+<p>关于Hashmap以及ConcurrentHashMap，和BloomFilter我们单开一章吧。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/10/11/Binary IndexedTree/" itemprop="url">
+                  Binary Indexed Tree 树状数组
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/BinaryIndexTree-树状数组-算法/" itemprop="url" rel="index">
+                    <span itemprop="name">BinaryIndexTree 树状数组 算法</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>#Binary Indexed Tree 树状数组</p>
+<p>做Leetcode 做到MeetingRoomII的时候我知道不用线段树或者树状数组是不太好搞了。还是来学习一下吧。</p>
+<p>树状数组算是线段树的一种特殊情况（子集），所以树状数组能解决的问题线段树一定能做，但线段树能做的树状数组不一定能做。</p>
+<p>##引入的问题</p>
+<p>##问题1<br>    对一个数组进行如下操作<br>    update(i1,i2,operation)<br>    求 value(i)=？</p>
+<pre><code>例如：<span class="keyword">int</span>[] <span class="keyword">ar</span>=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="keyword">N</span>]
+<span class="keyword">update</span>(<span class="keyword">ar</span>,<span class="number">2</span>,<span class="number">5</span>,+,<span class="number">4</span>) //(<span class="number">2</span> <span class="keyword">to</span> <span class="number">5</span>).<span class="built_in">map</span>(<span class="keyword">ar</span>(_)+=<span class="number">4</span>)
+<span class="keyword">return</span> <span class="keyword">ar</span>(<span class="keyword">k</span>)
+</code></pre><p>##问题2<br>    对一个数组进行如下操作 update（index,operation,value）<br>    求 sum（i1，i2）=？</p>
+<pre><code>例如：<span class="keyword">int</span>[] <span class="keyword">ar</span>=<span class="keyword">new</span> <span class="keyword">int</span>[<span class="keyword">N</span>]
+<span class="keyword">update</span>(<span class="keyword">ar</span>,<span class="number">3</span>,+,<span class="number">5</span>);     //<span class="keyword">ar</span>[<span class="number">3</span>]+=<span class="number">5</span>
+<span class="keyword">update</span>(<span class="keyword">ar</span>,<span class="number">11</span>,-,<span class="number">3</span>);  //<span class="keyword">ar</span>[<span class="number">11</span>]-=<span class="number">3</span>
+。。。。。。
+求：sum（<span class="keyword">ar</span>,<span class="number">0</span>,<span class="number">12</span>）? //(<span class="number">0</span> <span class="keyword">to</span> <span class="number">12</span>).<span class="built_in">map</span>(<span class="keyword">ar</span>(_)).sum
+</code></pre><p>应用线段树的思路，对问题1，可以在中间节点缓存操作O(lgn)，求解时再计算出结果。</p>
+<p>对问题2，可以直接缓存sum，每次操作时都对sum附带进行操作O(lgn)，而求结果时，直接使用缓存的sum结果O(lgn)。</p>
+<p>##树状数组的解法</p>
+<p>按照刚才的解题分析，应当使用线段树进行操作，但线段树操作效率比较低，是否一种折中的办法呢？</p>
+<blockquote>
+<blockquote>
+<p>例如:把线段树的每个节点映射到一个额外的数组上？</p>
+</blockquote>
+</blockquote>
+<p>那么问题很明确，如何将一颗有N个叶子节点的树映射到一个长度为N的数组上？</p>
+<p>最直观的思路显然是这样:</p>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/BinaryIndexTree1.png" alt="图1"></p>
+<p>图看上去很容易理解，我们希望将中间结果（1~2）（5~8）等存在另外一个数组B[]里，剩下的问题只有一个，怎么把这些节点向数组的index映射？而且这个映射显然是算法可描述的，这样在计算时才能容易找到各个节点。</p>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/binaryIndexTree2.png" alt="图2"></p>
+<p>究竟怎样想出来的这种映射方式已经不得而知，但的确是个很神妙的构想，这也是Binary Index Tree的精髓了。</p>
+<p>###基本设计</p>
+<p>图2中黄色的块被废弃了,如果用a-&gt;b表示a存入b则：</p>
+<pre><code>(<span class="number">1</span>~<span class="number">2</span>)-&gt;<span class="number">2</span>
+(<span class="number">1</span>~<span class="number">4</span>)-&gt;<span class="number">4</span>
+(<span class="number">5</span>~<span class="number">6</span>)-&gt;<span class="number">6</span>
+(<span class="number">1</span>~<span class="number">8</span>)-&gt;<span class="number">8</span>
+
+<span class="number">1</span>-&gt;<span class="number">1</span>
+<span class="number">3</span>-&gt;<span class="number">3</span>
+<span class="number">5</span>-&gt;<span class="number">5</span>
+<span class="number">7</span>-&gt;<span class="number">7</span>
+</code></pre><p>是不是有点规律了？</p>
+<ol>
+<li>奇数点全部存原数组值</li>
+<li>偶书点K存入的位数与K&amp;(-K)后面的0相关，由M个0就存了1&lt;&lt;M个数字</li>
+</ol>
+<p>###求解问题2</p>
+<p>如果希望计算（st,ed）的sum时，如何计算呢？直接计算st到ed之间的数据相当难算，但是</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">sum</span>（<span class="keyword">st</span>，<span class="keyword">ed</span>）=<span class="literal">sum</span>(1,<span class="keyword">ed</span>)-<span class="literal">sum</span>(1,<span class="keyword">st</span>-1)</span><br></pre></td></tr></table></figure>
+<p>这时候再看一下图2是不是明白了？<br>从新定义一个函数sumFromStart(k）表示从1加到K的和。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">sum</span><span class="params">(st,ed)</span></span>=<span class="function"><span class="title">sumFromStart</span><span class="params">(ed)</span></span>-<span class="function"><span class="title">sumFromStart</span><span class="params">(st-<span class="number">1</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>最后看看这个sumFromStart写法吧其实很容易想到：</p>
+<ul>
+<li>2 是10计算1~2的和</li>
+<li>4 是100计算了1~4的和</li>
+<li>8 是1000计算了1~8的和</li>
+</ul>
+<p>如果我们想算1~7 </p>
+<p>7=111=100+10+1</p>
+<p>而且1~7=(1~4)+(5~6)+7</p>
+<p>所以sumFromStart(7)=B(4)+B(6)+B(7)</p>
+<p>再写清楚点，如果是二进制:</p>
+<p>sumFromStart(111)=B(100)+B(110)+B(111)</p>
+<p>想明白了？ 还没有？那就看图吧</p>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/BinaryIndexTree3.png" alt="图3"></p>
+<p>所以，sumFromStart(k)定义如下</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sumFromStart</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span>[] b)</span></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sum=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(k!=<span class="number">0</span>)&#123;</span><br><span class="line">		sum+=b[k];</span><br><span class="line">		k=k-(k&amp;(-k));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后还有一个更新操作，因为是单个更新，所以注意要把上面的点也更新了,以对A[5]，操作为例，需要更新B(5),B(6),B(8)。写出来这三个</p>
+<p>B(101)<br>B(110)<br>B(1000)</p>
+<p>看不出啥太明显的规律啊？</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">101</span> +<span class="number">1</span> =<span class="number">110</span></span><br><span class="line"><span class="number">110</span> +<span class="number">10</span>=<span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<p>明白了么？ k+k&amp;(-k)啊，所以update写出来</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> update(<span class="keyword">int</span> <span class="keyword">index</span>,<span class="keyword">int</span> v,Operation=add,<span class="keyword">int</span>[] b)&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">index</span>&lt;b.length)&#123;</span><br><span class="line">		b[<span class="keyword">index</span>]+=v;</span><br><span class="line">		<span class="keyword">index</span>=<span class="keyword">index</span>+<span class="keyword">index</span>&amp;(~<span class="keyword">index</span>);</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//问题2返回</span></span><br><span class="line"><span class="keyword">void</span> <span class="keyword">sum</span>(<span class="keyword">int</span> st,<span class="keyword">int</span> ed,<span class="keyword">int</span>[]b)&#123;</span><br><span class="line">	<span class="keyword">return</span> sumFromStart(ed,b)-sumFromStart(st-<span class="number">1</span>,b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###求解问题1</p>
+<p>问题1是段累加，单点求值，所以可以把段累加过程加入B数组（复杂度lgn），求解时再算单点（复杂度lgn）</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] b=<span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line"><span class="keyword">void</span> update(<span class="keyword">int</span> st,<span class="keyword">int</span> ed,<span class="keyword">int</span> added,)&#123;</span><br><span class="line">	updateFromStart(st-<span class="number">1</span>,-added,b);</span><br><span class="line">	updateFromStart(ed,added,b);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> updateFromStart(<span class="keyword">int</span> <span class="keyword">index</span>,<span class="keyword">int</span> added,<span class="keyword">int</span>[] b)&#123;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">index</span>&lt;b.length)&#123;</span><br><span class="line">		b[<span class="keyword">index</span>]+=added;</span><br><span class="line">		<span class="keyword">index</span>-=<span class="keyword">index</span>&amp;(-<span class="keyword">index</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> getV(<span class="keyword">int</span> <span class="keyword">index</span>)&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">sum</span>=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(<span class="keyword">index</span>&lt;b.length)&#123;</span><br><span class="line">		<span class="keyword">sum</span>+=b[<span class="keyword">index</span>];</span><br><span class="line">		<span class="keyword">index</span>+=<span class="keyword">index</span>&amp;(-<span class="keyword">index</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">sum</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>###求解MeetingRoomII</p>
+<p>最后给出meeting RoomII代码，很遗憾，这个题最后求最大重叠，所以遍历了每个点找最大，时间复杂度O(nlgn)</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="built_in">int</span> minMeetingRooms(Interval[] ins) &#123;</span><br><span class="line">        <span class="built_in">int</span> st=<span class="type">Integer</span>.MAX_VALUE;</span><br><span class="line">        <span class="built_in">int</span> ed=<span class="type">Integer</span>.MIN_VALUE;</span><br><span class="line">        for(Interval <span class="type">in</span>: ins)&#123;</span><br><span class="line">            st=Math.<span class="built_in">min</span>(st,<span class="type">in</span>.start);</span><br><span class="line">            ed=Math.<span class="built_in">max</span>(ed,<span class="type">in</span>.<span class="keyword">end</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span>[] bis=new <span class="built_in">int</span>[ed-st+<span class="number">5</span>];</span><br><span class="line">        <span class="built_in">int</span> delta=st-<span class="number">1</span>;</span><br><span class="line">        for(Interval <span class="type">in</span>:ins)&#123;</span><br><span class="line">            add(<span class="type">in</span>.start-delta,-<span class="number">1</span>,bis);</span><br><span class="line">            add(<span class="type">in</span>.<span class="keyword">end</span>-delta,<span class="number">1</span>,bis);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">int</span> <span class="built_in">max</span>=<span class="number">0</span>;</span><br><span class="line">        for(<span class="built_in">int</span> i=<span class="number">1</span>;i&lt;bis.length;i++)&#123;</span><br><span class="line">            <span class="built_in">max</span>=Math.<span class="built_in">max</span>(<span class="built_in">max</span>,getFrom(bis,i));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">max</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="built_in">int</span> getFrom(<span class="built_in">int</span>[] bis, <span class="built_in">int</span> i) &#123;</span><br><span class="line">        <span class="built_in">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;bis.length)&#123;</span><br><span class="line">            res+=bis[i];</span><br><span class="line">            i+=i&amp;(-i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> void add(<span class="built_in">int</span> <span class="built_in">index</span>,<span class="built_in">int</span> added,<span class="built_in">int</span>[] b)&#123;</span><br><span class="line">        <span class="keyword">while</span>(<span class="built_in">index</span>&gt;<span class="number">0</span>)&#123;</span><br><span class="line">            b[<span class="built_in">index</span>]+=added;</span><br><span class="line">            <span class="built_in">index</span>-=<span class="built_in">index</span>&amp;(-<span class="built_in">index</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/10/11/kafka_producer_代码阅读/" itemprop="url">
+                  Kafka 新版Producer Java版代码阅读
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Kafka-Details-DistributedSystem-Producer/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka Details DistributedSystem Producer</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>###Kafka 新版Producer Java版代码阅读</p>
+<p>Kafka在0.8.2.1出了新版Producer，支持ack（仅Java版，因为通过JavaClient实现的）。因此对代码进行了简单阅读，并记录如下：</p>
+<p>接口如下：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">Future</span>&lt;RecordMetadata&gt; send(ProducerRecord&lt;K,V&gt; <span class="keyword">record</span>, Callback callback) 
+</code></pre><p>封装一个Record之后，每次调用同时传入一个callback。该函数在Kafka返回结果时被调用。</p>
+<p>根据官方<a href="https://github.com/apache/kafka/blob/trunk/examples/src/main/java/kafka/examples/Producer.java" target="_blank" rel="external">example</a>的调用方式：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> onCompletion(RecordMetadata metadata, Exception <span class="keyword">exception</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (metadata != <span class="keyword">null</span>) &#123;</span><br><span class="line">    		<span class="comment">//means success</span></span><br><span class="line">    	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    		<span class="comment">//means fail</span></span><br><span class="line">      	<span class="keyword">exception</span>.printStackTrace();</span><br><span class="line">      	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>======================</p>
+<p>####1. 如果我来做，怎么做？</p>
+<p>我觉得如果我来设计，至少需要考虑如下几个问题：</p>
+<ul>
+<li><p>发送的时候callback是否跟着发到Kafka Server？</p>
+</li>
+<li><p>Kafka支持了batch send，ack的时候是一个一个ack还是batch ack？同样，如果是batch ack，call back怎么调用？</p>
+</li>
+<li><p>每次callback都会单独使用一个线程调用么？还是共享一个线程？</p>
+</li>
+<li><p>如果Callback不发送到KafkaServer，在客户端是怎样存储的？进程fail掉的时候是否会丢ack？</p>
+</li>
+</ul>
+<p>======================</p>
+<p>###2. 带着这几个问题，我们来看人家怎么做的</p>
+<p>======================</p>
+<p>#####2.1 基本逻辑<br>先从Kafka Producer的send方法看起，</p>
+<p>send的全部代码就是这样，简单来说做了这样几件事</p>
+<ol>
+<li>判断partition</li>
+<li>序列化消息</li>
+<li>判断消息大小是否符合格式</li>
+<li><p>重点是第四步：</p>
+<pre><code><span class="type">RecordAccumulator</span>.<span class="type">RecordAppendResult</span> <span class="literal">result</span> = accumulator.append(tp, serializedKey, serializedValue, compressionType, callback);
+</code></pre></li>
+</ol>
+<p>accumulator 是每个Producer单独持有唯一一个的，每次调用appen之后返会一个包含有（FutureRecordMetadata）的执行result.</p>
+<p>追进去看一下这个append方法，注释是这样说的</p>
+<pre><code><span class="type">Add</span> a record to the accumulator, <span class="keyword">return</span> the append <span class="literal">result</span>。<span class="type">The</span> append <span class="literal">result</span> will contain the future metadata, <span class="keyword">and</span> flag <span class="keyword">for</span> whether the appended batch <span class="keyword">is</span> full <span class="keyword">or</span> a new batch <span class="keyword">is</span> created.
+</code></pre><p>简单来说这个方法就是把一个message序列化之后加入到accumulator的发送队列里，等会再详细介绍Acculator。</p>
+<ol>
+<li><p>第五步，调用sender的awake方法</p>
+<pre><code><span class="keyword">if</span> (<span class="literal">result</span>.batchIsFull || <span class="literal">result</span>.newBatchCreated) {
+    this.sender.wakeup();
+}
+</code></pre></li>
+</ol>
+<p>看到这里感觉啥都没干啊，所以我们需要进一步看一下Acculator以及Sender究竟在做什么。</p>
+<p>======================</p>
+<p>#####2.2 Accumulator</p>
+<p> 在Producer里通过Accumulator的append方法把消息加入异步发送队列，我们先看看Accumulator的实现。</p>
+<pre><code><span class="keyword">private</span> <span class="keyword">final</span> BufferPool <span class="keyword">free</span>;
+<span class="keyword">private</span> <span class="keyword">final</span> ConcurrentMap&lt;TopicPartition, Deque&lt;RecordBatch&gt;&gt; batches;
+<span class="keyword">private</span> <span class="keyword">final</span> IncompleteRecordBatches incomplete;
+</code></pre><p>Accumulator里有三个结构必须要说一下，BufferPool用于管理batch发送的缓存，等会细说，batches显然是一个以partition为Key的map，value是一个double-ended-queue，每个queue里的元素是一个RecordBatch，显然是用来做发送缓冲的。最后还有一个Incoplete，用于记录未完成的所有batch。</p>
+<p>Accumulator的append方法代码比较长，简要说一下做了这样几个事情</p>
+<ol>
+<li><p>根据partition从batches里找到deque，然后peeklast().tryappend(),也就是调用了RecordBatch的tryappend方法</p>
+<pre><code>Deque&lt;RecordBatch&gt; dq = dequeFor(tp);
+<span class="keyword">synchronized</span> (dq) {
+    RecordBatch last = dq.peekLast();
+    <span class="keyword">if</span> (last != <span class="keyword">null</span>) {
+        FutureRecordMetadata future = last.tryAppend(<span class="variable">key</span>, value, callback);
+        <span class="comment">//you.meng   futrue==true means no more room for the new coming message</span>
+        <span class="keyword">if</span> (future != <span class="keyword">null</span>)
+            <span class="keyword">return</span> <span class="keyword">new</span> RecordAppendResult(future, dq.<span class="built_in">size</span>() &gt; <span class="number">1</span> || last.records.isFull(), <span class="keyword">false</span>);
+    }
+}
+</code></pre></li>
+</ol>
+<pre><code>这个tryappend方法比较简单，就是看看recordbatch里面地方够不够，不够就返回<span class="keyword">null</span>，够就加上，Recordbatch里用一个List&lt;Thunk&gt;  来存储每个msg的callback。但整个BatchRecord封装成一个future返回。代码如下：
+
+    <span class="keyword">public</span> FutureRecordMetadata tryAppend(<span class="built_in">byte</span>[] <span class="variable">key</span>, <span class="built_in">byte</span>[] value, Callback callback) {
+        <span class="keyword">if</span> (!<span class="keyword">this</span>.records.hasRoomFor(<span class="variable">key</span>, value)) {
+            <span class="keyword">return</span> <span class="keyword">null</span>;
+        } <span class="keyword">else</span> {
+            <span class="keyword">this</span>.records.<span class="built_in">append</span>(<span class="number">0</span>L, <span class="variable">key</span>, value);
+            <span class="keyword">this</span>.maxRecordSize = Math.<span class="built_in">max</span>(<span class="keyword">this</span>.maxRecordSize, Record.recordSize(<span class="variable">key</span>, value));
+            FutureRecordMetadata future = <span class="keyword">new</span> FutureRecordMetadata(<span class="keyword">this</span>.produceFuture, <span class="keyword">this</span>.recordCount);
+            <span class="keyword">if</span> (callback != <span class="keyword">null</span>)
+                thunks.<span class="built_in">add</span>(<span class="keyword">new</span> Thunk(callback, future));
+            <span class="keyword">this</span>.recordCount++;
+            <span class="keyword">return</span> future;
+        }
+    }
+</code></pre><p>由此可知Kafka对Batch消息的确认是一次批量确认，但callback应该是一次批量确认之后一个一个发送的。</p>
+<ol>
+<li><p>第一步如果成功吧msg加入batch显然后面啥都不用做了，如果返回是null，则需要从新来一个RecordBatch。然后先申请空间</p>
+<pre><code>ByteBuffer buffer = <span class="keyword">free</span>.<span class="built_in">allocate</span>(<span class="built_in">size</span>);
+</code></pre><p> 注意，这个申请空间是有可能block的（当然也要看用户设置），所以在申请空间之后，可能已经过了很久，物是人非了，所以代码很小心的从新调用了一遍batches.get(partition).peeklast.tryappend。</p>
+<p> //哈哈 自从用了scala 妈妈再也不担心我读不懂长代码了。</p>
+<p> 如果这个时候tryappend发现有地方了，这时候释放空间，加进去拉倒。</p>
+<pre><code><span class="keyword">free</span>.<span class="built_in">deallocate</span>(buffer);
+</code></pre></li>
+</ol>
+<pre><code>当然也可能依然坑爹的tryappend返回<span class="literal">null</span>，即表示notEnoughRoom <span class="keyword">for</span> <span class="keyword">new</span> msg，那么进入第三步
+</code></pre><ol>
+<li>最后只有两种情况没有讨论了，要不就是partition下面 d-e-queue是空的，要不就是现有的空间都不够了。所以第二部申请的空间（buffer）必须用了啊，然后我们新来做一个RecordMessage吧。</li>
+</ol>
+<pre><code><span class="label">MemoryRecords</span> records = MemoryRecords.emptyRecords(<span class="keyword">buffer, </span>compression, this.<span class="keyword">batchSize);
+</span><span class="label">RecordBatch</span> <span class="keyword">batch </span>= new RecordBatch(tp, records, time.milliseconds())<span class="comment">;</span>
+<span class="label">FutureRecordMetadata</span> future = Utils.notNull(<span class="keyword">batch.tryAppend(key, </span>value, callback))<span class="comment">;</span>
+<span class="label">dq.addLast</span>(<span class="keyword">batch);
+</span><span class="label">incomplete.add</span>(<span class="keyword">batch);</span>
+</code></pre><p>我们用新申请的空间buffer生成了新的MemoryRecord,然后做出来batch，加入d-e-queue，加入未完成队列。</p>
+<p>看到这里已经相对清晰了，我们捋一捋几个悬而未解的问题。</p>
+<ul>
+<li>free.allocate(size) 还有free.deallocate(buffer)是咋做的？</li>
+<li>MemoryRecords怎么使用的buffer？</li>
+<li>那个坑爹的Sender怎么awake的？</li>
+<li>callback什么时候被调用的？</li>
+</ul>
+<p>根据这几个问题，我们逐一分析一下：</p>
+<p>======================</p>
+<p>#####2.3 Buffered pool</p>
+<p>======================</p>
+<p>#####2.4 MemoryRecords &amp;&amp; Compressor &amp;&amp; RecordBatch</p>
+<p>######2.4.1 MemoryRecords</p>
+<p>在accumulator中我们看到，MemoryRecord 对 bytebuffer进行了封装，而后RecordBatch对MemoeryRecord进行封装</p>
+<pre><code><span class="label">MemoryRecords</span> records = MemoryRecords.emptyRecords(<span class="keyword">buffer, </span>compression, this.<span class="keyword">batchSize);
+</span><span class="label">RecordBatch</span> <span class="keyword">batch </span>= new RecordBatch(tp, records, time.milliseconds())<span class="comment">;</span>
+</code></pre><p>先看Memory Recored，Memory Record继承自Record接口，其定义4byte的size，8byte的offest所以每个Record size&lt;2^32 位 文件小于2^64 位。</p>
+<pre><code><span class="comment">/**
+* A binary format which consists of a 4 byte size, an 8 byte offset, and the record bytes. See {<span class="doctag">@link</span> MemoryRecords}
+* for the in-memory representation.
+*/</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Records</span> <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">LogEntry</span>&gt; </span>{
+
+<span class="keyword">int</span> SIZE_LENGTH = <span class="number">4</span>;
+<span class="keyword">int</span> OFFSET_LENGTH = <span class="number">8</span>;
+<span class="keyword">int</span> LOG_OVERHEAD = SIZE_LENGTH + OFFSET_LENGTH;
+</code></pre><p>MemoryRecord中还持有Compressor以及buffer，主要被调用append方法将buffer中的数据写入compressor</p>
+<pre><code><span class="comment">/**
+ * Append the given record and offset to the buffer
+ */</span>
+<span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">append</span>(<span class="keyword">long</span> offset, Record record) {
+    <span class="keyword">if</span> (!writable)
+        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Memory records is not writable"</span>);
+
+    <span class="keyword">int</span> <span class="keyword">size</span> = record.<span class="keyword">size</span>();
+    compressor.putLong(offset);
+    compressor.putInt(<span class="keyword">size</span>);
+    compressor.put(record.buffer());
+    compressor.recordWritten(<span class="keyword">size</span> + Records.LOG_OVERHEAD);
+    record.buffer().rewind();
+}
+</code></pre><p>######2.4.2 RecordBatch<br>先跳过Compressor，我们看一下MemoryRecord继续被向上封装成了RecordBatch。因为MemoryRecord只有对IO的操作，并没有对Kafka逻辑的支持，因此RecordBatch在其基础之上封装了一些计数参数之外还增加了几个变量：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">final</span> MemoryRecords records;
+<span class="keyword">public</span> <span class="keyword">final</span> TopicPartition topicPartition;
+<span class="keyword">public</span> <span class="keyword">final</span> ProduceRequestResult produceFuture;
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">List</span>&lt;Thunk&gt; thunks;
+</code></pre><p>即对一次producer的batch提交过程进行了封装，包括发送的topicPartition，提交batch返回的produceFutrue以及存储这个batch里所有msg对应callback的thunks。</p>
+<p>RecordBatch的tryAppend方法已经在2.2节介绍，除此之外，RecordBatch还有一个Done方法，看名字也知道用于对batch的返回结果进行确认：如果没有exception就直接调用thunks list里所有的callback，异常就按异常格式调用。</p>
+<p>值得一提的就是recordbatch里是有个thunks的，里面用于存放所有的callback信息。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">List</span>&lt;Thunk&gt; thunks;</span><br></pre></td></tr></table></figure>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FutureRecordMetadata future = <span class="keyword">new</span> FutureRecordMetadata(<span class="keyword">this</span>.produceFuture, <span class="keyword">this</span>.recordCount);</span><br><span class="line"> 	<span class="keyword">if</span> (<span class="keyword">callback</span> != <span class="literal">null</span>)</span><br><span class="line"> 		thunks.add(<span class="keyword">new</span> Thunk(<span class="keyword">callback</span>, future));</span><br></pre></td></tr></table></figure>
+<p>因此可以看到，callback信息是全部存在客户端的recordbatch里的，等到返回时再从thunks里取出来。</p>
+<p>再看一下被确认的done方法，当被确认时，recordbatch里所有信息被一一确认。所以也可以看出来是批量确认的。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> done(<span class="keyword">long</span> baseOffset, RuntimeException exception) &#123;</span><br><span class="line">        <span class="keyword">this</span>.produceFuture.done(topicPartition, baseOffset, exception);</span><br><span class="line">        <span class="comment">// execute callbacks</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.thunks.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thunk thunk = <span class="keyword">this</span>.thunks.<span class="built_in">get</span>(i);</span><br><span class="line">                <span class="keyword">if</span> (exception == <span class="keyword">null</span>)</span><br><span class="line">                    thunk.callback.onCompletion(thunk.future.<span class="built_in">get</span>(), <span class="keyword">null</span>);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    thunk.callback.onCompletion(<span class="keyword">null</span>, exception);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                <span class="built_in">log</span>.error(<span class="string">"Error executing user-provided callback on message for topic-partition &#123;&#125;:"</span>, topicPartition, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>######2.4.3 Compressor</p>
+<p>//TBD</p>
+<p>======================</p>
+<p>#####2.5 callback &amp;&amp; Future &amp;&amp; ProduceRequestResult &amp;&amp; FutureRecordMetadata</p>
+<p>Futrue FutureTask Callable 的概念就不再复述了，请自行查阅。</p>
+<p>######2.5.1 ProduceRequestResult （short for PRResult）</p>
+<p>ProduceRequestResult是象征意义上的返回结果，但事实上该Result是在Client端生成的，其构造函数只有一种空构造函数，参数只有这几个。</p>
+<pre><code><span class="keyword">private</span> <span class="keyword">final</span> CountDownLatch latch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);
+<span class="keyword">private</span> <span class="keyword">volatile</span> TopicPartition topicPartition;
+<span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">long</span> baseOffset = -<span class="number">1</span>L;
+<span class="keyword">private</span> <span class="keyword">volatile</span> RuntimeException <span class="keyword">error</span>;
+
+<span class="function"><span class="keyword">public</span> <span class="title">ProduceRequestResult</span><span class="params">()</span> </span>{
+}
+</code></pre><p>看到</p>
+<pre><code>latch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);
+</code></pre><p>就很容易明白这个PRResult的作用了，因为支持message.get()的阻塞等待，因此需要对产生的结果进行阻塞控制，只有当Server端回复结果之后才能让message.get()方法进入结束阻塞。而这个过程的实现，就是使用PRResult的latch实现的。</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">done</span><span class="params">(TopicPartition topicPartition, <span class="keyword">long</span> baseOffset, RuntimeException <span class="keyword">error</span>)</span> </span>{
+    <span class="keyword">this</span>.topicPartition = topicPartition;
+    <span class="keyword">this</span>.baseOffset = baseOffset;
+    <span class="keyword">this</span>.<span class="keyword">error</span> = <span class="keyword">error</span>;
+    <span class="keyword">this</span>.latch.countDown();
+}
+</code></pre><p>这是PRResult的Done方法，可以看到，该Result的latch在初始化就自动生成，直到Done方法被调用才能解除阻塞，其他任何wait在latch上的方法都将被阻塞。</p>
+<p>我们看看有哪些方法调用了latch.await吧： 追到根 发现使用了该方法的包括：</p>
+<pre><code><span class="tag">FutureRecordMetadata</span><span class="class">.get</span> 
+<span class="tag">KakfaProducer</span><span class="class">.flush</span>
+</code></pre><p>第一个是官方定义的清清楚楚的接口，第二个是flush，简单易懂，不再介绍。</p>
+<p>######2.5.2 FutureRecordMetadata &amp;&amp;RecordMetadata</p>
+<p>如果说PRResult只是具有了一个阻塞功能的结果存储器，那么FutureRecordMetaData就是在其基础上有封装了执行过程。</p>
+<pre><code>    <span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FutureRecordMetadata</span> <span class="keyword">implements</span> <span class="title">Future</span>&lt;<span class="title">RecordMetadata</span>&gt; </span>{
+    <span class="keyword">private</span> <span class="keyword">final</span> ProduceRequestResult result;
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> relativeOffset;
+</code></pre><p>FRMetaData持有result的同时，继承了Future，所以调用FRMetaData的get方法时，通过实现其封装的PRResult.await()进行阻塞。直到PRResult被Done，latch.countDown()被调用为止。</p>
+<p>对多线程以及阻塞感兴趣更多的可以参考FutrueTask。</p>
+<pre><code>@<span class="type">Override</span>
+public <span class="type">RecordMetadata</span> get() throws <span class="type">InterruptedException</span>, <span class="type">ExecutionException</span> {
+    this.<span class="literal">result</span>.await();
+    <span class="keyword">return</span> valueOrError();
+}
+
+<span class="type">RecordMetadata</span> value() {
+    <span class="keyword">return</span> new <span class="type">RecordMetadata</span>(<span class="literal">result</span>.topicPartition(), this.<span class="literal">result</span>.baseOffset(), this.relativeOffset);
+}
+</code></pre><p>======================               </p>
+<p>####2.6 前部分小结</p>
+<p>简要总结一下</p>
+<ol>
+<li>Accumulator：消息的总控端，负责对发送，接收进行实际控制，但并非线程类</li>
+<li>消息的封装，Batch封装（RecordBatch/MemoryRecords/Comporessor）</li>
+<li>消息对内存的使用（Buffer Pool）</li>
+<li>调用结果返回（FutureRecordMetadata/ProduceRequestResult/Callback）</li>
+</ol>
+<p>基本涉及了发送过程的全部静态实现，唯独缺少了多线程控制。当然，在这上面的实现中，也多次涉及到了sender.run(time) 以及sender.wakeup()等方法。</p>
+<p>所以在最后，我们来看看Sender的实现。</p>
+<p>======================</p>
+<p>#####2.7 Sender </p>
+<p>Sender 主要持有如下对象</p>
+<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Sender</span> <span class="keyword">implements</span> <span class="title">Runnable</span> {</span>
+
+
+    <span class="comment">/* the state of each nodes connection */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> KafkaClient client;
+
+<span class="comment">/* the record accumulator that batches records */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> RecordAccumulator accumulator;
+
+<span class="comment">/* the metadata for the client */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> Metadata metadata;
+
+<span class="comment">/* the maximum request size to attempt to send to the server */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="typename">int</span> maxRequestSize;
+
+<span class="comment">/* the number of acknowledgements to request from the server */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="typename">short</span> acks;
+
+<span class="comment">/* the max time in ms for the server to wait for acknowlegements */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="typename">int</span> requestTimeout;
+
+<span class="comment">/* the number of times to retry a failed request before giving up */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="typename">int</span> retries;
+
+<span class="comment">/* the clock instance used for getting the time */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> Time time;
+
+<span class="comment">/* true while the sender thread is still running */</span>
+<span class="keyword">private</span> <span class="keyword">volatile</span> <span class="typename">boolean</span> running;
+
+<span class="comment">/* true when the caller wants to ignore all unsent/inflight messages and force close.  */</span>
+<span class="keyword">private</span> <span class="keyword">volatile</span> <span class="typename">boolean</span> forceClose;
+
+<span class="comment">/* metrics */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> SenderMetrics sensors;
+
+<span class="comment">/* param clientId of the client */</span>
+<span class="keyword">private</span> String clientId;
+</code></pre><p>看半天鸡毛用没有，对吧。值得一提的是，sender持有的accumulator和KafkaProducer持有的accumulator是同一个。而且Sender是继承自线程的，其唯一的一次初始化是在new KafkaProducer的时候，且被KafkaProducer持有，被KafkaProducer的iothread装了起来。</p>
+<pre><code><span class="keyword">this</span>.ioThread = <span class="keyword">new</span> KafkaThread(ioThreadName, <span class="keyword">this</span>.sender, <span class="literal">true</span>);
+<span class="keyword">this</span>.ioThread.start();
+</code></pre><p>首先找一下sender怎么被使用的吧，ioThread只有在KProducer.close调用了一下。而sender在KProducer的send，flush等方法里多次被调用wakeup()方法.</p>
+<p>下面我们仔细看一下他的run.() , run.(time）以及wakeup()方法吧。</p>
+<p>//是不是俺的写法带点scala风格拉？</p>
+<p>run方法内部调用了run(time)方法，二者不分家。先看run</p>
+<pre><code><span class="comment">// main loop, runs until close is called</span>
+<span class="keyword">while</span> (running) {
+        try {
+            <span class="keyword">run</span>(time.milliseconds());
+        } catch (Exception <span class="keyword">e</span>) {
+            <span class="keyword">log</span>.<span class="keyword">error</span>(<span class="string">"Uncaught error in kafka producer I/O thread: "</span>, <span class="keyword">e</span>);
+        }
+    }
+</code></pre><p>带停止标志位的循环执行，后面就剩下关闭相关操作了。</p>
+<pre><code><span class="comment">// okay we stopped accepting requests but there may still be</span>
+<span class="comment">// requests in the accumulator or waiting for acknowledgment,</span>
+<span class="comment">// wait until these are completed.</span>
+<span class="keyword">while</span> (!forceClose &amp;&amp; (<span class="keyword">this</span>.accumulator.hasUnsent() || <span class="keyword">this</span>.client.inFlightRequestCount() &gt; <span class="number">0</span>)) {
+    <span class="keyword">try</span> {
+        run(time.milliseconds());
+    } <span class="keyword">catch</span> (Exception e) {
+        <span class="built_in">log</span>.error(<span class="string">"Uncaught error in kafka producer I/O thread: "</span>, e);
+    }
+}
+<span class="keyword">if</span> (forceClose) {
+    <span class="comment">// We need to fail all the incomplete batches and wake up the threads waiting on</span>
+    <span class="comment">// the futures.</span>
+    <span class="keyword">this</span>.accumulator.abortIncompleteBatches();
+}
+<span class="keyword">try</span> {
+    <span class="keyword">this</span>.client.close();
+} <span class="keyword">catch</span> (Exception e) {
+    <span class="built_in">log</span>.error(<span class="string">"Failed to close network client"</span>, e);
+}
+</code></pre><p>关闭过程其实很值得看看，没啥可说的。看看run(time)和wakeup()吧。</p>
+<pre><code>    <span class="comment">/**
+ * Wake up the selector associated with this send thread
+ */</span>
+<span class="keyword">public</span> <span class="keyword">void</span> wakeup() {
+    <span class="keyword">this</span>.<span class="keyword">client</span>.wakeup();
+}
+</code></pre><p>然后就没了，client是NetworkClient，封装了网络的NIOSelector的wakeup，我觉得这个问题还是开一篇单讲了。读者就就按照注释的意思理解吧。</p>
+<p>======================</p>
+<p>#####2.7 KafkaProducer </p>
+<p>经历了这一切，我们从新回到KafkaProducer 来。似乎只剩下了一个close方法。<br>没啥好说的，就到这里吧。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/10/11/java_中的future以及futuretask/" itemprop="url">
+                  Future and FutureTask
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Garbage-Collection-C4/" itemprop="url" rel="index">
+                    <span itemprop="name">Garbage Collection, C4</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>##Java 中的Future以及FutureTask</p>
+<p>###参考文献</p>
+<ul>
+<li>查阅sun.misc.Unsafe.compareAndSwapInt相关</li>
+</ul>
+<ul>
+<li>非阻塞同步算法与CAS(Compare and Swap)无锁算法： <a href="http://www.tuicool.com/articles/zuui6z" target="_blank" rel="external">http://www.tuicool.com/articles/zuui6z</a></li>
+</ul>
+<ul>
+<li><p>Doug Lea的malloc ：<a href="http://article.yeeyan.org/view/25646/6380" target="_blank" rel="external">http://article.yeeyan.org/view/25646/6380</a></p>
+</li>
+<li><p>Doug Lea关于NIO的报告</p>
+</li>
+<li><p>一切其他的设计模式相关的报告 <a href="http://openhom" target="_blank" rel="external">http://openhom</a><br>e.cc/Gossip/DesignPattern</p>
+</li>
+<li><p>最经常被问到的一些线程问题 <a href="http://www.cnblogs.com/dolphin0520/p/3958019.html" target="_blank" rel="external">http://www.cnblogs.com/dolphin0520/p/3958019.html</a></p>
+</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/10/11/borg论文翻译及理解/" itemprop="url">
+                  Borg论文翻译及理解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Borg-翻译-理解-Google/" itemprop="url" rel="index">
+                    <span itemprop="name">Borg 翻译 理解 Google</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>#Borg论文翻译及理解</p>
+<h3 id="1-_Abstract">1. Abstract</h3><p>Google的borg使用大量机器支持着数千个应用的10W个作业，其中部分单个集群规模超过万台机器。</p>
+<p>其通过</p>
+<ol>
+<li>Adminition control</li>
+<li>Task-packing</li>
+<li>Over-commitment</li>
+<li>Machine sharing with process level isolation</li>
+</ol>
+<p>提供</p>
+<ul>
+<li>Declarative job specification lauguage</li>
+<li>Naming service integration</li>
+<li>Real time job monitoring </li>
+<li>Tools to analyze and simulate system behavior</li>
+</ul>
+<h3 id="2-_Introduction">2. Introduction</h3><p>Borg 主要得益于三点：</p>
+<ol>
+<li>他隐藏了Resource Management以及Failure Handling的细节，所以保证他的用户可以focus在应用开发本身。</li>
+<li>其本身就具有高可用性以及高可靠性，与此同时，也保证运行其上的应用具有同样的特性。</li>
+<li>很好的保证我们可以在数万台机器上运行应用。</li>
+</ol>
+<p>Borg当然不是第一个提出这些问题的软件，但是的确是第一个在如此规模运行的软件。</p>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/Borgp1.png" alt="Borg整体结构图"></p>
+<h3 id="3-_用户眼中的Borg">3. 用户眼中的Borg</h3><p>在Google开发工程师眼中，他们将作业提交到Borg，Borg将他们的作业运行在Borg Cell中。每个Borg Cell可能有多达上万台机器构成。本节主要介绍在开发者眼中的borg。</p>
+<h4 id="3-1_Work_Load">3.1 Work Load</h4><p>Borg支持异质的workload，其主要包括两种：</p>
+<ul>
+<li>一种是never goes down Service 如 Gmail Google Doc，这些服务是latency-sensitive的（ms level）</li>
+<li>另外一种是Batch Job 如Mapreduce作业。这些任务可能运行几天后完成，这些相比之前的服务对延时并没有那么敏感。</li>
+</ul>
+<p>在此文当中，我们将高priority任务称之为Prod（production），其他的则称为non-prod。大部分第一种任务是prod任务，而batch任务大部分则为none-prod任务。</p>
+<p>在一个典型的Cell中，prod类型任务占有70%的CPU资源，并利用了其中的60%，同时占用了55%的内存，并使用了其中的85%。</p>
+<h4 id="3-2_Clusters_and_Cells">3.2 Clusters and Cells</h4><p>一个Cluster往往用于描述处在同一个机房中的一部分机器，一个Cluster往往具有个Cell，部分Cluster还具有Test Cell以及其他具有其他功能的Cell。</p>
+<p>一般一个中等规模的Cell具有1w个左右的机器，而且其中的机器并非同构架机器，可能different in cpu mem dist network。但Borg屏蔽了这些特异性，对于developer而言，一切都是一样的，包括故障处理，监控以及依赖等等。</p>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/borgp2.png" alt="task生命周期"></p>
+<h4 id="3-3_作业概述">3.3 作业概述</h4><p>每个Job在一个Cell中进行执行，与此同时，可以为每个job分配名字，以及该job希望其所属的task执行的环境（包括CPU类型，IP，System arc等等）。</p>
+<p>每个job在执行过程会会映射到多个机器的多个进程上。值得注意的是，大部分作业并没有映射到一个虚拟机上，因为我们不希望因为虚拟机的原因付出更多的资源，另一个原因是Borg产生在一个虚拟化还不那么流行的年代-。-！</p>
+<p>对于每个task而言，每个task同样可以指定希望执行的环境，当然，其中但部分内容还是继承自job，但允许被overriden。在每个机器上，我们并不使用类似slot的方式约定每个机器上可执行的task数量。Borg程序在运行环境被静态链接了以减少执行依赖，且这些borg程序会以package或者binary file的形式由Borg系统进行传递。</p>
+<p>对于每个borg程序，Borg具有监控工具以及commandline供需以支持用户对自己的job进行操作以及监控。大部分作业描述是以BCL的方式进行描述的，该方式类似GCL，同时BCL也支持lambda函数。图2展示了job的生命周期</p>
+<p>对于一个运行中的Job而言，用户可以通过向Borg推送一个新的配置文件来对Job的（配置、属性、甚至执行文件）进行更改，而后命令Borg针对新的配置文件update。这种update是一种轻量级的非原子性的操作，因此在完成之前很容易被撤销。其中一些更新可能需要task重启，而一些更新使得job不再适配原来所在的机器，因此这些job会被停止并reschedule，而其他一些任务则可以直接继续执行。</p>
+<p>这些task会首先通过Unix的 SIGTERM进行通知，而后进行SIGKILL。所以他们有时间进行 clean up，save status，完成请求响应以及拒绝新的请求。</p>
+<p>####3.4 作业的Alloc</p>
+<p>对Borg而言，Borg Alloc是机器上被预留出的一批资源，从而保证真正的task可以运行在其中。因此alloc可以用于预留出一部分资源给未来的task，或者在task重启的过程中为其一直保持资源，还或者把运行在不同机器上的task移动到一起。</p>
+<p>对于Alloc中的资源的使用，如同一台机器一样，如果有多个任务在一个alloc中，则他们会共享其中的资源。</p>
+<p>因此Alloc set更像是一个job，一大堆alloc在不同的机器上都预留了资源。当alloc set被建立之后，一个或者多个任务就可以在alloc set中进行执行。</p>
+<p>为了简洁起见，我们用task来表示单个的alloc或者alloc其中运行的任务，而使用job来表示一个alloc set 或者大型的运行其中的任务。</p>
+<p>####3.5 作业的Priority, quota, and admission control</p>
+<p>我们通过Quota以及Priority综合对作业进行控制。</p>
+<ul>
+<li>Priority用于描述作业重要程度，用于在同一个Cell中作业之间竞争资源时进行判定。</li>
+</ul>
+<p>对每个任务而言，我们都使用一个整数来表示其优先级。相比较而言，高等级的任务更容易获得资源，甚至不惜以杀掉低等级的任务为代价。在Borg中，我们使用非重叠的优先级策略（从高到低）：Monitoring，Production，batch，以及best effort（即test 或者free）。在本文中我们所指的prod类型程序即为monitoring或者production级别。</p>
+<p>同时，严格的等级问题以及允许kill可能会带来优势震荡（preemption cascades），即：在一个机器上，Monitoring级的task为了资源，试图kill一个prodcution级的任务，而后者为了资源继续kill一个batch类型task，从而导致对资源的大量浪费。</p>
+<p>为了处理此类问题，我们禁止了production level 及之上级别的任务的kill掉同级任务的情况。同样，很好的权限设置也可以用于其他地方，比如MR在每个机器上的任务分配进程的优先级就会比MR worker稍微高一点。</p>
+<ul>
+<li>Quota(配额)则主要是对作业提交者的一种限定。</li>
+</ul>
+<p>在使用priority时就存在这样一个问题，如果高priority的job可以kill低priority的job，会不会所有user都申请尽可能高priority的job呢？</p>
+<p>所以必须对作业提交者进行限制，以保证作业之间具有不同的优先级。其基本策略就是每个用户都在不同的优先级下具有不同的配额。</p>
+<p>配额的概念更像是硬性要求（Admission Control）而非调度算法。Quota的表示形式是使用一个Vector的资源限定（CPU，内存硬盘），例如“20TiB of RAM at prod priority from now until the end of July in cell xx”。无法满足该需求的job会在提交的时候就被拒绝。</p>
+<p>高权限的quota cost more than 低权限quota。而且会对高权限的quota资源有限（例如production权限的计算资源只占整个Cell的20%，而更低权限的计算资源Quota可能更多）。我们鼓励用户在申请资源的时候仅仅足够运行的资源，而非申请额外富裕的资源。但还是会有很多用户overbuy资源，因为这样可以杜绝在未来因为用户的增长而增长的资源使用。</p>
+<p>对于最低权限的作业，其具有无限的quota。然并卵，很多时候底level的作业可能虽然通过了quota审核，但是却因为没有实际资源而无法被调度上cell。</p>
+<p>对于Quota如何分配的问题，是在Borg之外进行的。而且这与机器，以及我们对机器的预期密切相关。更多请去看参考文献[29, 35, 36, 66]</p>
+<p>####3.6 Naming and monitoring</p>
+<p>当然仅仅是</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/10/11/Twitter Heron翻译/" itemprop="url">
+                  Heron 论文翻译及理解
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Heron-DistributedSystem-翻译-Storm/" itemprop="url" rel="index">
+                    <span itemprop="name">Heron DistributedSystem 翻译 Storm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>#Heron 论文翻译及理解</p>
+<p>#背景介绍：</p>
+<p>Heron是号称Twitter流数据处理的新一代实现，是StormV2。我们首先回顾一下Storm系统的问题</p>
+<ol>
+<li>worker日志混乱，如果一个bolt日志过大，会冲掉其他bolt的日志</li>
+<li>worker之间因为没有资源隔离，因此会出现不确定的worker间相互影响</li>
+<li>Nimbus单点故障</li>
+<li>背压(Back-Pressure)问题:receiver无法处理消息时，sender会丢弃消息。这种情况下如果没有ack将无法得知是否所有消息是否被处理，在最极端的情况下，系统会不同的消耗资源但得不到任何结果。</li>
+</ol>
+<p>针对这些问题，我们实现了Heron：</p>
+<p>数据模型：支持At Most once 以及At least once</p>
+<p>工作模型：</p>
+<p>####0. 调度器（基于Mesos的Aurora）：<br>用于对每个topology使用的资源进行分配。</p>
+<p>####1. Topology Master （TM）</p>
+<p>在调度器分配资源后，topology内部有一个类似选主的过程，主通过在zk上锁定一个公认的node以标示自己为主。同时，TopologyMaster也作为监控中心收集topology内部运行状态。但不作为数据流的中心，因此topology Master不会成为瓶颈。</p>
+<p>####2. Stream Manager（SM） 以及Heron Instance（HI）</p>
+<p>被分配到同一个topology中的SM之间建立全连接，即O（N*N）的连接，可见单个topology规模越大，SM建立的连接数量也会成倍增加。</p>
+<p>HI则为分配到SM内部的处理单元，HI通过SM的信息通路进行通信。</p>
+<p>####3. Topology Back Pressure</p>
+<p>背压机制主要用于流量控制，该机制保证了不同的组件可以以不同的速度处理事件。<br>举例而言：拓扑中有上游组件以及下游组件，当下游组件因为意外处理速度变慢时，上游组件依然以原速度发送事件，则会导致事件出现堆积。无论是中间丢弃事件还是把消息队列撑爆，显然都是我们不希望看到的情况。<br>这时候，背压机制的作用就是调节上游组件，让其减慢速度。</p>
+<p>#####3.1 尝试1：TCP 背压</p>
+<p>我们尝试在TCP连接的层面对该问题进行调整。SM之间通过TCP进行连接，二者之间都有Sending Buffer以及Receiver Buffer。当receiver处理速度变慢时，Receiver Buffer会随之变满，而后SendingBuffer也会慢，这时候上游组件是可以察觉到这种情况的。而后可以进行其他措施进行处理，如发送给其他的SM，或者调整自己的处理速度，直到下游SM速度赶上来位置。</p>
+<p>这种方式实现简单，但实际效果并不理想。Because multiple logical channels (between HIs) are overlaid on top of the physical connections between SMs. 因为HI之间的多个逻辑连接都建立在SM的连接至上，该策略不仅降低了上游SM的发送速度，同时也降低了下游被背压的HI的处理速度。</p>
+<p>其结果是，任何处理速度下降引起的TCP背压都会导致一连串的连锁反应导致系统处于长期的动荡调整阶段。</p>
+<p>#####3.2 尝试2: Spout 背压：</p>
+<p>这种方式同样结合了Sending Buffer以及Receiver Buffer进行。当SM意识到自己内部的某个HI处理速度变慢时，SM找到对应HI的spout并停止从该Spout中读取数据。而该Spout的发送缓存也因此会被填满并最终导致阻塞。与次同时SM会发送“开始背压消息”（Start BackPressure Message）到该topology的其他SM中。收到“开始背压消息”的SM则全部停止从自己上游获取消息的举措。<br>即：让其他所有的组件全部停下等待速度慢的组件消化完自己Receiver Buffer中的消息之后大家在一起继续。<br>当缓慢的HI速度赶上来之后，SM再次发送“停止背压消息”，收到消息的SM从新进入正常工作状态。</p>
+<p>分析：该方式就是让其他所有快的都等慢的。同时隐含着系统被大量 stop start back pressure冲毁的风险。但其好处也是显而易见的，无论topology的层次有多深，该方式都能够保证足够低的处理延时。</p>
+<p>#####3.3 尝试3：</p>
+<p>层层背压：没懂，还好 也没用</p>
+<p>#####3.4实现：</p>
+<p>我们最终实现的是Spout背压机制。该机制在实践中工作良好且可以轻易得出哪里是问题的root cause。<br>在实现上，每个socket连接都具有两个界限值，即高水位界限值以及低水位界限值。当receiver buffer到达高水位界限值时触发背压策略，直到Buffer回复到低水位时终止背压。设计成这种策略主要是防止系统反复震荡。<br>因为有了背压策略，所以系统不会在丢弃tuple，因此系统只有在出现组件故障时才回丢弃tuple，这使得tuple的丢弃更具有确定性。</p>
+<p>当此时注意到，一旦进入背压模式，整个系统的处理速度与系统中最慢的组件速度相当。</p>
+<p>####4. HI 的实现</p>
+<p>HI 抛弃Storm原有的多个Spout或者bolt可以共享一个JVM的思路，每个HI单独使用一个JVM，因此这样可以方便的调试各个组件的性能。</p>
+<p>与此同时，因为传输事件的任务交由SM完成，因此对于我们而言，HI可以是以任意语言编写的代码。</p>
+<p>对于HI的实现，我们主要有两种设计思路：单线程的实现以及多线程的实现。下面我们将分述两种实现。</p>
+<p>######4.1 单线程实现</p>
+<p>在单线程的实现中，线程维护一个与其所属的SM的TCP连接。一旦有事件到达，users logic代码会被调用，如果user的代码会生成tuple，则该线程同样负责将该tuple传递给所属的SM。</p>
+<p>该代码虽然简单，但存在诸多问题，最主要原因是usercode可能会各种原因被block</p>
+<ol>
+<li>为了减速小睡一会</li>
+<li>调用系统IO，TCP连接，文件操作等需要上下文切换频繁的工作</li>
+<li>调用一些同步线程（synchronization）方法</li>
+</ol>
+<p>这些block最关键的问题是会导致一些定时操作被耽误，例如性能状态监控。因为这些block时间不够确定，因此可能导致性能状态metric收集不及时，让master以为HI处于非良好状态。</p>
+<p>######4.2 双线程实现</p>
+<p>如名所属，该方式下每个HI通过两个thread实现，一个GateWay Thread一个Task Execution Thread。</p>
+<p>如图所示GateWay Thread负责与SM以及状态监控的MM进行通信，收发消息。Task Excurtion Thread 负责执行用户的逻辑代码。</p>
+<p>两个线程之前通过三条单向有界队列（unidirection Queue）进行连接。当Data in 队列满时，GateWay不再从SM中读取消息，与此同时触发其所在SM的背压机制。同样，当dataout队列满时（由此可知队列buffer应该都由gate thread维护），GateWay同样认为此时TaskExcution线程不能接收更多的消息从而定制发送消息。与此同时TaskE线程也不再向dateout队列发送消息。</p>
+<p>对TaskE线程而言，如果他是spout，则该线程不停地执行nextTuple方法并向data out队列推送消息。如果是bolt，则每个从datain 进入的消息都会触发 execute方法。</p>
+<p>GC问题：<br>当我们使用topology的有界队列执行大型topology时，我们进场遇到GC问题。正当一切都正常的时候，一个网络中断（network outage）发生了，因此SM无法消费GateWay发出的消息因此dataout队列会发生堆积，且因为这些事件需要被处理，因此无法被GC回收。因此很容易导致HI达到其内存极限。<br>此时，当网络恢复时，Gateway从SM读入新的tuple的同时也向SM发送堆积在outqueue中的消息。如果GateWay读入消息在前，新object的生成占用更多内存从而触发GC，而之前outqueue因为堆积占用了所有内存，因此会导致更严重的性能下降(Performance degradation)。</p>
+<p>为了解决此类GC问题，我们主要的思路是定期检查datain queue 以及dataout queue的大小，并动态更改其capacity。如果这些队列的capacity超过了某个设定的极限，则系统以折半的方式减小其capacity。<br>（这里没有说具体减小的方式，个人认为对于缩减datain queue，就是不在从SM中读取数据，知道datain queue中的tuple被消耗到一半之后完成一次折半capacity的过程。同样，对于out queue，也是先停in queue，然后直到out queue中消息被发出去一半之后再继续）。<br>这种折半减少capacity的方式被定时的调用直到：queue的capacity到达一个稳定的状况或者queue的大小减到0。如果queue的大小减到0，显然对于大多数的情况下，没有tuple可以被生产以及消费，（系统进入一个类似无状态的过程），此时进行GC会变得容易得多。</p>
+<p>相反如果queue中的tuple数量小于设置值，系统会（通过GateWay从SM中读入更多的数据）增加queue中tuple的数量，知道到达极限值或者设置值。</p>
+<p>####6. MetricManager</p>
+<p>MM负责收集并发送所有的状态。包括系统状态以及用户定义的的状态。</p>
+<p>####7. 开始过程以及异常处理</p>
+<ul>
+<li><p>启动过程：</p>
+<p>  在提交一个topology之后调度器（Aurora）allocate必须的资源并在这些机器上启动topology container。Topology container中选出Topology Master，并在zk上通过锁住一个公认的节点宣布其为Master。与此同时，所有的SM（Stream Master）通过zk发现TM并与之进行定期心跳。<br>当所有SM与TM全部连接完毕(不需要两两互联)，TM开始运行一个部署算法将topology中不同的components分配到不同的container中。在我们的术语中，我们称之为physical plan。完成Physical Plan之后SM与TM通信获得其按照Plan应该与之互联的SM。此时，SM已经完成了一个完全互通的网络。HI启动并按照Plan获得其需要执行的任务，至此，整个topoloogy构建完毕，数据按照规定开始流动。<br>为了保险起见，TM可以Plan写入ZK以防止TM单点故障。</p>
+</li>
+<li><p>异常处理：</p>
+<p>  在Topology执行的过程中，有几种故障情况可能引起topology的整个执行过程。</p>
+</li>
+<li><p>TM Die：</p>
+<p>  当TM挂掉时，container会重启TM进程，TM进程则会自动从ZK回复状态。<br>（个人问题1： TM实时将状态写入ZK？包括哪些状态？）<br>如果存在Standby TM，则主备切换。与TM建立Channel的SM全部与之前的备建立Channel。</p>
+</li>
+<li><p>SM Die：</p>
+<p>  与TM类似，SM死掉时，它会被其所在的Container重启，被重启之后的SM首先联系ZK找TM，之后与TM通信下载Plan，以查看是否有任务变化。同时，与该死掉的SM互联的SM在与其失去连接后，同样连接TM下载新Plan查看是否应该找个新的SM连接还是等待其重启。</p>
+</li>
+<li><p>HI Die：</p>
+<p>  HI重启之后则直接与自己的SM连接获取plan并重新工作。</p>
+</li>
+</ul>
+<p>##译者补充:</p>
+<p>这里讲的比较模糊，有几个问题没有讲清楚：</p>
+<ol>
+<li>ZK里存得Plan是一个什么形式？</li>
+<li>TM实时更新了哪些状态？</li>
+<li>SM。HI挂了的时候，当前正在发送的消息和SM内部的消息是怎么处理的？</li>
+</ol>
+<ul>
+<li>总结</li>
+</ul>
+<ol>
+<li><p>cluster Manager（Nimbus）的任务被明确的分开了</p>
+</li>
+<li><p>每个HI仅仅执行一个任务，所以debug log变得简单了</p>
+</li>
+<li>因为设计将整个执行过程变得透明化，当topology变慢时，可以清晰的找到问题的根源。</li>
+<li>资源隔离</li>
+<li>每个topology都具有自己的TM</li>
+<li>背压机制</li>
+</ol>
+<p>##译者总结：</p>
+<p>###改变1：<br>对照 原来的storm</p>
+<p> HI-&gt;woker</p>
+<p> container-&gt;Supervisor。</p>
+<p>而SM则是从原来的worker中提出来的通信组件。原来的模式中每个woker负责与其他worker通信，在我们实际使用中，一个woker里能开到100多个线程，其中发送接收都开了很多线程。每个worker都开这么多与其他机器的连接显然是很消耗资源而且很不可靠的方式。</p>
+<p>而，参考现在的方式，SM被单独提出来负责所有通信，每个HI只需要跟SM建立本地连接。所以，此时，一旦出现单点故障，只需要SM负责通信上的问题即可。HI完全不受影响。而现在的storm立刻出现大量连接断开，甚至出现雪崩现象。</p>
+<p>###改变2：<br>Nimbus抽象到TM和schedule两部分，并且通过ZK维护整个Topology的状态。因为我们的使用规模依然较小，并没有遇到TM需要解决问题的痛点，不过多评论。</p>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/10/11/Paxos/" itemprop="url">
+                  对Paxos一点浅薄的认识
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Paxos-DistributedSystem-翻译-Storm/" itemprop="url" rel="index">
+                    <span itemprop="name">Paxos DistributedSystem 翻译 Storm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>#对Paxos一点浅薄的认识</p>
+<p> Paxos作为大神的一篇经典之作，已经有太多的人尝试对其进行理解和解释。但很遗憾，由于本人理解能力有限，至今难以勾勒出对其一个清晰的轮廓。</p>
+<p> 因此尝试通过对本文的撰写理清一些思路。</p>
+<p>##1. 引言：Paxos到底用来做什么 </p>
+<p>在讨论这个问题之前，我们不妨先想想：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为什么一个分布式系统里需要有主节点？</span><br></pre></td></tr></table></figure>
+<p>###1.1 有主节点的系统中，主节点在做什么</p>
+<p>那么我们不妨看看一些具有主节点的系统的工作方式吧。<br>（由于本人理解所限，很多信息不一定完全或者正确，欢迎补充，讨论）</p>
+<p>####1.1.1 HDFS/GFS</p>
+<p>HDFS中有namenode负责中央控制，datanode负责数据存储，其他角色我们暂不考虑。NameNode提供的服务包括：</p>
+<ol>
+<li>[读]提供File-&gt;Block映射的查询</li>
+<li>[写]写入新文件时提供新的File-&gt;Blok的映射</li>
+</ol>
+<p>简略而言，就是维护一张统一的映射表格，以确保清楚知道所谓文件在所有机器上的位置。而具体读写操作由DataNode完成。</p>
+<p>####1.1.2 Storm</p>
+<p>Storm中主节点被称为Nimbus，其他节点被称为superviosr。Nimbus主要负责作业的</p>
+<ul>
+<li>提交</li>
+<li>状态监控</li>
+<li>杀死</li>
+<li>Reschedule</li>
+</ul>
+<p>###1.2 如果没有中心会存在什么问题？</p>
+<p>我们尝试在这些系统中删除主节点，看看没有主节点的情况下，仅依靠节点间的协商，会出现怎样的问题。</p>
+<p>####HDFS 无主情况的讨论</p>
+<p>一方面需要每个机器存储大映射表，我们假设每个机器都有足够的空间存下。或者我们找个第三方共享存储（HDFS依赖其他共享存储-.-! 循环依赖的感觉）。</p>
+<p>更重要的是：有新的写请求到达时，没有主节点的HDFS集群需要商量一个统一的全局的位置把这个文件写下来。（比如文件A写在哪个机器哪个位置，文件B在哪个机器哪个位置）</p>
+<p>这些节点需要有一个合理的算法保证大家“看到”，并且都“认为”File1写在了XXX，File2写在了XXX。但真的仅仅是这样么？怎么看到呢？</p>
+<p>我们可以在每个机器上跑一套共同的算法，我们称之为全局空间分配算法，该算法保证每来一个数据，我给你分配一个空间。这下好了，File1来了，每个机器按照该算法一算，应该在XXXX位置，大家结果都一样，都”认为“这个文件在这里。File2也来了，同上。</p>
+<p>这里面有啥问题？</p>
+<p>File1，File2一起来呢？有的机器比如N1可能看到的顺序是File1先到，有的机器比如N2可能是看到File2先到。这时候N1机器上算法的输入是File1，File2。N2机器上执行的算法是File2，File1。肯定空间分配不一致了。</p>
+<p>当然我们可以简单地把File1直接写在请求机N1上，File2写在N2上，这样不存在任何冲突（使用一定程度上的自治）。但终究会存在数据倾斜（即：部分机器上数据太多，部分机器上太少）需要一个均衡算法来协调。</p>
+<p>所以在这里无论是：</p>
+<ul>
+<li>文件来的时候就分配一个全局的位置</li>
+<li>还是，文件倾斜了再均衡</li>
+</ul>
+<p>在没有主节点的情况下，唯一需要的就是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">所有节点商量好，所有节点都看到</span><br></pre></td></tr></table></figure>
+<p>这话太通俗了是吧，我们先继续往下看。</p>
+<h4 id="Storm_无主情况的讨论">Storm 无主情况的讨论</h4><p>根据Storm中心的那四个工作里，作业的状态，杀死相对好办，我们可以找共享存储解决这个问题。其他节点轮训检查共享存储，你说杀我就杀，你说啥状态就是啥状态。</p>
+<p>但是，想想提交和schedule咋办呢？无论提交还是reschedule，可认为每个任务（Topology）里有多个子任务（worker）。而且Storm部署在N1~Nk号机器上。如果没有中心</p>
+<ul>
+<li>哪个机器上运行哪个worker呢？</li>
+</ul>
+<p>不是没有办法，我们可以在每个机器上有一套相同的算法，来一个topology，每个机器算法相同，输入相同，结果就相同。大家都知道自己该干嘛拉！！</p>
+<p>但这样真的可以么？</p>
+<p>如果，同时有两个topology在不同的机器上被提交了呢？</p>
+<p>比如，N1上有人提交了Toplogy1，N2上有人提交了Topology2。二者分别广播到其他机器，”来来来，跑作业，运行你的作业分配算法来跑的Topology1/Topology2“。</p>
+<p>是不是和刚才没有主HDFS的类似？</p>
+<p>所以在N3看来可能是N1先说，N2后说的。可能在N4上网络堵了那么一个瞬间，他先收到了N2，再收到了N1。</p>
+<p>所以N3和N4上输入数据的顺序不同，得到的任务分配算法也不一样，肯定是跑不对了。</p>
+<p>是不是感觉和之前的问题一样？</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在没有主节点的环境中，如果请求之间时间间隔很大，或者都是读请求，或者全局一致的简单写请求，感觉上不会出现任何问题。</span><br></pre></td></tr></table></figure>
+<p>但一旦不是这些情况，就需要一个算法，或者一个主节点，他们都需要做同一件事情：</p>
+<p>在HDFS的讨论里，我们称之为“大家都商量好，都看到”，更加形式化一些：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">所有操作必须得到一个全局统一的编号。</span><br></pre></td></tr></table></figure>
+<p>####总结</p>
+<p>想想是么？</p>
+<p>主节点做的事情：HDFS里空间映射的写入，Storm里作业的调度。</p>
+<ul>
+<li>如果没有主节点，那么每个操作需要有一个全局认可的编号，那么每个机器“看到”的就一定一样。算法抛出来的结果也一定一样。</li>
+<li>如果有了主节点，主节点其实是把自己看到的顺序认为是官方顺序，并把该顺序作为输入运行调度算法，把结果输出到所有其他节点。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">所以，无论无主节点的环境共同商量也好，还是存在一个主节点也好，他们解决的完全是一样的问题:</span><br><span class="line"></span><br><span class="line">把写操作编号，并让所有其他节点认可该编号。</span><br></pre></td></tr></table></figure>
+<p>无怪乎人家Google的人说，所有分布式算法，都是Paxos的变种，主从模式也不例外。</p>
+<p>##2. Paxos登场</p>
+<p>等灯等灯！Lamport大神出场。再看看人家的话：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在一个分布式数据库系统中，如果各节点的初始状态一致，每个节点都执行相同的操作序列，那么他们最后能得到一个一致的状态。</span><br><span class="line"></span><br><span class="line">为保证每个节点执行相同的命令序列，需要在每一条指令上执行一个“一致性算法”以保证每个节点看到的指令一致</span><br></pre></td></tr></table></figure>
+<p>看了之前的两个例子，是不是一种茅塞顿开的感觉？前半句是基本假设，后半句就是Paxos要做什么</p>
+<p>上节中我们讨论了半天无主的情况，我们希望无主的时候能做到的就是</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">把写操作编号，并让所有其他节点认可该编号。</span><br></pre></td></tr></table></figure>
+<p>这就是Paxos要做的啊！</p>
+<p>###2.1 拍脑袋的集中尝试</p>
+<p>我们先抛开Paxos复杂的算法和听不懂的论证。</p>
+<p>我看到Paxos第一想到的就是为什么要那么费劲，有没有别的办法？那么，我们来拍脑袋试试，来吧，土鳖博士最擅长这个。</p>
+<ul>
+<li>先置调节：N节点，无主</li>
+<li>需求：对每个操作编号，全局认可</li>
+</ul>
+<p>首先，操作之间时间间隔很大的话显然不存在问题：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">请求之间时间间隔很大时： </span><br><span class="line"></span><br><span class="line">- 请求<span class="literal">C1</span>来到N1，N1通知所有点，无异议后写入编号K<span class="label">=k1</span>，广播告知大家。</span><br><span class="line"></span><br><span class="line">- 然后再来一个请求<span class="literal">C2</span>，到达N2，N2已经收到(<span class="literal">C1</span>，k1),并且认可(<span class="literal">C1</span>,k1),所以广播<span class="literal">C2</span>，给其编号k1+<span class="number">1</span>，所有人认可，发送确认更新（<span class="literal">C2</span>，K1+<span class="number">1</span>）。结束。</span><br></pre></td></tr></table></figure>
+<p>这似乎都算不上是一个算法。但这里有很多词都值得推敲</p>
+<ul>
+<li>首先，每次更新一个请求的值都是一个二段提交的过程。因为这里面假想了可能有别的请求。</li>
+<li>我们细看C2的过程，N2有个</li>
+</ul>
+
+            
+          </span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/10/11/Kakfa_structure/" itemprop="url">
+                  Kafka 几个实现细节
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Kafka-Details-DistributedSystem/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka Details DistributedSystem</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <h1 id="Kafka_几个实现细节">Kafka 几个实现细节</h1><p>关于Kafka大方向上的介绍已经很多了，infoq上面不少不错的资源</p>
 <p><a href="http://www.oschina.net/translate/kafka-design?cmp&amp;p=1#" target="_blank" rel="external">http://www.oschina.net/translate/kafka-design?cmp&amp;p=1#</a></p>
 <p><a href="http://www.infoq.com/cn/articles/kafka-analysis-part-1" target="_blank" rel="external">http://www.infoq.com/cn/articles/kafka-analysis-part-1</a></p>
 <p><a href="http://www.infoq.com/cn/articles/kafka-analysis-part-2" target="_blank" rel="external">http://www.infoq.com/cn/articles/kafka-analysis-part-2</a></p>
@@ -232,174 +1834,345 @@
 </ul>
 <p>即可保证Exactly Once语义。</p>
 
+            
+          </span>
+        
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/16/Kakfa_structure/" data-id="cifszkqrg0000h9s618sg3vrs" class="article-share-link">Share</a>
+
+    <footer class="post-footer">
       
+
+      
+
+      
+      
+        <div class="post-eof"></div>
       
     </footer>
-  </div>
-  
-</article>
+  </article>
 
 
+    
+      
+
   
-    <article id="post-My-New-Post" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/15/My-New-Post/" class="article-date">
-  <time datetime="2015-10-15T09:53:47.000Z" itemprop="datePublished">2015-10-15</time>
-</a>
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
     
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+      <header class="post-header">
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/15/My-New-Post/">My New Post</a>
-    </h1>
-  
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                <a class="post-title-link" href="/2015/10/11/Gargage_Collection/" itemprop="url">
+                  不会暂停的垃圾回收器，C4
+                </a>
+              
+            
+          </h1>
+        
 
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Garbage-Collection-C4/" itemprop="url" rel="index">
+                    <span itemprop="name">Garbage Collection, C4</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
       </header>
     
-    <div class="article-entry" itemprop="articleBody">
+
+
+    <div class="post-body">
+
       
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+              <p>#不会暂停的垃圾回收器，C4 The Continuously Concurrent Compacting Collector，by Zing JVM @azulsystems</p>
+<p>最近在看GC有很多不错的文章，顺便翻一下C4吧，似乎很神的样子</p>
+<p>##垃圾收集器相关</p>
+<p>G1是Oracle下一代垃圾回收器，CMS的替代者<a href="http://blog.csdn.net/renfufei/article/details/41897113" target="_blank" rel="external">一个不错的中文介绍</a></p>
+<p>C4是Azulsystems的一篇论文，该公司提供了一个不会stop-the-world的zing JVM，知乎上大名鼎鼎的 <a href="http://www.zhihu.com/people/rednaxelafx" target="_blank" rel="external">@RednaxelaFX</a> 就在这个公司。这是唯一<a href="http://www.importnew.com/2410.html" target="_blank" rel="external">找到的一篇C4中文介绍</a></p>
+<p>隔行如隔山，这个C4的论文实在是看不懂，还好我找到了<a href="http://rednaxelafx.iteye.com/blog/362738" target="_blank" rel="external">RednaxelaFX大人的blog</a>。如果你也读不懂，我建议先先去看看</p>
+<p>##简要翻译</p>
+<p>其中很多参考了 <a href="http://www.zhihu.com/people/rednaxelafx" target="_blank" rel="external">@RednaxelaFX</a>的内容以及他的，<a href="http://hllvm.group.iteye.com/group/topic/21468#post-272070" target="_blank" rel="external">blog</a>，表示感谢：）</p>
+<p>以及R大的一些讨论</p>
+<p><a href="http://hllvm.group.iteye.com/group/topic/44381#post-272188" target="_blank" rel="external">http://hllvm.group.iteye.com/group/topic/44381#post-272188</a></p>
+<p><a href="http://hllvm.group.iteye.com/group/topic/21468" target="_blank" rel="external">http://hllvm.group.iteye.com/group/topic/21468</a></p>
+<p>####Write Barrier<br>这篇论文讲的非常清楚，讲了很多实现，说的也很清楚：<a href="http://www.cs.ucsb.edu/~ckrintz/racelab/gc/papers/hosking-compwritebarrier.pdf" target="_blank" rel="external">一篇关于Write Barrier以及Store Buffer的论文</a></p>
+<p>write barrier 是在实现部分垃圾收集（partial GC）时用于记录从非收集部分指向收集部分的指针的集合的结构。</p>
+<p>分代式GC是一种部分垃圾收集的实现方式。当分两代时，通常把这两代叫做young gen和old gen；通常能单独收集的只是young gen。此时remembered set记录的就是从old gen指向young gen的跨代指针。 </p>
+<p>####Write Barrier实现方式1：Remembered Set &amp;&amp; 卡表（card table）</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">所以说 Remembered <span class="keyword">Set</span> 和卡表应该都算是<span class="keyword">Write</span> Barrier的一种实现方式，当然，卡表还算是Remembered <span class="keyword">Set</span>的一个特例。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>粒度问题</li>
+</ul>
+<p>所谓粒度问题，就是每个指向yong代的指针到底代表多大的一块空间。所以无论是remembered set还是card table，记录精度都有很大的选择余地： </p>
+<ol>
+<li>字粒度：每个记录精确到一个机器字（word）。该字包含有跨代指针。 </li>
+<li>对象粒度：每个记录精确到一个对象。该对象里有字段含有跨代指针。 </li>
+<li>card粒度：每个记录精确到一大块内存区域。该区域内有对象含有跨代指针。 </li>
+<li>还有其它可能性，任君想像</li>
+</ol>
+<p>但一般而言，有一些隐含假设，当提到Remembered Set，一般指的是对象粒度，而卡表一般值一个内存块。</p>
+<ul>
+<li>实现数据结构</li>
+</ul>
+<ol>
+<li>对于地址空间较大的情况，可以考虑直接使用指针,也就是一般意义上的Remembered Set</li>
+</ol>
+<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">RememberedSet</span> </span>&#123;</span><br><span class="line">  Object* data[MAX_REMEMBEREDSET_SIZE];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">typedef</span> char* <span class="keyword">address;</span><br><span class="line"></span></span><br><span class="line"><span class="keyword">struct </span>RememberedSet &#123;</span><br><span class="line">  <span class="keyword">address* </span><span class="preprocessor">data</span>[MAX_REMEMBEREDSET_SIZE]<span class="comment">;</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>Card Table 则是Remembered Set一种特殊实现，用每个bit隐式代表一块内存区域，所以会格外省空间</li>
+</ol>
+<figure class="highlight thrift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">CardTable</span> </span>&#123;</span><br><span class="line">  <span class="built_in">byte</span> table[MAX_CARDTABLE_SIZE];</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>简要实现方式猜测</li>
+</ul>
+<p>这块目前还没看论文，我猜测应该是在新生代生成新对象的时候，查看是否有指向这些新生代的老年代对象，从而更改Remembered Set。</p>
+<p>疑问1： 那么在做Full GC时，是不是也要从新清理一遍整个Remember Set呢？</p>
+<p>####Write Barrier实现方式2：Store Buffer</p>
+<blockquote>
+<p>还有一个与remembered set相关的概念，叫做store buffer。由于其实现方式也被称为“sequential store buffer(SSB)”。<br>有些资料会把store buffer也看作remembered set的一种实现，但我喜欢把前者看作与后者相关/近似的概念，而不是“实现方式”。 </p>
+<p>例如最老的V8使用per-page remembered set，而比较新的版本使用store buffer。<br>（使用remembered set的V8，以最早的V8 0.1为例，每个“Page”有8KB，其中开头有248字节用于remembered set（RSet）。RSet里每个bit对应该Page里的一个word，所以这是word精度的。</p>
+<p>而使用store buffer的V8也是word精度的。） </p>
+<p>两者的相似之处在于它们都记录跨区域的指针。<br>而最重要的区别是：remembered set是一个集合（set），所以不包含重复；store buffer则通常允许包含重复。 </p>
+<p>Store buffer的write-barrier比要去重复的remembered set的writer-barrier要简单和高效，但由于其允许重复，前者在部分收集（例如young GC）时的开销会比后者大。 </p>
+<p>一个折衷的办法是在mutator的write-barrier还是允许重复，然后周期性增量式或在另一个线程并发的对store buffer去重。这样到实际执行部分收集时重复条目的数量可以大幅减少，提高GC的效率。V8的store buffer就是这样做的。 </p>
+<p>这种还需要对数据做后续处理的write-barrier也叫做logging write-barrier。 </p>
+</blockquote>
+<p>从F大的论述中可以才</p>
+<p>####mutator</p>
+<p>感觉是内存分配器？</p>
+
+            
+          </span>
         
       
     </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/15/My-New-Post/" data-id="cifszgfd30000fts60hqx1gjx" class="article-share-link">Share</a>
+
+    <footer class="post-footer">
       
+
+      
+
+      
+      
+        <div class="post-eof"></div>
       
     </footer>
-  </div>
-  
-</article>
+  </article>
 
 
+    
+  </section>
+
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/10/15/hello-world/" class="article-date">
-  <time datetime="2015-10-15T09:47:37.000Z" itemprop="datePublished">2015-10-15</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
+
+ </div>
+
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/10/15/hello-world/">Hello World</a>
-    </h1>
-  
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/10/15/hello-world/" data-id="cifszgfdt0002fts65kupu0hj" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-  
-</section>
-        
-          <aside id="sidebar">
-  
-    
-  
-    
-  
-    
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">3</span></li></ul>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recents</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2015/10/16/Kakfa_structure/">(no title)</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/15/My-New-Post/">My New Post</a>
-          </li>
-        
-          <li>
-            <a href="/2015/10/15/hello-world/">Hello World</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
         
       </div>
-      <footer id="footer">
+
+      
+        
   
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2015 You Meng<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
     </div>
   </div>
-</footer>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="孟由" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">孟由</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">喜欢写作的码农</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
     </div>
-    <nav id="mobile-nav">
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
   
-    <a href="/" class="mobile-nav-link">Home</a>
+  &copy; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孟由</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
   
-    <a href="/archives" class="mobile-nav-link">Archives</a>
   
-</nav>
+  
+    
     
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+  
 
 
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
 
 
-<script src="/js/script.js" type="text/javascript"></script>
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
 
-  </div>
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
 </body>
 </html>

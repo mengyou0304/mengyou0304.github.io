@@ -1,0 +1,768 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="喜欢写作的码农" />
+
+
+
+  <meta name="keywords" content="Paxos DistributedSystem 翻译 Storm," />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="#对Paxos一点浅薄的认识
+ Paxos作为大神的一篇经典之作，已经有太多的人尝试对其进行理解和解释。但很遗憾，由于本人理解能力有限，至今难以勾勒出对其一个清晰的轮廓。
+ 因此尝试通过对本文的撰写理清一些思路。
+##1. 引言：Paxos到底用来做什么 
+在讨论这个问题之前，我们不妨先想想：
+1为什么一个分布式系统里需要有主节点？
+###1.1 有主节点的系统中，主节点在做什么
+那么我们不妨看看">
+<meta property="og:type" content="article">
+<meta property="og:title" content="对Paxos一点浅薄的认识">
+<meta property="og:url" content="http://yoursite.com/2015/10/11/Paxos/index.html">
+<meta property="og:site_name" content="码农牧场">
+<meta property="og:description" content="#对Paxos一点浅薄的认识
+ Paxos作为大神的一篇经典之作，已经有太多的人尝试对其进行理解和解释。但很遗憾，由于本人理解能力有限，至今难以勾勒出对其一个清晰的轮廓。
+ 因此尝试通过对本文的撰写理清一些思路。
+##1. 引言：Paxos到底用来做什么 
+在讨论这个问题之前，我们不妨先想想：
+1为什么一个分布式系统里需要有主节点？
+###1.1 有主节点的系统中，主节点在做什么
+那么我们不妨看看">
+<meta property="og:updated_time" content="2015-10-19T02:31:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="对Paxos一点浅薄的认识">
+<meta name="twitter:description" content="#对Paxos一点浅薄的认识
+ Paxos作为大神的一篇经典之作，已经有太多的人尝试对其进行理解和解释。但很遗憾，由于本人理解能力有限，至今难以勾勒出对其一个清晰的轮廓。
+ 因此尝试通过对本文的撰写理清一些思路。
+##1. 引言：Paxos到底用来做什么 
+在讨论这个问题之前，我们不妨先想想：
+1为什么一个分布式系统里需要有主节点？
+###1.1 有主节点的系统中，主节点在做什么
+那么我们不妨看看">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'always'
+  };
+</script>
+
+
+
+  <title> 对Paxos一点浅薄的认识 | 码农牧场 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">码农牧场</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                对Paxos一点浅薄的认识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Paxos-DistributedSystem-翻译-Storm/" itemprop="url" rel="index">
+                    <span itemprop="name">Paxos DistributedSystem 翻译 Storm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>#对Paxos一点浅薄的认识</p>
+<p> Paxos作为大神的一篇经典之作，已经有太多的人尝试对其进行理解和解释。但很遗憾，由于本人理解能力有限，至今难以勾勒出对其一个清晰的轮廓。</p>
+<p> 因此尝试通过对本文的撰写理清一些思路。</p>
+<p>##1. 引言：Paxos到底用来做什么 </p>
+<p>在讨论这个问题之前，我们不妨先想想：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">为什么一个分布式系统里需要有主节点？</span><br></pre></td></tr></table></figure>
+<p>###1.1 有主节点的系统中，主节点在做什么</p>
+<p>那么我们不妨看看一些具有主节点的系统的工作方式吧。<br>（由于本人理解所限，很多信息不一定完全或者正确，欢迎补充，讨论）</p>
+<p>####1.1.1 HDFS/GFS</p>
+<p>HDFS中有namenode负责中央控制，datanode负责数据存储，其他角色我们暂不考虑。NameNode提供的服务包括：</p>
+<ol>
+<li>[读]提供File-&gt;Block映射的查询</li>
+<li>[写]写入新文件时提供新的File-&gt;Blok的映射</li>
+</ol>
+<p>简略而言，就是维护一张统一的映射表格，以确保清楚知道所谓文件在所有机器上的位置。而具体读写操作由DataNode完成。</p>
+<p>####1.1.2 Storm</p>
+<p>Storm中主节点被称为Nimbus，其他节点被称为superviosr。Nimbus主要负责作业的</p>
+<ul>
+<li>提交</li>
+<li>状态监控</li>
+<li>杀死</li>
+<li>Reschedule</li>
+</ul>
+<p>###1.2 如果没有中心会存在什么问题？</p>
+<p>我们尝试在这些系统中删除主节点，看看没有主节点的情况下，仅依靠节点间的协商，会出现怎样的问题。</p>
+<p>####HDFS 无主情况的讨论</p>
+<p>一方面需要每个机器存储大映射表，我们假设每个机器都有足够的空间存下。或者我们找个第三方共享存储（HDFS依赖其他共享存储-.-! 循环依赖的感觉）。</p>
+<p>更重要的是：有新的写请求到达时，没有主节点的HDFS集群需要商量一个统一的全局的位置把这个文件写下来。（比如文件A写在哪个机器哪个位置，文件B在哪个机器哪个位置）</p>
+<p>这些节点需要有一个合理的算法保证大家“看到”，并且都“认为”File1写在了XXX，File2写在了XXX。但真的仅仅是这样么？怎么看到呢？</p>
+<p>我们可以在每个机器上跑一套共同的算法，我们称之为全局空间分配算法，该算法保证每来一个数据，我给你分配一个空间。这下好了，File1来了，每个机器按照该算法一算，应该在XXXX位置，大家结果都一样，都”认为“这个文件在这里。File2也来了，同上。</p>
+<p>这里面有啥问题？</p>
+<p>File1，File2一起来呢？有的机器比如N1可能看到的顺序是File1先到，有的机器比如N2可能是看到File2先到。这时候N1机器上算法的输入是File1，File2。N2机器上执行的算法是File2，File1。肯定空间分配不一致了。</p>
+<p>当然我们可以简单地把File1直接写在请求机N1上，File2写在N2上，这样不存在任何冲突（使用一定程度上的自治）。但终究会存在数据倾斜（即：部分机器上数据太多，部分机器上太少）需要一个均衡算法来协调。</p>
+<p>所以在这里无论是：</p>
+<ul>
+<li>文件来的时候就分配一个全局的位置</li>
+<li>还是，文件倾斜了再均衡</li>
+</ul>
+<p>在没有主节点的情况下，唯一需要的就是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">所有节点商量好，所有节点都看到</span><br></pre></td></tr></table></figure>
+<p>这话太通俗了是吧，我们先继续往下看。</p>
+<h4 id="Storm_无主情况的讨论">Storm 无主情况的讨论</h4><p>根据Storm中心的那四个工作里，作业的状态，杀死相对好办，我们可以找共享存储解决这个问题。其他节点轮训检查共享存储，你说杀我就杀，你说啥状态就是啥状态。</p>
+<p>但是，想想提交和schedule咋办呢？无论提交还是reschedule，可认为每个任务（Topology）里有多个子任务（worker）。而且Storm部署在N1~Nk号机器上。如果没有中心</p>
+<ul>
+<li>哪个机器上运行哪个worker呢？</li>
+</ul>
+<p>不是没有办法，我们可以在每个机器上有一套相同的算法，来一个topology，每个机器算法相同，输入相同，结果就相同。大家都知道自己该干嘛拉！！</p>
+<p>但这样真的可以么？</p>
+<p>如果，同时有两个topology在不同的机器上被提交了呢？</p>
+<p>比如，N1上有人提交了Toplogy1，N2上有人提交了Topology2。二者分别广播到其他机器，”来来来，跑作业，运行你的作业分配算法来跑的Topology1/Topology2“。</p>
+<p>是不是和刚才没有主HDFS的类似？</p>
+<p>所以在N3看来可能是N1先说，N2后说的。可能在N4上网络堵了那么一个瞬间，他先收到了N2，再收到了N1。</p>
+<p>所以N3和N4上输入数据的顺序不同，得到的任务分配算法也不一样，肯定是跑不对了。</p>
+<p>是不是感觉和之前的问题一样？</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">在没有主节点的环境中，如果请求之间时间间隔很大，或者都是读请求，或者全局一致的简单写请求，感觉上不会出现任何问题。</span><br></pre></td></tr></table></figure>
+<p>但一旦不是这些情况，就需要一个算法，或者一个主节点，他们都需要做同一件事情：</p>
+<p>在HDFS的讨论里，我们称之为“大家都商量好，都看到”，更加形式化一些：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">所有操作必须得到一个全局统一的编号。</span><br></pre></td></tr></table></figure>
+<p>####总结</p>
+<p>想想是么？</p>
+<p>主节点做的事情：HDFS里空间映射的写入，Storm里作业的调度。</p>
+<ul>
+<li>如果没有主节点，那么每个操作需要有一个全局认可的编号，那么每个机器“看到”的就一定一样。算法抛出来的结果也一定一样。</li>
+<li>如果有了主节点，主节点其实是把自己看到的顺序认为是官方顺序，并把该顺序作为输入运行调度算法，把结果输出到所有其他节点。</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">所以，无论无主节点的环境共同商量也好，还是存在一个主节点也好，他们解决的完全是一样的问题:</span><br><span class="line"></span><br><span class="line">把写操作编号，并让所有其他节点认可该编号。</span><br></pre></td></tr></table></figure>
+<p>无怪乎人家Google的人说，所有分布式算法，都是Paxos的变种，主从模式也不例外。</p>
+<p>##2. Paxos登场</p>
+<p>等灯等灯！Lamport大神出场。再看看人家的话：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">在一个分布式数据库系统中，如果各节点的初始状态一致，每个节点都执行相同的操作序列，那么他们最后能得到一个一致的状态。</span><br><span class="line"></span><br><span class="line">为保证每个节点执行相同的命令序列，需要在每一条指令上执行一个“一致性算法”以保证每个节点看到的指令一致</span><br></pre></td></tr></table></figure>
+<p>看了之前的两个例子，是不是一种茅塞顿开的感觉？前半句是基本假设，后半句就是Paxos要做什么</p>
+<p>上节中我们讨论了半天无主的情况，我们希望无主的时候能做到的就是</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">把写操作编号，并让所有其他节点认可该编号。</span><br></pre></td></tr></table></figure>
+<p>这就是Paxos要做的啊！</p>
+<p>###2.1 拍脑袋的集中尝试</p>
+<p>我们先抛开Paxos复杂的算法和听不懂的论证。</p>
+<p>我看到Paxos第一想到的就是为什么要那么费劲，有没有别的办法？那么，我们来拍脑袋试试，来吧，土鳖博士最擅长这个。</p>
+<ul>
+<li>先置调节：N节点，无主</li>
+<li>需求：对每个操作编号，全局认可</li>
+</ul>
+<p>首先，操作之间时间间隔很大的话显然不存在问题：</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">请求之间时间间隔很大时： </span><br><span class="line"></span><br><span class="line">- 请求<span class="literal">C1</span>来到N1，N1通知所有点，无异议后写入编号K<span class="label">=k1</span>，广播告知大家。</span><br><span class="line"></span><br><span class="line">- 然后再来一个请求<span class="literal">C2</span>，到达N2，N2已经收到(<span class="literal">C1</span>，k1),并且认可(<span class="literal">C1</span>,k1),所以广播<span class="literal">C2</span>，给其编号k1+<span class="number">1</span>，所有人认可，发送确认更新（<span class="literal">C2</span>，K1+<span class="number">1</span>）。结束。</span><br></pre></td></tr></table></figure>
+<p>这似乎都算不上是一个算法。但这里有很多词都值得推敲</p>
+<ul>
+<li>首先，每次更新一个请求的值都是一个二段提交的过程。因为这里面假想了可能有别的请求。</li>
+<li>我们细看C2的过程，N2有个</li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Paxos-DistributedSystem-翻译-Storm/" rel="tag">#Paxos DistributedSystem 翻译 Storm</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/11/Twitter Heron翻译/" rel="prev">
+                <i class="fa fa-chevron-left"></i> Heron 论文翻译及理解
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/11/Kakfa_structure/" rel="next">
+                Kafka 几个实现细节 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="孟由" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">孟由</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">喜欢写作的码农</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Storm_无主情况的讨论"><span class="nav-number">1.</span> <span class="nav-text">Storm 无主情况的讨论</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孟由</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

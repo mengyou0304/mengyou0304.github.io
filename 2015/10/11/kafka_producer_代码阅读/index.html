@@ -1,0 +1,967 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="喜欢写作的码农" />
+
+
+
+  <meta name="keywords" content="Kafka Details DistributedSystem Producer," />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="###Kafka 新版Producer Java版代码阅读
+Kafka在0.8.2.1出了新版Producer，支持ack（仅Java版，因为通过JavaClient实现的）。因此对代码进行了简单阅读，并记录如下：
+接口如下：
+public Future&amp;lt;RecordMetadata&amp;gt; send(ProducerRecord&amp;lt;K,V&amp;gt; record, Callback ca">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka 新版Producer Java版代码阅读">
+<meta property="og:url" content="http://yoursite.com/2015/10/11/kafka_producer_代码阅读/index.html">
+<meta property="og:site_name" content="码农牧场">
+<meta property="og:description" content="###Kafka 新版Producer Java版代码阅读
+Kafka在0.8.2.1出了新版Producer，支持ack（仅Java版，因为通过JavaClient实现的）。因此对代码进行了简单阅读，并记录如下：
+接口如下：
+public Future&amp;lt;RecordMetadata&amp;gt; send(ProducerRecord&amp;lt;K,V&amp;gt; record, Callback ca">
+<meta property="og:updated_time" content="2015-10-19T02:30:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kafka 新版Producer Java版代码阅读">
+<meta name="twitter:description" content="###Kafka 新版Producer Java版代码阅读
+Kafka在0.8.2.1出了新版Producer，支持ack（仅Java版，因为通过JavaClient实现的）。因此对代码进行了简单阅读，并记录如下：
+接口如下：
+public Future&amp;lt;RecordMetadata&amp;gt; send(ProducerRecord&amp;lt;K,V&amp;gt; record, Callback ca">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'always'
+  };
+</script>
+
+
+
+  <title> Kafka 新版Producer Java版代码阅读 | 码农牧场 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">码农牧场</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Kafka 新版Producer Java版代码阅读
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-11T00:00:00+08:00" content="2015-10-11">
+              2015-10-11
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Kafka-Details-DistributedSystem-Producer/" itemprop="url" rel="index">
+                    <span itemprop="name">Kafka Details DistributedSystem Producer</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>###Kafka 新版Producer Java版代码阅读</p>
+<p>Kafka在0.8.2.1出了新版Producer，支持ack（仅Java版，因为通过JavaClient实现的）。因此对代码进行了简单阅读，并记录如下：</p>
+<p>接口如下：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">Future</span>&lt;RecordMetadata&gt; send(ProducerRecord&lt;K,V&gt; <span class="keyword">record</span>, Callback callback) 
+</code></pre><p>封装一个Record之后，每次调用同时传入一个callback。该函数在Kafka返回结果时被调用。</p>
+<p>根据官方<a href="https://github.com/apache/kafka/blob/trunk/examples/src/main/java/kafka/examples/Producer.java" target="_blank" rel="external">example</a>的调用方式：</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> onCompletion(RecordMetadata metadata, Exception <span class="keyword">exception</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (metadata != <span class="keyword">null</span>) &#123;</span><br><span class="line">    		<span class="comment">//means success</span></span><br><span class="line">    	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    		<span class="comment">//means fail</span></span><br><span class="line">      	<span class="keyword">exception</span>.printStackTrace();</span><br><span class="line">      	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>======================</p>
+<p>####1. 如果我来做，怎么做？</p>
+<p>我觉得如果我来设计，至少需要考虑如下几个问题：</p>
+<ul>
+<li><p>发送的时候callback是否跟着发到Kafka Server？</p>
+</li>
+<li><p>Kafka支持了batch send，ack的时候是一个一个ack还是batch ack？同样，如果是batch ack，call back怎么调用？</p>
+</li>
+<li><p>每次callback都会单独使用一个线程调用么？还是共享一个线程？</p>
+</li>
+<li><p>如果Callback不发送到KafkaServer，在客户端是怎样存储的？进程fail掉的时候是否会丢ack？</p>
+</li>
+</ul>
+<p>======================</p>
+<p>###2. 带着这几个问题，我们来看人家怎么做的</p>
+<p>======================</p>
+<p>#####2.1 基本逻辑<br>先从Kafka Producer的send方法看起，</p>
+<p>send的全部代码就是这样，简单来说做了这样几件事</p>
+<ol>
+<li>判断partition</li>
+<li>序列化消息</li>
+<li>判断消息大小是否符合格式</li>
+<li><p>重点是第四步：</p>
+<pre><code><span class="type">RecordAccumulator</span>.<span class="type">RecordAppendResult</span> <span class="literal">result</span> = accumulator.append(tp, serializedKey, serializedValue, compressionType, callback);
+</code></pre></li>
+</ol>
+<p>accumulator 是每个Producer单独持有唯一一个的，每次调用appen之后返会一个包含有（FutureRecordMetadata）的执行result.</p>
+<p>追进去看一下这个append方法，注释是这样说的</p>
+<pre><code><span class="type">Add</span> a record to the accumulator, <span class="keyword">return</span> the append <span class="literal">result</span>。<span class="type">The</span> append <span class="literal">result</span> will contain the future metadata, <span class="keyword">and</span> flag <span class="keyword">for</span> whether the appended batch <span class="keyword">is</span> full <span class="keyword">or</span> a new batch <span class="keyword">is</span> created.
+</code></pre><p>简单来说这个方法就是把一个message序列化之后加入到accumulator的发送队列里，等会再详细介绍Acculator。</p>
+<ol>
+<li><p>第五步，调用sender的awake方法</p>
+<pre><code><span class="keyword">if</span> (<span class="literal">result</span>.batchIsFull || <span class="literal">result</span>.newBatchCreated) {
+    this.sender.wakeup();
+}
+</code></pre></li>
+</ol>
+<p>看到这里感觉啥都没干啊，所以我们需要进一步看一下Acculator以及Sender究竟在做什么。</p>
+<p>======================</p>
+<p>#####2.2 Accumulator</p>
+<p> 在Producer里通过Accumulator的append方法把消息加入异步发送队列，我们先看看Accumulator的实现。</p>
+<pre><code><span class="keyword">private</span> <span class="keyword">final</span> BufferPool <span class="keyword">free</span>;
+<span class="keyword">private</span> <span class="keyword">final</span> ConcurrentMap&lt;TopicPartition, Deque&lt;RecordBatch&gt;&gt; batches;
+<span class="keyword">private</span> <span class="keyword">final</span> IncompleteRecordBatches incomplete;
+</code></pre><p>Accumulator里有三个结构必须要说一下，BufferPool用于管理batch发送的缓存，等会细说，batches显然是一个以partition为Key的map，value是一个double-ended-queue，每个queue里的元素是一个RecordBatch，显然是用来做发送缓冲的。最后还有一个Incoplete，用于记录未完成的所有batch。</p>
+<p>Accumulator的append方法代码比较长，简要说一下做了这样几个事情</p>
+<ol>
+<li><p>根据partition从batches里找到deque，然后peeklast().tryappend(),也就是调用了RecordBatch的tryappend方法</p>
+<pre><code>Deque&lt;RecordBatch&gt; dq = dequeFor(tp);
+<span class="keyword">synchronized</span> (dq) {
+    RecordBatch last = dq.peekLast();
+    <span class="keyword">if</span> (last != <span class="keyword">null</span>) {
+        FutureRecordMetadata future = last.tryAppend(<span class="variable">key</span>, value, callback);
+        <span class="comment">//you.meng   futrue==true means no more room for the new coming message</span>
+        <span class="keyword">if</span> (future != <span class="keyword">null</span>)
+            <span class="keyword">return</span> <span class="keyword">new</span> RecordAppendResult(future, dq.<span class="built_in">size</span>() &gt; <span class="number">1</span> || last.records.isFull(), <span class="keyword">false</span>);
+    }
+}
+</code></pre></li>
+</ol>
+<pre><code>这个tryappend方法比较简单，就是看看recordbatch里面地方够不够，不够就返回<span class="keyword">null</span>，够就加上，Recordbatch里用一个List&lt;Thunk&gt;  来存储每个msg的callback。但整个BatchRecord封装成一个future返回。代码如下：
+
+    <span class="keyword">public</span> FutureRecordMetadata tryAppend(<span class="built_in">byte</span>[] <span class="variable">key</span>, <span class="built_in">byte</span>[] value, Callback callback) {
+        <span class="keyword">if</span> (!<span class="keyword">this</span>.records.hasRoomFor(<span class="variable">key</span>, value)) {
+            <span class="keyword">return</span> <span class="keyword">null</span>;
+        } <span class="keyword">else</span> {
+            <span class="keyword">this</span>.records.<span class="built_in">append</span>(<span class="number">0</span>L, <span class="variable">key</span>, value);
+            <span class="keyword">this</span>.maxRecordSize = Math.<span class="built_in">max</span>(<span class="keyword">this</span>.maxRecordSize, Record.recordSize(<span class="variable">key</span>, value));
+            FutureRecordMetadata future = <span class="keyword">new</span> FutureRecordMetadata(<span class="keyword">this</span>.produceFuture, <span class="keyword">this</span>.recordCount);
+            <span class="keyword">if</span> (callback != <span class="keyword">null</span>)
+                thunks.<span class="built_in">add</span>(<span class="keyword">new</span> Thunk(callback, future));
+            <span class="keyword">this</span>.recordCount++;
+            <span class="keyword">return</span> future;
+        }
+    }
+</code></pre><p>由此可知Kafka对Batch消息的确认是一次批量确认，但callback应该是一次批量确认之后一个一个发送的。</p>
+<ol>
+<li><p>第一步如果成功吧msg加入batch显然后面啥都不用做了，如果返回是null，则需要从新来一个RecordBatch。然后先申请空间</p>
+<pre><code>ByteBuffer buffer = <span class="keyword">free</span>.<span class="built_in">allocate</span>(<span class="built_in">size</span>);
+</code></pre><p> 注意，这个申请空间是有可能block的（当然也要看用户设置），所以在申请空间之后，可能已经过了很久，物是人非了，所以代码很小心的从新调用了一遍batches.get(partition).peeklast.tryappend。</p>
+<p> //哈哈 自从用了scala 妈妈再也不担心我读不懂长代码了。</p>
+<p> 如果这个时候tryappend发现有地方了，这时候释放空间，加进去拉倒。</p>
+<pre><code><span class="keyword">free</span>.<span class="built_in">deallocate</span>(buffer);
+</code></pre></li>
+</ol>
+<pre><code>当然也可能依然坑爹的tryappend返回<span class="literal">null</span>，即表示notEnoughRoom <span class="keyword">for</span> <span class="keyword">new</span> msg，那么进入第三步
+</code></pre><ol>
+<li>最后只有两种情况没有讨论了，要不就是partition下面 d-e-queue是空的，要不就是现有的空间都不够了。所以第二部申请的空间（buffer）必须用了啊，然后我们新来做一个RecordMessage吧。</li>
+</ol>
+<pre><code><span class="label">MemoryRecords</span> records = MemoryRecords.emptyRecords(<span class="keyword">buffer, </span>compression, this.<span class="keyword">batchSize);
+</span><span class="label">RecordBatch</span> <span class="keyword">batch </span>= new RecordBatch(tp, records, time.milliseconds())<span class="comment">;</span>
+<span class="label">FutureRecordMetadata</span> future = Utils.notNull(<span class="keyword">batch.tryAppend(key, </span>value, callback))<span class="comment">;</span>
+<span class="label">dq.addLast</span>(<span class="keyword">batch);
+</span><span class="label">incomplete.add</span>(<span class="keyword">batch);</span>
+</code></pre><p>我们用新申请的空间buffer生成了新的MemoryRecord,然后做出来batch，加入d-e-queue，加入未完成队列。</p>
+<p>看到这里已经相对清晰了，我们捋一捋几个悬而未解的问题。</p>
+<ul>
+<li>free.allocate(size) 还有free.deallocate(buffer)是咋做的？</li>
+<li>MemoryRecords怎么使用的buffer？</li>
+<li>那个坑爹的Sender怎么awake的？</li>
+<li>callback什么时候被调用的？</li>
+</ul>
+<p>根据这几个问题，我们逐一分析一下：</p>
+<p>======================</p>
+<p>#####2.3 Buffered pool</p>
+<p>======================</p>
+<p>#####2.4 MemoryRecords &amp;&amp; Compressor &amp;&amp; RecordBatch</p>
+<p>######2.4.1 MemoryRecords</p>
+<p>在accumulator中我们看到，MemoryRecord 对 bytebuffer进行了封装，而后RecordBatch对MemoeryRecord进行封装</p>
+<pre><code><span class="label">MemoryRecords</span> records = MemoryRecords.emptyRecords(<span class="keyword">buffer, </span>compression, this.<span class="keyword">batchSize);
+</span><span class="label">RecordBatch</span> <span class="keyword">batch </span>= new RecordBatch(tp, records, time.milliseconds())<span class="comment">;</span>
+</code></pre><p>先看Memory Recored，Memory Record继承自Record接口，其定义4byte的size，8byte的offest所以每个Record size&lt;2^32 位 文件小于2^64 位。</p>
+<pre><code><span class="comment">/**
+* A binary format which consists of a 4 byte size, an 8 byte offset, and the record bytes. See {<span class="doctag">@link</span> MemoryRecords}
+* for the in-memory representation.
+*/</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Records</span> <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">LogEntry</span>&gt; </span>{
+
+<span class="keyword">int</span> SIZE_LENGTH = <span class="number">4</span>;
+<span class="keyword">int</span> OFFSET_LENGTH = <span class="number">8</span>;
+<span class="keyword">int</span> LOG_OVERHEAD = SIZE_LENGTH + OFFSET_LENGTH;
+</code></pre><p>MemoryRecord中还持有Compressor以及buffer，主要被调用append方法将buffer中的数据写入compressor</p>
+<pre><code><span class="comment">/**
+ * Append the given record and offset to the buffer
+ */</span>
+<span class="keyword">public</span> <span class="keyword">void</span> <span class="keyword">append</span>(<span class="keyword">long</span> offset, Record record) {
+    <span class="keyword">if</span> (!writable)
+        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"Memory records is not writable"</span>);
+
+    <span class="keyword">int</span> <span class="keyword">size</span> = record.<span class="keyword">size</span>();
+    compressor.putLong(offset);
+    compressor.putInt(<span class="keyword">size</span>);
+    compressor.put(record.buffer());
+    compressor.recordWritten(<span class="keyword">size</span> + Records.LOG_OVERHEAD);
+    record.buffer().rewind();
+}
+</code></pre><p>######2.4.2 RecordBatch<br>先跳过Compressor，我们看一下MemoryRecord继续被向上封装成了RecordBatch。因为MemoryRecord只有对IO的操作，并没有对Kafka逻辑的支持，因此RecordBatch在其基础之上封装了一些计数参数之外还增加了几个变量：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">final</span> MemoryRecords records;
+<span class="keyword">public</span> <span class="keyword">final</span> TopicPartition topicPartition;
+<span class="keyword">public</span> <span class="keyword">final</span> ProduceRequestResult produceFuture;
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">List</span>&lt;Thunk&gt; thunks;
+</code></pre><p>即对一次producer的batch提交过程进行了封装，包括发送的topicPartition，提交batch返回的produceFutrue以及存储这个batch里所有msg对应callback的thunks。</p>
+<p>RecordBatch的tryAppend方法已经在2.2节介绍，除此之外，RecordBatch还有一个Done方法，看名字也知道用于对batch的返回结果进行确认：如果没有exception就直接调用thunks list里所有的callback，异常就按异常格式调用。</p>
+<p>值得一提的就是recordbatch里是有个thunks的，里面用于存放所有的callback信息。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">List</span>&lt;Thunk&gt; thunks;</span><br></pre></td></tr></table></figure>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">FutureRecordMetadata future = <span class="keyword">new</span> FutureRecordMetadata(<span class="keyword">this</span>.produceFuture, <span class="keyword">this</span>.recordCount);</span><br><span class="line"> 	<span class="keyword">if</span> (<span class="keyword">callback</span> != <span class="literal">null</span>)</span><br><span class="line"> 		thunks.add(<span class="keyword">new</span> Thunk(<span class="keyword">callback</span>, future));</span><br></pre></td></tr></table></figure>
+<p>因此可以看到，callback信息是全部存在客户端的recordbatch里的，等到返回时再从thunks里取出来。</p>
+<p>再看一下被确认的done方法，当被确认时，recordbatch里所有信息被一一确认。所以也可以看出来是批量确认的。</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> done(<span class="keyword">long</span> baseOffset, RuntimeException exception) &#123;</span><br><span class="line">        <span class="keyword">this</span>.produceFuture.done(topicPartition, baseOffset, exception);</span><br><span class="line">        <span class="comment">// execute callbacks</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.thunks.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thunk thunk = <span class="keyword">this</span>.thunks.<span class="built_in">get</span>(i);</span><br><span class="line">                <span class="keyword">if</span> (exception == <span class="keyword">null</span>)</span><br><span class="line">                    thunk.callback.onCompletion(thunk.future.<span class="built_in">get</span>(), <span class="keyword">null</span>);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    thunk.callback.onCompletion(<span class="keyword">null</span>, exception);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                <span class="built_in">log</span>.error(<span class="string">"Error executing user-provided callback on message for topic-partition &#123;&#125;:"</span>, topicPartition, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>######2.4.3 Compressor</p>
+<p>//TBD</p>
+<p>======================</p>
+<p>#####2.5 callback &amp;&amp; Future &amp;&amp; ProduceRequestResult &amp;&amp; FutureRecordMetadata</p>
+<p>Futrue FutureTask Callable 的概念就不再复述了，请自行查阅。</p>
+<p>######2.5.1 ProduceRequestResult （short for PRResult）</p>
+<p>ProduceRequestResult是象征意义上的返回结果，但事实上该Result是在Client端生成的，其构造函数只有一种空构造函数，参数只有这几个。</p>
+<pre><code><span class="keyword">private</span> <span class="keyword">final</span> CountDownLatch latch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);
+<span class="keyword">private</span> <span class="keyword">volatile</span> TopicPartition topicPartition;
+<span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">long</span> baseOffset = -<span class="number">1</span>L;
+<span class="keyword">private</span> <span class="keyword">volatile</span> RuntimeException <span class="keyword">error</span>;
+
+<span class="function"><span class="keyword">public</span> <span class="title">ProduceRequestResult</span><span class="params">()</span> </span>{
+}
+</code></pre><p>看到</p>
+<pre><code>latch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);
+</code></pre><p>就很容易明白这个PRResult的作用了，因为支持message.get()的阻塞等待，因此需要对产生的结果进行阻塞控制，只有当Server端回复结果之后才能让message.get()方法进入结束阻塞。而这个过程的实现，就是使用PRResult的latch实现的。</p>
+<pre><code><span class="keyword">public</span> <span class="function"><span class="keyword">void</span> <span class="title">done</span><span class="params">(TopicPartition topicPartition, <span class="keyword">long</span> baseOffset, RuntimeException <span class="keyword">error</span>)</span> </span>{
+    <span class="keyword">this</span>.topicPartition = topicPartition;
+    <span class="keyword">this</span>.baseOffset = baseOffset;
+    <span class="keyword">this</span>.<span class="keyword">error</span> = <span class="keyword">error</span>;
+    <span class="keyword">this</span>.latch.countDown();
+}
+</code></pre><p>这是PRResult的Done方法，可以看到，该Result的latch在初始化就自动生成，直到Done方法被调用才能解除阻塞，其他任何wait在latch上的方法都将被阻塞。</p>
+<p>我们看看有哪些方法调用了latch.await吧： 追到根 发现使用了该方法的包括：</p>
+<pre><code><span class="tag">FutureRecordMetadata</span><span class="class">.get</span> 
+<span class="tag">KakfaProducer</span><span class="class">.flush</span>
+</code></pre><p>第一个是官方定义的清清楚楚的接口，第二个是flush，简单易懂，不再介绍。</p>
+<p>######2.5.2 FutureRecordMetadata &amp;&amp;RecordMetadata</p>
+<p>如果说PRResult只是具有了一个阻塞功能的结果存储器，那么FutureRecordMetaData就是在其基础上有封装了执行过程。</p>
+<pre><code>    <span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FutureRecordMetadata</span> <span class="keyword">implements</span> <span class="title">Future</span>&lt;<span class="title">RecordMetadata</span>&gt; </span>{
+    <span class="keyword">private</span> <span class="keyword">final</span> ProduceRequestResult result;
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> relativeOffset;
+</code></pre><p>FRMetaData持有result的同时，继承了Future，所以调用FRMetaData的get方法时，通过实现其封装的PRResult.await()进行阻塞。直到PRResult被Done，latch.countDown()被调用为止。</p>
+<p>对多线程以及阻塞感兴趣更多的可以参考FutrueTask。</p>
+<pre><code>@<span class="type">Override</span>
+public <span class="type">RecordMetadata</span> get() throws <span class="type">InterruptedException</span>, <span class="type">ExecutionException</span> {
+    this.<span class="literal">result</span>.await();
+    <span class="keyword">return</span> valueOrError();
+}
+
+<span class="type">RecordMetadata</span> value() {
+    <span class="keyword">return</span> new <span class="type">RecordMetadata</span>(<span class="literal">result</span>.topicPartition(), this.<span class="literal">result</span>.baseOffset(), this.relativeOffset);
+}
+</code></pre><p>======================               </p>
+<p>####2.6 前部分小结</p>
+<p>简要总结一下</p>
+<ol>
+<li>Accumulator：消息的总控端，负责对发送，接收进行实际控制，但并非线程类</li>
+<li>消息的封装，Batch封装（RecordBatch/MemoryRecords/Comporessor）</li>
+<li>消息对内存的使用（Buffer Pool）</li>
+<li>调用结果返回（FutureRecordMetadata/ProduceRequestResult/Callback）</li>
+</ol>
+<p>基本涉及了发送过程的全部静态实现，唯独缺少了多线程控制。当然，在这上面的实现中，也多次涉及到了sender.run(time) 以及sender.wakeup()等方法。</p>
+<p>所以在最后，我们来看看Sender的实现。</p>
+<p>======================</p>
+<p>#####2.7 Sender </p>
+<p>Sender 主要持有如下对象</p>
+<pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Sender</span> <span class="keyword">implements</span> <span class="title">Runnable</span> {</span>
+
+
+    <span class="comment">/* the state of each nodes connection */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> KafkaClient client;
+
+<span class="comment">/* the record accumulator that batches records */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> RecordAccumulator accumulator;
+
+<span class="comment">/* the metadata for the client */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> Metadata metadata;
+
+<span class="comment">/* the maximum request size to attempt to send to the server */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="typename">int</span> maxRequestSize;
+
+<span class="comment">/* the number of acknowledgements to request from the server */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="typename">short</span> acks;
+
+<span class="comment">/* the max time in ms for the server to wait for acknowlegements */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="typename">int</span> requestTimeout;
+
+<span class="comment">/* the number of times to retry a failed request before giving up */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> <span class="typename">int</span> retries;
+
+<span class="comment">/* the clock instance used for getting the time */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> Time time;
+
+<span class="comment">/* true while the sender thread is still running */</span>
+<span class="keyword">private</span> <span class="keyword">volatile</span> <span class="typename">boolean</span> running;
+
+<span class="comment">/* true when the caller wants to ignore all unsent/inflight messages and force close.  */</span>
+<span class="keyword">private</span> <span class="keyword">volatile</span> <span class="typename">boolean</span> forceClose;
+
+<span class="comment">/* metrics */</span>
+<span class="keyword">private</span> <span class="keyword">final</span> SenderMetrics sensors;
+
+<span class="comment">/* param clientId of the client */</span>
+<span class="keyword">private</span> String clientId;
+</code></pre><p>看半天鸡毛用没有，对吧。值得一提的是，sender持有的accumulator和KafkaProducer持有的accumulator是同一个。而且Sender是继承自线程的，其唯一的一次初始化是在new KafkaProducer的时候，且被KafkaProducer持有，被KafkaProducer的iothread装了起来。</p>
+<pre><code><span class="keyword">this</span>.ioThread = <span class="keyword">new</span> KafkaThread(ioThreadName, <span class="keyword">this</span>.sender, <span class="literal">true</span>);
+<span class="keyword">this</span>.ioThread.start();
+</code></pre><p>首先找一下sender怎么被使用的吧，ioThread只有在KProducer.close调用了一下。而sender在KProducer的send，flush等方法里多次被调用wakeup()方法.</p>
+<p>下面我们仔细看一下他的run.() , run.(time）以及wakeup()方法吧。</p>
+<p>//是不是俺的写法带点scala风格拉？</p>
+<p>run方法内部调用了run(time)方法，二者不分家。先看run</p>
+<pre><code><span class="comment">// main loop, runs until close is called</span>
+<span class="keyword">while</span> (running) {
+        try {
+            <span class="keyword">run</span>(time.milliseconds());
+        } catch (Exception <span class="keyword">e</span>) {
+            <span class="keyword">log</span>.<span class="keyword">error</span>(<span class="string">"Uncaught error in kafka producer I/O thread: "</span>, <span class="keyword">e</span>);
+        }
+    }
+</code></pre><p>带停止标志位的循环执行，后面就剩下关闭相关操作了。</p>
+<pre><code><span class="comment">// okay we stopped accepting requests but there may still be</span>
+<span class="comment">// requests in the accumulator or waiting for acknowledgment,</span>
+<span class="comment">// wait until these are completed.</span>
+<span class="keyword">while</span> (!forceClose &amp;&amp; (<span class="keyword">this</span>.accumulator.hasUnsent() || <span class="keyword">this</span>.client.inFlightRequestCount() &gt; <span class="number">0</span>)) {
+    <span class="keyword">try</span> {
+        run(time.milliseconds());
+    } <span class="keyword">catch</span> (Exception e) {
+        <span class="built_in">log</span>.error(<span class="string">"Uncaught error in kafka producer I/O thread: "</span>, e);
+    }
+}
+<span class="keyword">if</span> (forceClose) {
+    <span class="comment">// We need to fail all the incomplete batches and wake up the threads waiting on</span>
+    <span class="comment">// the futures.</span>
+    <span class="keyword">this</span>.accumulator.abortIncompleteBatches();
+}
+<span class="keyword">try</span> {
+    <span class="keyword">this</span>.client.close();
+} <span class="keyword">catch</span> (Exception e) {
+    <span class="built_in">log</span>.error(<span class="string">"Failed to close network client"</span>, e);
+}
+</code></pre><p>关闭过程其实很值得看看，没啥可说的。看看run(time)和wakeup()吧。</p>
+<pre><code>    <span class="comment">/**
+ * Wake up the selector associated with this send thread
+ */</span>
+<span class="keyword">public</span> <span class="keyword">void</span> wakeup() {
+    <span class="keyword">this</span>.<span class="keyword">client</span>.wakeup();
+}
+</code></pre><p>然后就没了，client是NetworkClient，封装了网络的NIOSelector的wakeup，我觉得这个问题还是开一篇单讲了。读者就就按照注释的意思理解吧。</p>
+<p>======================</p>
+<p>#####2.7 KafkaProducer </p>
+<p>经历了这一切，我们从新回到KafkaProducer 来。似乎只剩下了一个close方法。<br>没啥好说的，就到这里吧。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kafka-Details-DistributedSystem-Producer/" rel="tag">#Kafka Details DistributedSystem Producer</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/11/Binary IndexedTree/" rel="prev">
+                <i class="fa fa-chevron-left"></i> Binary Indexed Tree 树状数组
+              </a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/11/java_中的future以及futuretask/" rel="next">
+                Future and FutureTask <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="孟由" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">孟由</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">喜欢写作的码农</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孟由</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>

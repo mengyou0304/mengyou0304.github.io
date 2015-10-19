@@ -1,0 +1,800 @@
+<!doctype html>
+<html class="theme-next use-motion ">
+<head>
+  
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+  
+    <link href='//fonts.useso.com/css?family=Lato:300,400,700,400italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+  
+
+
+<link rel="stylesheet" type="text/css" href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" />
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.2"/>
+
+
+    <meta name="description" content="喜欢写作的码农" />
+
+
+
+  <meta name="keywords" content="Hash函数 xor-shift scheme HashCollections BloomFilter," />
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.2" />
+
+
+<meta name="description" content="##Hash函数与xor-shift scheme，HashCollections，BloomFilter
+根据定义，Hashcode用于帮助Equals更快速的鉴定两个对象是否相同，于此同时，HashCode也广泛运用于很多基于Hash的Collections。本文简要分析了HashCode的实现以及用于。
+###1. HashCode
+####1.1 来自hashcode的思考
+1234567">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hash and related Collections">
+<meta property="og:url" content="http://yoursite.com/2015/10/19/HashAndRelatedCollections/index.html">
+<meta property="og:site_name" content="码农牧场">
+<meta property="og:description" content="##Hash函数与xor-shift scheme，HashCollections，BloomFilter
+根据定义，Hashcode用于帮助Equals更快速的鉴定两个对象是否相同，于此同时，HashCode也广泛运用于很多基于Hash的Collections。本文简要分析了HashCode的实现以及用于。
+###1. HashCode
+####1.1 来自hashcode的思考
+1234567">
+<meta property="og:image" content="http://7xl65g.com1.z0.glb.clouddn.com/hashprocess.jpg">
+<meta property="og:updated_time" content="2015-10-19T02:28:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hash and related Collections">
+<meta name="twitter:description" content="##Hash函数与xor-shift scheme，HashCollections，BloomFilter
+根据定义，Hashcode用于帮助Equals更快速的鉴定两个对象是否相同，于此同时，HashCode也广泛运用于很多基于Hash的Collections。本文简要分析了HashCode的实现以及用于。
+###1. HashCode
+####1.1 来自hashcode的思考
+1234567">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: '',
+    sidebar: 'always'
+  };
+</script>
+
+
+
+  <title> Hash and related Collections | 码农牧场 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+
+
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">码农牧场</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Hash and related Collections
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-10-19T10:28:56+08:00" content="2015-10-19">
+              2015-10-19
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp; 分类于
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Hash函数-xor-shift-scheme-HashCollections-BloomFilter/" itemprop="url" rel="index">
+                    <span itemprop="name">Hash函数 xor-shift scheme HashCollections BloomFilter</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>##Hash函数与xor-shift scheme，HashCollections，BloomFilter</p>
+<p>根据定义，Hashcode用于帮助Equals更快速的鉴定两个对象是否相同，于此同时，HashCode也广泛运用于很多基于Hash的Collections。本文简要分析了HashCode的实现以及用于。</p>
+<p>###1. HashCode</p>
+<p>####1.1 来自hashcode的思考</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * <span class="type">Returns</span> a hash code value <span class="keyword">for</span> the <span class="keyword">object</span>. <span class="type">This</span> <span class="keyword">method</span> <span class="keyword">is</span></span><br><span class="line"> * supported <span class="keyword">for</span> the benefit <span class="keyword">of</span> hash tables such <span class="keyword">as</span> those provided by</span><br><span class="line"> * &#123;@link java.util.<span class="type">HashMap</span>&#125;.</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * <span class="type">The</span> general contract <span class="keyword">of</span> &#123;@code hashCode&#125; <span class="keyword">is</span>:</span><br><span class="line"> * &lt;ul&gt;</span><br><span class="line"> * &lt;li&gt;<span class="type">Whenever</span> it <span class="keyword">is</span> invoked on the same <span class="keyword">object</span> more than once during</span><br><span class="line"> *     an execution <span class="keyword">of</span> a <span class="type">Java</span> application, the &#123;@code hashCode&#125; <span class="keyword">method</span></span><br><span class="line"> *     must consistently <span class="keyword">return</span> the same integer, provided no information</span><br><span class="line"> *     used <span class="keyword">in</span> &#123;@code equals&#125; comparisons on the <span class="keyword">object</span> <span class="keyword">is</span> modified.</span><br><span class="line"> *     <span class="type">This</span> integer need <span class="keyword">not</span> remain consistent <span class="keyword">from</span> one execution <span class="keyword">of</span> an</span><br><span class="line"> *     application to another execution <span class="keyword">of</span> the same application.</span><br><span class="line"> * &lt;li&gt;<span class="type">If</span> two objects are equal according to the &#123;@code equals(<span class="type">Object</span>)&#125;</span><br><span class="line"> *     <span class="keyword">method</span>, then calling the &#123;@code hashCode&#125; <span class="keyword">method</span> on each <span class="keyword">of</span></span><br><span class="line"> *     the two objects must produce the same integer <span class="literal">result</span>.</span><br><span class="line"> * &lt;li&gt;<span class="type">It</span> <span class="keyword">is</span> &lt;em&gt;<span class="keyword">not</span>&lt;/em&gt; required that <span class="keyword">if</span> two objects are unequal</span><br><span class="line"> *     according to the &#123;@link java.lang.<span class="type">Object</span><span class="comment">#equals(java.lang.Object)&#125;</span></span><br><span class="line"> *     <span class="keyword">method</span>, then calling the &#123;@code hashCode&#125; <span class="keyword">method</span> on each <span class="keyword">of</span> the</span><br><span class="line"> *     two objects must produce <span class="keyword">distinct</span> integer results.  <span class="type">However</span>, the</span><br><span class="line"> *     programmer should be aware that producing <span class="keyword">distinct</span> integer results</span><br><span class="line"> *     <span class="keyword">for</span> unequal objects may improve the performance <span class="keyword">of</span> hash tables.</span><br><span class="line"> * &lt;/ul&gt;</span><br><span class="line"> * &lt;p&gt;</span><br><span class="line"> * <span class="type">As</span> much <span class="keyword">as</span> <span class="keyword">is</span> reasonably practical, the hashCode <span class="keyword">method</span> defined by</span><br><span class="line"> * class &#123;@code <span class="type">Object</span>&#125; does <span class="keyword">return</span> <span class="keyword">distinct</span> integers <span class="keyword">for</span> <span class="keyword">distinct</span></span><br><span class="line"> * objects. (<span class="type">This</span> <span class="keyword">is</span> typically implemented by converting the internal</span><br><span class="line"> * address <span class="keyword">of</span> the <span class="keyword">object</span> into an integer, but this implementation</span><br><span class="line"> * technique <span class="keyword">is</span> <span class="keyword">not</span> required by the</span><br><span class="line"> * <span class="type">Java</span>&lt;font size=<span class="string">"-2"</span>&gt;&lt;sup&gt;<span class="type">TM</span>&lt;/sup&gt;&lt;/font&gt; programming language.)</span><br><span class="line"> *</span><br><span class="line"> * @<span class="keyword">return</span>  a hash code value <span class="keyword">for</span> this <span class="keyword">object</span>.</span><br><span class="line"> * @see     java.lang.<span class="type">Object</span><span class="comment">#equals(java.lang.Object)</span></span><br><span class="line"> * @see     java.lang.<span class="type">System</span><span class="comment">#identityHashCode</span></span><br><span class="line"> */</span><br><span class="line">public native <span class="type">int</span> hashCode();</span><br></pre></td></tr></table></figure>
+<p>注释说的太清楚我居然无言以对….</p>
+<ol>
+<li>对一个对象调用多次hashcode，其返回值应当相同。</li>
+<li>如果o1.equals(o2),那么o1.hashcode==o2.hashcode</li>
+<li>(不是必须但try best)，if(!o1.equals(o2)) o1.hashcode可以=o2.hashcode,但应该尽可能避免该情况。</li>
+</ol>
+<p>但我有几个问题之前一直没想明白：</p>
+<ul>
+<li>问题1. 简单类型和其他类型的实现不同么：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Integer i1=<span class="number">1</span>;</span><br><span class="line">Integer i2=<span class="number">1</span>;</span><br><span class="line">i1.hashcode=i2.hascode?</span><br><span class="line"></span><br><span class="line">Entry o1=Entry(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">Entry o2=Entry(<span class="number">1</span>,<span class="number">2</span>)</span><br><span class="line">o2.hashcode=o2.hashcode?</span><br></pre></td></tr></table></figure>
+<p>后来我看到Integer.hashcode方法…</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">hashCode</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">value</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>问题2. 对象的引用更改时，Hashcode变么？</li>
+</ul>
+<p>这个问题源自我对一个很长的链表上某个元素做hash的时候，让我不得不考虑会不会每次做hash都会遍历一遍整个链表。</p>
+<p>结果很蛋疼，更改引用甚至值的话，如果你不重写hashcode方法，hashcode值是不会变的</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">TmpOB o1=new TmpOB(1,<span class="string">"aaa"</span>);</span><br><span class="line">TmpOB o2=new TmpOB(1,<span class="string">"aaa"</span>);</span><br><span class="line">System.out.println(o1.hashCode());</span><br><span class="line">o2.a=3;</span><br><span class="line">System.out.println(o1.hashCode());</span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">//result:</span><br><span class="line">727129599</span><br><span class="line">727129599</span><br></pre></td></tr></table></figure>
+<p>####1.2 hashcode的实现</p>
+<p>因为Object 的hashcode方法是native的，所以参考一些别人的文章，大致意思是JVM里C++实现的，代码大体如下，其返回值就是hashcode。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> intptr_t <span class="title">get_next_hash</span><span class="params">(Thread * Self, oop obj)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">intptr_t</span> value = <span class="number">0</span> ;</span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">0</span>) &#123;</span><br><span class="line">     <span class="comment">// This form uses an unguarded global Park-Miller RNG,</span></span><br><span class="line">     <span class="comment">// so it's possible for two threads to race and generate the same RNG.</span></span><br><span class="line">     <span class="comment">// On MP system we'll have lots of RW access to a global, so the</span></span><br><span class="line">     <span class="comment">// mechanism induces lots of coherency traffic.</span></span><br><span class="line">     value = os::random() ;</span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">1</span>) &#123;</span><br><span class="line">     <span class="comment">// This variation has the property of being stable (idempotent)</span></span><br><span class="line">     <span class="comment">// between STW operations.  This can be useful in some of the 1-0</span></span><br><span class="line">     <span class="comment">// synchronization schemes.</span></span><br><span class="line">     <span class="keyword">intptr_t</span> addrBits = <span class="keyword">intptr_t</span>(obj) &gt;&gt; <span class="number">3</span> ;</span><br><span class="line">     value = addrBits ^ (addrBits &gt;&gt; <span class="number">5</span>) ^ GVars.stwRandom ;</span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">2</span>) &#123;</span><br><span class="line">     value = <span class="number">1</span> ;            <span class="comment">// for sensitivity testing</span></span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">3</span>) &#123;</span><br><span class="line">     value = ++GVars.hcSequence ;</span><br><span class="line">  &#125; <span class="keyword">else</span></span><br><span class="line">  <span class="keyword">if</span> (hashCode == <span class="number">4</span>) &#123;</span><br><span class="line">     value = <span class="keyword">intptr_t</span>(obj) ;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">     <span class="comment">// Marsaglia's xor-shift scheme with thread-specific state</span></span><br><span class="line">     <span class="comment">// This is probably the best overall implementation -- we'll</span></span><br><span class="line">     <span class="comment">// likely make this the default in future releases.</span></span><br><span class="line">     <span class="keyword">unsigned</span> t = Self-&gt;_hashStateX ;</span><br><span class="line">     t ^= (t &lt;&lt; <span class="number">11</span>) ;</span><br><span class="line">     Self-&gt;_hashStateX = Self-&gt;_hashStateY ;</span><br><span class="line">     Self-&gt;_hashStateY = Self-&gt;_hashStateZ ;</span><br><span class="line">     Self-&gt;_hashStateZ = Self-&gt;_hashStateW ;</span><br><span class="line">     <span class="keyword">unsigned</span> v = Self-&gt;_hashStateW ;</span><br><span class="line">     v = (v ^ (v &gt;&gt; <span class="number">19</span>)) ^ (t ^ (t &gt;&gt; <span class="number">8</span>)) ;</span><br><span class="line">     Self-&gt;_hashStateW = v ;</span><br><span class="line">     value = v ;</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  value &amp;= markOopDesc::hash_mask;</span><br><span class="line">  <span class="keyword">if</span> (value == <span class="number">0</span>) value = <span class="number">0xBAD</span> ;</span><br><span class="line">  assert (value != markOopDesc::no_hash, <span class="string">"invariant"</span>) ;</span><br><span class="line">  TEVENT (hashCode: GENERATE) ;</span><br><span class="line">  <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原谅我C++学艺不精，完全不知道他在做什么。还好我找到了一些大神的讨论</p>
+<p><a href="http://hllvm.group.iteye.com/group/topic/39183" target="_blank" rel="external">ITEYE上的讨论</a></p>
+<p><a href="http://stackoverflow.com/questions/2427631/how-is-hashcode-calculated-in-java" target="_blank" rel="external">StackOverFlow上的讨论</a></p>
+<blockquote>
+<p>The hashCode() method is often used for identifying an object. I think the Object implementation returns the pointer (not a real pointer but a unique id or something like that) of the object. But most classes override the method. Like the String class. Two String objects have not the same pointer but they are equal:</p>
+<p>new String(“a”).hashCode() == new String(“a”).hashCode()<br>I think the most common use for hashCode() is in Hashtable, HashSet, etc..</p>
+<p>Java API Object hashCode()</p>
+<p>Edit: (due to a recent downvote and based on an article I read about JVM parameters)</p>
+<p>With the JVM parameter -XX:hashCode you can change the way how the hashCode is calculated (see the Issue 222 of the Java Specialists’ Newsletter).</p>
+<p>HashCode==0: Simply returns random numbers with no relation to where in memory the object is found. As far as I can make out, the global read-write of the seed is not optimal for systems with lots of processors.</p>
+<p>HashCode==1: Counts up the hash code values, not sure at what value they start, but it seems quite high.</p>
+<p>HashCode==2: Always returns the exact same identity hash code of 1. This can be used to test code that relies on object identity. The reason why JavaChampionTest returned Kirk’s URL in the example above is that all objects were returning the same hash code.</p>
+<p>HashCode==3: Counts up the hash code values, starting from zero. It does not look to be thread safe, so multiple threads could generate objects with the same hash code.</p>
+<p>HashCode==4: This seems to have some relation to the memory location at which the object was created.</p>
+<p>HashCode&gt;=5: This is the default algorithm for Java 8 and has a per-thread seed. It uses Marsaglia’s xor-shift scheme to produce pseudo-random numbers.</p>
+</blockquote>
+<p>可以看到HashCode&gt;=5是默认实现,可是这个XorShift是个虾米？</p>
+<p>感谢<a href="https://en.wikipedia.org/wiki/Xorshift" target="_blank" rel="external">wikipedia上的资料</a></p>
+<p>上面讲的很清楚，弗罗里达州立大学一位叫做George Marsaglia的老师发表了一篇使用位移以及亦或运算生成随机数的方法，并发表了<a href="http://www.jstatsoft.org/v08/i14/paper" target="_blank" rel="external">论文</a>在一篇统计学杂志上。</p>
+<p>最简单的实现是这样</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> <span class="string">&lt;stdint.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* These state variables must be initialized so that they are not all zero. */</span></span><br><span class="line"><span class="keyword">uint32_t</span> x, y, z, w;</span><br><span class="line"></span><br><span class="line"><span class="keyword">uint32_t</span> xorshift128(<span class="keyword">void</span>) &#123;</span><br><span class="line">    <span class="keyword">uint32_t</span> t = x ^ (x &lt;&lt; <span class="number">11</span>);</span><br><span class="line">    x = y; y = z; z = w;</span><br><span class="line">    <span class="keyword">return</span> w = w ^ (w &gt;&gt; <span class="number">19</span>) ^ t ^ (t &gt;&gt; <span class="number">8</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>哈哈 这次和C++代码总算对上了。先不管为什么，先看看wiki上继续的讨论。</p>
+<p>####1.3 随机数</p>
+<p>因为随机数是密码学的基础，因此关于随机数生成，测试，比较，坑很深，不再过多解释。</p>
+<p>随机数大体可分为物理产生的真正的随机数，以及一些函数生成的伪随机数，部分Intel的芯片里就带有物理产生随机数的方法</p>
+<p>来自hcwang的<a href="http://www.cnblogs.com/hcwang/p/3701438.html" target="_blank" rel="external">关于随机数的笔记</a></p>
+<blockquote>
+<ul>
+<li>真随机数</li>
+</ul>
+<p>真随机数只能用某些随机物理过程来产生。例如：放射性衰变、电子设备的热噪音、宇宙射线的触发时间等等。如果采用随机物理过程来产生蒙特卡洛计算用的随机数，理论上不存在问题，但是实际应用中，要做出速度很快而又准确的随机物理过程产生器是很困难的。Intel810RNG的原理大概是：利用热噪声(是由导体中电子的热震动引起的)放大后，影响一个由电压控制的振荡器，通过另一个高频振荡器来收集数据。</p>
+<ul>
+<li>伪随机数</li>
+</ul>
+<p>实际应用的随机数通常都是通过某些数学公式计算而产生的伪随机数。这样的伪随机数从数学意义上讲已经一点不是随机的了。但是，只要伪随机数能够通过随机数的一系列的统计检验，我们就可以把它当作真随机数而放心地使用。这样我们就可以很经济地、重复地产生出随机数。理论上要求伪随机数产生器要具备以下特征：良好的统计分布特性、高效率的伪随机数产生、伪随机数产生的循环周期长，产生程序可移植性好和伪随机数可以重复产生。其中满足良好的统计特性是最重要的。</p>
+</blockquote>
+<p>摘自知乎的部分测试随机数生成算法的一些测试思想：</p>
+<p>来自<a href="http://www.zhihu.com/question/20222653" target="_blank" rel="external">知乎-如何评价一个伪随机数生成算法的优劣？</a></p>
+<blockquote>
+<ul>
+<li>频数测试：测试二进制序列中，“0”和“1” 数目是否近似相等。如果是，则序列是随机的。</li>
+<li>块内频数测试：目的是确定在待测序列中，所有非重叠的 长度为M位的块内的“0”和“1”的数目是否表现为随机分布。如果是，则序列是随机的。</li>
+<li>游程测试：目的是确定待测序列中，各种特定长度的 “0”和“1”的游程数目是否如真随机序列期望的那样。如果是，则序列是随机的。</li>
+<li>块内最长连续“1”测试：目的是确定待测序列中， 最长连“1”串的长度是否与真随机序列中最长连“1”串的 长度近似一致。如果是，则序列是随机的。</li>
+<li>矩阵秩的测试：目的是检测待测序列中，固定长度子序列的线性相关性。如果线性相关性较小，则序列是随机的。</li>
+<li>离散傅里叶变换测试：目的是通过检测待测序列的周期性质，并与真随机序列周期性质相比较，通过它们之间的偏离程度来确定待测序列随机性。如果偏离程度较小，序列是随机的。</li>
+<li>非重叠模板匹配测试：目的是检测待测序列中，子序列是否与太多的非周期模板相匹配。太多就意味着待测序列是非随机的。</li>
+<li>重叠模板匹配测试：目的是统计待测序列中，特定长度的连续“1”的数目，是否与真随机序列的情况偏离太大。太大是非随机的。</li>
+<li>通用统计测试：目的是检测待测序列是否能在信息不丢失的情况下被明显压缩。一个不可被明显压缩的序列是随机的。</li>
+<li>压缩测试：目的是确定待测序列能被压缩的程度，如果能被显著压缩，说明不是随机序列。</li>
+<li>线性复杂度测试：目的是确定待测序列是否足够复杂，如果是，则序列是随机的。</li>
+<li>连续性测试：目的是确定待测序列所有可能的m位比特的组合子串出现的次数是否与真随机序列中的情况近似相同，如果是，则序列是随机的。</li>
+<li>近似熵测试：目的是通过比较m位比特串与m-1位比特串在待测序列中出现的频度，再与正态分布的序列中的情况相对比，从而确定随机性。</li>
+<li>部分和测试：目的确定待测序列中的部分和是否太大或太小。太大或太小都是非随机的。</li>
+<li>随机游走测试：目的是确定在一个随机游程中，某个特定状态出现的次数是否远远超过真随机序列中的情况。如果是，则序列是非随机的。</li>
+<li>随机游走变量测试：目的是检测待测序列中，某一特定状态在一个游机游程中出现次数与真随机序列的偏离程度。如果偏离程度较大，则序列是非随机的。</li>
+</ul>
+</blockquote>
+<p>####1.4  xor-shift scheme</p>
+<p>好了，我们还是来看看xor-shift scheme吧。根据Wiki上的描述，该方法在计算机上奇快，比较好，只是有一些统计学测试点没过……但如果通过该方法加上一些非线性函数就可以轻松过所有测试点，轻松虐 <a href="https://en.wikipedia.org/wiki/Mersenne_Twister" target="_blank" rel="external">Mersenne Twister</a>以及<a href="https://en.wikipedia.org/wiki/Well_equidistributed_long-period_linear" target="_blank" rel="external">WELL</a>。</p>
+<p>当然该方法不是没有问题，x,y,z几个变量的初始值还得好好选选。估计人家搞加密的比较关系这些问题，咱们是在算hash冲突啊！</p>
+<p>O(∩<em>∩)O我们是在写Hash是吧，怎么越写越远啊O(∩</em>∩)O</p>
+<p>####1.5 小结</p>
+<p>总之可以看到，目前对于一个Object的hashCode方法的第一次计算，默认情况下是通过xor-shift scheme的一个伪随机函数生成的。</p>
+<p>那么第二次调用呢？事实上，hashcode值在第一次生成后会写入到内存里，和Object存储在一起（存在Object的头部），之后的调用直接从object里当一个property读出来就可以了。</p>
+<p>当然，还有部分陈旧的实现（老版本的JDK里）是通过使用Object存储的地址实现的。但这也存在一个问题，就算你第一次是按照当前Object的地址生成，以后都直接读取，但你GC要是用并行GC或者 SerialGC的时候Object是会被移动的，移动之后原来的地址上再生成Object会不会很容易Hash冲突呢？</p>
+<p>所以我觉得如果使用地址实现，至少也要再和GC Times进行一下位运算减少冲突次数。</p>
+<p>至此为止，一个Object的Hashcode生成方法就是这样了。</p>
+<p>###2. HashMap &amp;&amp; HashSet</p>
+<p>HashSet通过HashMap实现，这就不用说啥了。</p>
+<p>####2.1 HashMap里的hash函数<br>唯一值得说一说的就是HashMap.hash(int)方法。该方法输入key.hashCode又进行了很多位运算才返回HashMap里给Key使用的Hash值。</p>
+<p>为什么？</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">final int hash(Object k) &#123;</span><br><span class="line">    int <span class="keyword">h</span> = hashSeed;</span><br><span class="line">    <span class="keyword">if</span> (0 != <span class="keyword">h</span> &amp;&amp; k instanceof String) &#123;</span><br><span class="line">        <span class="keyword">return</span> sun.misc.Hashing.stringHash32((String) k);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">h</span> ^= k.hashCode();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This function ensures that hashCodes that differ only by</span></span><br><span class="line">    <span class="comment">// constant multiples at each bit position have a bounded</span></span><br><span class="line">    <span class="comment">// number of collisions (approximately 8 at default load factor).</span></span><br><span class="line">    <span class="keyword">h</span> ^= (<span class="keyword">h</span> &gt;&gt;&gt; 20) ^ (<span class="keyword">h</span> &gt;&gt;&gt; 12);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">h</span> ^ (<span class="keyword">h</span> &gt;&gt;&gt; 7) ^ (<span class="keyword">h</span> &gt;&gt;&gt; 4);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遗憾，还是没想明白，看别人的<a href="http://www.iteye.com/topic/709945" target="_blank" rel="external">blog</a>才明白的。</p>
+<p>基本思路很简单，与HashMap自身结合也很紧密。</p>
+<blockquote>
+<p>首先，hashMap是用一些桶存key，然后用拉链解决冲突的。而且每次扩容的时候是成倍扩容，所以通数量一定是1&lt;&lt;k的形式。</p>
+<p>那么我们假设某时刻，一个hashmap.tablesize=1&lt;&lt;11,这时 两个objectkey要入库，一个是hashvalue=M,另一个是M+(1&lt;&lt;13)。我们算index函数：</p>
+</blockquote>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">indexFor</span><span class="params">(<span class="keyword">int</span> h, <span class="keyword">int</span> length)</span> </span>&#123;</span><br><span class="line">      <span class="comment">// assert Integer.bitCount(length) == 1 : "length must be a non-zero power of 2";</span></span><br><span class="line">      <span class="keyword">return</span> h &amp; (length-<span class="number">1</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>index函数直接取前10位，显然M&amp;(1&lt;&lt;12-1)==(M+(1&lt;&lt;13))&amp;(1&lt;&lt;12-1)<br>因为他们的低11位本来就相同啊！</p>
+<p>看到问题了吧，虽然hash函数将每个obj与1&lt;&lt;32或者1&lt;&lt;64对应起来了，而且对应的很离散。但只要HashMap的size不是1&lt;&lt;32,那么就要把原hashcode 向一个更小的集合映射。而这个映射过程，就是这个HashMap里的hash过程。</p>
+<p>该过程保证了任何一个高位（比如前面例子里M 与 M+1&lt;&lt;13）的移动，都会在低位产生对应的影响。而不是直接截取Hashcode里的低位，从而使冲突变得显而易见。</p>
+<p>具体过程看图吧，太清楚了，感谢marystone。</p>
+</blockquote>
+<p><img src="http://7xl65g.com1.z0.glb.clouddn.com/hashprocess.jpg" alt="图"></p>
+<blockquote>
+<p>其中h^(h&gt;&gt;&gt;7)^(h&gt;&gt;&gt;4) 结果中的位运行标识是把h&gt;&gt;&gt;7 换成 h&gt;&gt;&gt;8来看。</p>
+<p>即最后h^(h&gt;&gt;&gt;8)^(h&gt;&gt;&gt;4) 运算后hashCode值每位数值如下： </p>
+<p>8=8 </p>
+<p>7=7^8 </p>
+<p>6=6^7^8</p>
+<p>5=5^8^7^6 </p>
+<p>4=4^7^6^5^8 </p>
+<p>3=3^8^6^5^8^4^7 </p>
+<p>2=2^7^5^4^7^3^8^6 </p>
+<p>1=1^6^4^3^8^6^2^7^5 </p>
+<p>结果中的1、2、3三位出现重复位^运算 </p>
+<p>3=3^8^6^5^8^4^7     -&gt;   3^6^5^4^7 </p>
+<p>2=2^7^5^4^7^3^8^6   -&gt;   2^5^4^3^8^6 </p>
+<p>1=1^6^4^3^8^6^2^7^5 -&gt;   1^4^3^8^2^7^5</p>
+<p>算法中是采用(h&gt;&gt;&gt;7)而不是(h&gt;&gt;&gt;8)的算法，应该是考虑1、2、3三位出现重复位^运算的情况。使得最低位上原hashCode的8位都参与了^运算，所以在table.length为默认值16的情况下面，hashCode任意位的变化基本都能反应到最终hash table 定位算法中，这种情况下只有原hashCode第3位高1位变化不会反应到结果中。</p>
+</blockquote>
+<p>关于Hashmap以及ConcurrentHashMap，和BloomFilter我们单开一章吧。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hash函数-xor-shift-scheme-HashCollections-BloomFilter/" rel="tag">#Hash函数 xor-shift scheme HashCollections BloomFilter</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/11/Binary IndexedTree/" rel="next">
+                Binary Indexed Tree 树状数组 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+          </div>
+        
+      </div>
+
+      
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="孟由" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">孟由</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">喜欢写作的码农</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+      
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-next-heart fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">孟由</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.2"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.2"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.2" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.2"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.2" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+
+      motionIntegrator.bootstrap();
+    });
+  </script>
+
+  
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+  </script>
+</body>
+</html>
