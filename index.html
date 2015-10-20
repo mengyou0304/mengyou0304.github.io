@@ -45,6 +45,8 @@
 					
 						<li><a href="/archives">Archives</a></li>
 					
+						<li><a href="/about">About</a></li>
+					
 					<li>
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
@@ -64,7 +66,7 @@
 
   <section class="post" itemscope itemprop="blogPost">
   
-    <a href="/2015/10/19/HashAndRelatedCollections/" title="Hash and related Collections" itemprop="url">
+    <a href="/2015/10/20/HashAndRelatedCollections/" title="Hash and related Collections" itemprop="url">
   
     <h1 itemprop="name">Hash and related Collections</h1>
     
@@ -72,7 +74,7 @@
            <p itemprop="description" >Hash函数与xor-shift scheme，HashCollections，BloomFilter根据定义，Hashcode用于帮助Equals更快速的鉴定两个对象是否相同，于此同时，HashCode也广泛运用于很多基于Hash的Collections。本文简要分析了Hash</p>
         
     
-    <time datetime="2015-10-19T03:24:25.000Z" itemprop="datePublished">2015-10-19</time>
+    <time datetime="2015-10-20T06:28:25.000Z" itemprop="datePublished">2015-10-20</time>
   </a>
 </section>
 
@@ -83,10 +85,9 @@
     <h1 itemprop="name">Kafka 新版Producer Java版代码阅读</h1>
     
      
-           <p itemprop="description" >###Kafka 新版Producer Java版代码阅读
-Kafka在0.8.2.1出了新版Producer，支持ack（仅Java版，因为通过JavaClient实现的）。因此对代码进行了简单阅读，并记录如下：
+           <p itemprop="description" >Kafka 新版Producer Java版代码阅读Kafka在0.8.2.1出了新版Producer，支持ack（仅Java版，因为通过JavaClient实现的）。因此对代码进行了简单阅读，并记录如下：
 接口如下：
-public Future&amp;lt;RecordMet</p>
+public Future&amp;lt;RecordMetadat</p>
         
     
     <time datetime="2015-10-10T16:00:00.000Z" itemprop="datePublished">2015-10-11</time>
@@ -100,13 +101,11 @@ public Future&amp;lt;RecordMet</p>
     <h1 itemprop="name">Future and FutureTask</h1>
     
      
-           <p itemprop="description" >##Java 中的Future以及FutureTask
-###参考文献
-
+           <p itemprop="description" >Java 中的Future以及FutureTask参考文献
 查阅sun.misc.Unsafe.compareAndSwapInt相关
 
 
-非阻塞同步算法与CAS(Compare and Swap)无锁算法： http://www.tuicool.com/artic</p>
+非阻塞同步算法与CAS(Compare and Swap)无锁算法： http://www.tuicool.com/articles/zuu</p>
         
     
     <time datetime="2015-10-10T16:00:00.000Z" itemprop="datePublished">2015-10-11</time>
@@ -120,13 +119,13 @@ public Future&amp;lt;RecordMet</p>
     <h1 itemprop="name">Borg论文翻译及理解</h1>
     
      
-           <p itemprop="description" >Borg论文翻译及理解1. AbstractGoogle的borg使用大量机器支持着数千个应用的10W个作业，其中部分单个集群规模超过万台机器。
+           <p itemprop="description" >Borg论文翻译及理解AbstractGoogle的borg使用大量机器支持着数千个应用的10W个作业，其中部分单个集群规模超过万台机器。
 其通过
 
 Adminition control
 Task-packing
 Over-commitment
-Machine sharin</p>
+Machine sharing w</p>
         
     
     <time datetime="2015-10-10T16:00:00.000Z" itemprop="datePublished">2015-10-11</time>
@@ -157,11 +156,10 @@ worker之间因为没有资源隔离，因此会出现不确定的wor</p>
     <h1 itemprop="name">对Paxos一点浅薄的认识</h1>
     
      
-           <p itemprop="description" >#对Paxos一点浅薄的认识
- Paxos作为大神的一篇经典之作，已经有太多的人尝试对其进行理解和解释。但很遗憾，由于本人理解能力有限，至今难以勾勒出对其一个清晰的轮廓。
+           <p itemprop="description" >对Paxos一点浅薄的认识 Paxos作为大神的一篇经典之作，已经有太多的人尝试对其进行理解和解释。但很遗憾，由于本人理解能力有限，至今难以勾勒出对其一个清晰的轮廓。
  因此尝试通过对本文的撰写理清一些思路。
-##1. 引言：Paxos到底用来做什么 
-在讨论这个问题之前，我</p>
+引言：Paxos到底用来做什么在讨论这个问题之前，我们不妨先想想：
+1</p>
         
     
     <time datetime="2015-10-10T16:00:00.000Z" itemprop="datePublished">2015-10-11</time>
@@ -292,9 +290,21 @@ http://www.infoq.com/cn/articles/k</p>
 </div>
 
 
-  <div class="rsspart">
-	<a href="null" target="_blank" title="rss">RSS 訂閱</a>
-</div>
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">標簽雲</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Borg/" style="font-size: 10px;">Borg</a> <a href="/tags/C4/" style="font-size: 10px;">C4</a> <a href="/tags/Details/" style="font-size: 13.33px;">Details</a> <a href="/tags/DistributedSystem/" style="font-size: 20px;">DistributedSystem</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/Hash/" style="font-size: 10px;">Hash</a> <a href="/tags/Heron/" style="font-size: 10px;">Heron</a> <a href="/tags/JDK-Details/" style="font-size: 10px;">JDK Details</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kafka/" style="font-size: 13.33px;">Kafka</a> <a href="/tags/Paxos/" style="font-size: 10px;">Paxos</a> <a href="/tags/Producer/" style="font-size: 10px;">Producer</a> <a href="/tags/Storm/" style="font-size: 10px;">Storm</a> <a href="/tags/Thread/" style="font-size: 10px;">Thread</a> <a href="/tags/bloomfilter/" style="font-size: 10px;">bloomfilter</a> <a href="/tags/cc/" style="font-size: 10px;">cc</a> <a href="/tags/树状数组/" style="font-size: 10px;">树状数组</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/翻译/" style="font-size: 16.67px;">翻译</a>
+    </div>
+  </div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">歸檔</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li></ul>
+  </div>
+
 
 </aside>
 </div>

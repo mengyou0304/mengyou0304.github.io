@@ -9,13 +9,13 @@
     
     <meta name="author" content="孟由">
     
-    <meta name="description" content="Borg论文翻译及理解1. AbstractGoogle的borg使用大量机器支持着数千个应用的10W个作业，其中部分单个集群规模超过万台机器。
+    <meta name="description" content="Borg论文翻译及理解AbstractGoogle的borg使用大量机器支持着数千个应用的10W个作业，其中部分单个集群规模超过万台机器。
 其通过
 
 Adminition control
 Task-packing
 Over-commitment
-Machine sharing with pro">
+Machine sharing with proces">
     
     
     
@@ -51,6 +51,8 @@ Machine sharing with pro">
 					
 						<li><a href="/archives">Archives</a></li>
 					
+						<li><a href="/about">About</a></li>
+					
 					<li>
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
@@ -79,7 +81,7 @@ Machine sharing with pro">
     </p>
   <p class="article-time">
     <time datetime="2015-10-10T16:00:00.000Z" itemprop="datePublished">2015-10-11</time>
-    更新日期:<time datetime="2015-10-19T03:23:47.000Z" itemprop="dateModified">2015-10-19</time>
+    更新日期:<time datetime="2015-10-20T06:28:00.000Z" itemprop="dateModified">2015-10-20</time>
     
   </p>
 </header>
@@ -88,10 +90,10 @@ Machine sharing with pro">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Borg论文翻译及理解"><span class="toc-number">1.</span> <span class="toc-text">Borg论文翻译及理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-_Abstract"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. Abstract</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-_Introduction"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-_用户眼中的Borg"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. 用户眼中的Borg</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1_Work_Load"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">3.1 Work Load</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2_Clusters_and_Cells"><span class="toc-number">1.0.3.2.</span> <span class="toc-text">3.2 Clusters and Cells</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3_作业概述"><span class="toc-number">1.0.3.3.</span> <span class="toc-text">3.3 作业概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4_作业的Alloc"><span class="toc-number">1.0.3.4.</span> <span class="toc-text">3.4 作业的Alloc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5_作业的Priority,_quota,_and_admission_control"><span class="toc-number">1.0.3.5.</span> <span class="toc-text">3.5 作业的Priority, quota, and admission control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6_Naming_and_monitoring"><span class="toc-number">1.0.3.6.</span> <span class="toc-text">3.6 Naming and monitoring</span></a></li></ol></li></ol></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Borg论文翻译及理解"><span class="toc-number">1.</span> <span class="toc-text">Borg论文翻译及理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Abstract"><span class="toc-number">1.0.1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-number">1.0.2.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户眼中的Borg"><span class="toc-number">1.0.3.</span> <span class="toc-text">用户眼中的Borg</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Work_Load"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">Work Load</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Clusters_and_Cells"><span class="toc-number">1.0.3.2.</span> <span class="toc-text">Clusters and Cells</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作业概述"><span class="toc-number">1.0.3.3.</span> <span class="toc-text">作业概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作业的Alloc"><span class="toc-number">1.0.3.4.</span> <span class="toc-text">作业的Alloc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作业的Priority,_quota,_and_admission_control"><span class="toc-number">1.0.3.5.</span> <span class="toc-text">作业的Priority, quota, and admission control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Naming_and_monitoring"><span class="toc-number">1.0.3.6.</span> <span class="toc-text">Naming and monitoring</span></a></li></ol></li></ol></li></ol></li></ol>
 		</div>
 		
-		<h1 id="Borg论文翻译及理解">Borg论文翻译及理解</h1><h3 id="1-_Abstract">1. Abstract</h3><p>Google的borg使用大量机器支持着数千个应用的10W个作业，其中部分单个集群规模超过万台机器。</p>
+		<h1 id="Borg论文翻译及理解">Borg论文翻译及理解</h1><h3 id="Abstract">Abstract</h3><p>Google的borg使用大量机器支持着数千个应用的10W个作业，其中部分单个集群规模超过万台机器。</p>
 <p>其通过</p>
 <ol>
 <li>Adminition control</li>
@@ -106,7 +108,7 @@ Machine sharing with pro">
 <li>Real time job monitoring </li>
 <li>Tools to analyze and simulate system behavior</li>
 </ul>
-<h3 id="2-_Introduction">2. Introduction</h3><p>Borg 主要得益于三点：</p>
+<h3 id="Introduction">Introduction</h3><p>Borg 主要得益于三点：</p>
 <ol>
 <li>他隐藏了Resource Management以及Failure Handling的细节，所以保证他的用户可以focus在应用开发本身。</li>
 <li>其本身就具有高可用性以及高可靠性，与此同时，也保证运行其上的应用具有同样的特性。</li>
@@ -114,28 +116,28 @@ Machine sharing with pro">
 </ol>
 <p>Borg当然不是第一个提出这些问题的软件，但是的确是第一个在如此规模运行的软件。</p>
 <p><img src="http://7xl65g.com1.z0.glb.clouddn.com/Borgp1.png" alt="Borg整体结构图"></p>
-<h3 id="3-_用户眼中的Borg">3. 用户眼中的Borg</h3><p>在Google开发工程师眼中，他们将作业提交到Borg，Borg将他们的作业运行在Borg Cell中。每个Borg Cell可能有多达上万台机器构成。本节主要介绍在开发者眼中的borg。</p>
-<h4 id="3-1_Work_Load">3.1 Work Load</h4><p>Borg支持异质的workload，其主要包括两种：</p>
+<h3 id="用户眼中的Borg">用户眼中的Borg</h3><p>在Google开发工程师眼中，他们将作业提交到Borg，Borg将他们的作业运行在Borg Cell中。每个Borg Cell可能有多达上万台机器构成。本节主要介绍在开发者眼中的borg。</p>
+<h4 id="Work_Load">Work Load</h4><p>Borg支持异质的workload，其主要包括两种：</p>
 <ul>
 <li>一种是never goes down Service 如 Gmail Google Doc，这些服务是latency-sensitive的（ms level）</li>
 <li>另外一种是Batch Job 如Mapreduce作业。这些任务可能运行几天后完成，这些相比之前的服务对延时并没有那么敏感。</li>
 </ul>
 <p>在此文当中，我们将高priority任务称之为Prod（production），其他的则称为non-prod。大部分第一种任务是prod任务，而batch任务大部分则为none-prod任务。</p>
 <p>在一个典型的Cell中，prod类型任务占有70%的CPU资源，并利用了其中的60%，同时占用了55%的内存，并使用了其中的85%。</p>
-<h4 id="3-2_Clusters_and_Cells">3.2 Clusters and Cells</h4><p>一个Cluster往往用于描述处在同一个机房中的一部分机器，一个Cluster往往具有个Cell，部分Cluster还具有Test Cell以及其他具有其他功能的Cell。</p>
+<h4 id="Clusters_and_Cells">Clusters and Cells</h4><p>一个Cluster往往用于描述处在同一个机房中的一部分机器，一个Cluster往往具有个Cell，部分Cluster还具有Test Cell以及其他具有其他功能的Cell。</p>
 <p>一般一个中等规模的Cell具有1w个左右的机器，而且其中的机器并非同构架机器，可能different in cpu mem dist network。但Borg屏蔽了这些特异性，对于developer而言，一切都是一样的，包括故障处理，监控以及依赖等等。</p>
 <p><img src="http://7xl65g.com1.z0.glb.clouddn.com/borgp2.png" alt="task生命周期"></p>
-<h4 id="3-3_作业概述">3.3 作业概述</h4><p>每个Job在一个Cell中进行执行，与此同时，可以为每个job分配名字，以及该job希望其所属的task执行的环境（包括CPU类型，IP，System arc等等）。</p>
+<h4 id="作业概述">作业概述</h4><p>每个Job在一个Cell中进行执行，与此同时，可以为每个job分配名字，以及该job希望其所属的task执行的环境（包括CPU类型，IP，System arc等等）。</p>
 <p>每个job在执行过程会会映射到多个机器的多个进程上。值得注意的是，大部分作业并没有映射到一个虚拟机上，因为我们不希望因为虚拟机的原因付出更多的资源，另一个原因是Borg产生在一个虚拟化还不那么流行的年代-。-！</p>
 <p>对于每个task而言，每个task同样可以指定希望执行的环境，当然，其中但部分内容还是继承自job，但允许被overriden。在每个机器上，我们并不使用类似slot的方式约定每个机器上可执行的task数量。Borg程序在运行环境被静态链接了以减少执行依赖，且这些borg程序会以package或者binary file的形式由Borg系统进行传递。</p>
 <p>对于每个borg程序，Borg具有监控工具以及commandline供需以支持用户对自己的job进行操作以及监控。大部分作业描述是以BCL的方式进行描述的，该方式类似GCL，同时BCL也支持lambda函数。图2展示了job的生命周期</p>
 <p>对于一个运行中的Job而言，用户可以通过向Borg推送一个新的配置文件来对Job的（配置、属性、甚至执行文件）进行更改，而后命令Borg针对新的配置文件update。这种update是一种轻量级的非原子性的操作，因此在完成之前很容易被撤销。其中一些更新可能需要task重启，而一些更新使得job不再适配原来所在的机器，因此这些job会被停止并reschedule，而其他一些任务则可以直接继续执行。</p>
 <p>这些task会首先通过Unix的 SIGTERM进行通知，而后进行SIGKILL。所以他们有时间进行 clean up，save status，完成请求响应以及拒绝新的请求。</p>
-<h4 id="3-4_作业的Alloc">3.4 作业的Alloc</h4><p>对Borg而言，Borg Alloc是机器上被预留出的一批资源，从而保证真正的task可以运行在其中。因此alloc可以用于预留出一部分资源给未来的task，或者在task重启的过程中为其一直保持资源，还或者把运行在不同机器上的task移动到一起。</p>
+<h4 id="作业的Alloc">作业的Alloc</h4><p>对Borg而言，Borg Alloc是机器上被预留出的一批资源，从而保证真正的task可以运行在其中。因此alloc可以用于预留出一部分资源给未来的task，或者在task重启的过程中为其一直保持资源，还或者把运行在不同机器上的task移动到一起。</p>
 <p>对于Alloc中的资源的使用，如同一台机器一样，如果有多个任务在一个alloc中，则他们会共享其中的资源。</p>
 <p>因此Alloc set更像是一个job，一大堆alloc在不同的机器上都预留了资源。当alloc set被建立之后，一个或者多个任务就可以在alloc set中进行执行。</p>
 <p>为了简洁起见，我们用task来表示单个的alloc或者alloc其中运行的任务，而使用job来表示一个alloc set 或者大型的运行其中的任务。</p>
-<h4 id="3-5_作业的Priority,_quota,_and_admission_control">3.5 作业的Priority, quota, and admission control</h4><p>我们通过Quota以及Priority综合对作业进行控制。</p>
+<h4 id="作业的Priority,_quota,_and_admission_control">作业的Priority, quota, and admission control</h4><p>我们通过Quota以及Priority综合对作业进行控制。</p>
 <ul>
 <li>Priority用于描述作业重要程度，用于在同一个Cell中作业之间竞争资源时进行判定。</li>
 </ul>
@@ -151,7 +153,7 @@ Machine sharing with pro">
 <p>高权限的quota cost more than 低权限quota。而且会对高权限的quota资源有限（例如production权限的计算资源只占整个Cell的20%，而更低权限的计算资源Quota可能更多）。我们鼓励用户在申请资源的时候仅仅足够运行的资源，而非申请额外富裕的资源。但还是会有很多用户overbuy资源，因为这样可以杜绝在未来因为用户的增长而增长的资源使用。</p>
 <p>对于最低权限的作业，其具有无限的quota。然并卵，很多时候底level的作业可能虽然通过了quota审核，但是却因为没有实际资源而无法被调度上cell。</p>
 <p>对于Quota如何分配的问题，是在Borg之外进行的。而且这与机器，以及我们对机器的预期密切相关。更多请去看参考文献[29, 35, 36, 66]</p>
-<h4 id="3-6_Naming_and_monitoring">3.6 Naming and monitoring</h4><p>当然仅仅是</p>
+<h4 id="Naming_and_monitoring">Naming and monitoring</h4><p>当然仅仅是</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -171,7 +173,7 @@ Machine sharing with pro">
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/10/11/borg论文翻译及理解/" data-title="Borg论文翻译及理解 | 梦想" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/10/11/borg论文翻译及理解/" data-title="Borg论文翻译及理解 | 梦想" data-tsina="undefined" class="share clearfix">
   </div>
 
 </div>
@@ -205,7 +207,7 @@ Machine sharing with pro">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Borg论文翻译及理解"><span class="toc-number">1.</span> <span class="toc-text">Borg论文翻译及理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-_Abstract"><span class="toc-number">1.0.1.</span> <span class="toc-text">1. Abstract</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-_Introduction"><span class="toc-number">1.0.2.</span> <span class="toc-text">2. Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-_用户眼中的Borg"><span class="toc-number">1.0.3.</span> <span class="toc-text">3. 用户眼中的Borg</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1_Work_Load"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">3.1 Work Load</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2_Clusters_and_Cells"><span class="toc-number">1.0.3.2.</span> <span class="toc-text">3.2 Clusters and Cells</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3_作业概述"><span class="toc-number">1.0.3.3.</span> <span class="toc-text">3.3 作业概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4_作业的Alloc"><span class="toc-number">1.0.3.4.</span> <span class="toc-text">3.4 作业的Alloc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5_作业的Priority,_quota,_and_admission_control"><span class="toc-number">1.0.3.5.</span> <span class="toc-text">3.5 作业的Priority, quota, and admission control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6_Naming_and_monitoring"><span class="toc-number">1.0.3.6.</span> <span class="toc-text">3.6 Naming and monitoring</span></a></li></ol></li></ol></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Borg论文翻译及理解"><span class="toc-number">1.</span> <span class="toc-text">Borg论文翻译及理解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Abstract"><span class="toc-number">1.0.1.</span> <span class="toc-text">Abstract</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Introduction"><span class="toc-number">1.0.2.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#用户眼中的Borg"><span class="toc-number">1.0.3.</span> <span class="toc-text">用户眼中的Borg</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Work_Load"><span class="toc-number">1.0.3.1.</span> <span class="toc-text">Work Load</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Clusters_and_Cells"><span class="toc-number">1.0.3.2.</span> <span class="toc-text">Clusters and Cells</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作业概述"><span class="toc-number">1.0.3.3.</span> <span class="toc-text">作业概述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作业的Alloc"><span class="toc-number">1.0.3.4.</span> <span class="toc-text">作业的Alloc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#作业的Priority,_quota,_and_admission_control"><span class="toc-number">1.0.3.5.</span> <span class="toc-text">作业的Priority, quota, and admission control</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Naming_and_monitoring"><span class="toc-number">1.0.3.6.</span> <span class="toc-text">Naming and monitoring</span></a></li></ol></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
@@ -282,9 +284,21 @@ Machine sharing with pro">
 </div>
 
 
-  <div class="rsspart">
-	<a href="null" target="_blank" title="rss">RSS 訂閱</a>
-</div>
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">標簽雲</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Borg/" style="font-size: 10px;">Borg</a> <a href="/tags/C4/" style="font-size: 10px;">C4</a> <a href="/tags/Details/" style="font-size: 13.33px;">Details</a> <a href="/tags/DistributedSystem/" style="font-size: 20px;">DistributedSystem</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/Hash/" style="font-size: 10px;">Hash</a> <a href="/tags/Heron/" style="font-size: 10px;">Heron</a> <a href="/tags/JDK-Details/" style="font-size: 10px;">JDK Details</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kafka/" style="font-size: 13.33px;">Kafka</a> <a href="/tags/Paxos/" style="font-size: 10px;">Paxos</a> <a href="/tags/Producer/" style="font-size: 10px;">Producer</a> <a href="/tags/Storm/" style="font-size: 10px;">Storm</a> <a href="/tags/Thread/" style="font-size: 10px;">Thread</a> <a href="/tags/bloomfilter/" style="font-size: 10px;">bloomfilter</a> <a href="/tags/cc/" style="font-size: 10px;">cc</a> <a href="/tags/树状数组/" style="font-size: 10px;">树状数组</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/翻译/" style="font-size: 16.67px;">翻译</a>
+    </div>
+  </div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">歸檔</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li></ul>
+  </div>
+
 
 </aside>
 </div>

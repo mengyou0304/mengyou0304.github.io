@@ -47,6 +47,8 @@
 					
 						<li><a href="/archives">Archives</a></li>
 					
+						<li><a href="/about">About</a></li>
+					
 					<li>
 					
 					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
@@ -75,7 +77,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-08-10T16:00:00.000Z" itemprop="datePublished">2015-08-11</time>
-    更新日期:<time datetime="2015-10-19T03:23:26.000Z" itemprop="dateModified">2015-10-19</time>
+    更新日期:<time datetime="2015-10-20T06:28:00.000Z" itemprop="dateModified">2015-10-20</time>
     
   </p>
 </header>
@@ -84,7 +86,7 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Binary_Indexed_Tree_树状数组"><span class="toc-number">1.</span> <span class="toc-text">Binary Indexed Tree 树状数组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入的问题"><span class="toc-number">1.1.</span> <span class="toc-text">引入的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题1"><span class="toc-number">1.2.</span> <span class="toc-text">问题1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题2"><span class="toc-number">1.3.</span> <span class="toc-text">问题2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#树状数组的解法"><span class="toc-number">1.4.</span> <span class="toc-text">树状数组的解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求解问题2"><span class="toc-number">1.4.1.</span> <span class="toc-text">求解问题2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解问题1"><span class="toc-number">1.4.2.</span> <span class="toc-text">求解问题1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解MeetingRoomII"><span class="toc-number">1.4.3.</span> <span class="toc-text">求解MeetingRoomII</span></a></li></ol></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Binary_Indexed_Tree_树状数组"><span class="toc-number">1.</span> <span class="toc-text">Binary Indexed Tree 树状数组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入的问题"><span class="toc-number">1.1.</span> <span class="toc-text">引入的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题1"><span class="toc-number">1.2.</span> <span class="toc-text">问题1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题2"><span class="toc-number">1.3.</span> <span class="toc-text">问题2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#树状数组的解法"><span class="toc-number">1.4.</span> <span class="toc-text">树状数组的解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本设计"><span class="toc-number">1.4.1.</span> <span class="toc-text">基本设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解问题2"><span class="toc-number">1.4.2.</span> <span class="toc-text">求解问题2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解问题1"><span class="toc-number">1.4.3.</span> <span class="toc-text">求解问题1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解MeetingRoomII"><span class="toc-number">1.4.4.</span> <span class="toc-text">求解MeetingRoomII</span></a></li></ol></li></ol></li></ol>
 		</div>
 		
 		<h1 id="Binary_Indexed_Tree_树状数组">Binary Indexed Tree 树状数组</h1><p>做Leetcode 做到MeetingRoomII的时候我知道不用线段树或者树状数组是不太好搞了。还是来学习一下吧。</p>
@@ -119,8 +121,7 @@ return <span class="function"><span class="title">ar</span><span class="params">
 <p>图看上去很容易理解，我们希望将中间结果（1~2）（5~8）等存在另外一个数组B[]里，剩下的问题只有一个，怎么把这些节点向数组的index映射？而且这个映射显然是算法可描述的，这样在计算时才能容易找到各个节点。</p>
 <p><img src="http://7xl65g.com1.z0.glb.clouddn.com/binaryIndexTree2.png" alt="图2"></p>
 <p>究竟怎样想出来的这种映射方式已经不得而知，但的确是个很神妙的构想，这也是Binary Index Tree的精髓了。</p>
-<p>###基本设计</p>
-<p>图2中黄色的块被废弃了,如果用a-&gt;b表示a存入b则：</p>
+<h3 id="基本设计">基本设计</h3><p>图2中黄色的块被废弃了,如果用a-&gt;b表示a存入b则：</p>
 <pre><code>(<span class="number">1</span>~<span class="number">2</span>)-&gt;<span class="number">2</span>
 (<span class="number">1</span>~<span class="number">4</span>)-&gt;<span class="number">4</span>
 (<span class="number">5</span>~<span class="number">6</span>)-&gt;<span class="number">6</span>
@@ -184,7 +185,7 @@ return <span class="function"><span class="title">ar</span><span class="params">
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/08/11/Binary IndexedTree/" data-title="Binary Indexed Tree 树状数组 | 梦想" data-tsina="null" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/08/11/Binary IndexedTree/" data-title="Binary Indexed Tree 树状数组 | 梦想" data-tsina="undefined" class="share clearfix">
   </div>
 
 </div>
@@ -210,7 +211,7 @@ return <span class="function"><span class="title">ar</span><span class="params">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Binary_Indexed_Tree_树状数组"><span class="toc-number">1.</span> <span class="toc-text">Binary Indexed Tree 树状数组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入的问题"><span class="toc-number">1.1.</span> <span class="toc-text">引入的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题1"><span class="toc-number">1.2.</span> <span class="toc-text">问题1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题2"><span class="toc-number">1.3.</span> <span class="toc-text">问题2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#树状数组的解法"><span class="toc-number">1.4.</span> <span class="toc-text">树状数组的解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#求解问题2"><span class="toc-number">1.4.1.</span> <span class="toc-text">求解问题2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解问题1"><span class="toc-number">1.4.2.</span> <span class="toc-text">求解问题1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解MeetingRoomII"><span class="toc-number">1.4.3.</span> <span class="toc-text">求解MeetingRoomII</span></a></li></ol></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Binary_Indexed_Tree_树状数组"><span class="toc-number">1.</span> <span class="toc-text">Binary Indexed Tree 树状数组</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引入的问题"><span class="toc-number">1.1.</span> <span class="toc-text">引入的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题1"><span class="toc-number">1.2.</span> <span class="toc-text">问题1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题2"><span class="toc-number">1.3.</span> <span class="toc-text">问题2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#树状数组的解法"><span class="toc-number">1.4.</span> <span class="toc-text">树状数组的解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本设计"><span class="toc-number">1.4.1.</span> <span class="toc-text">基本设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解问题2"><span class="toc-number">1.4.2.</span> <span class="toc-text">求解问题2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解问题1"><span class="toc-number">1.4.3.</span> <span class="toc-text">求解问题1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#求解MeetingRoomII"><span class="toc-number">1.4.4.</span> <span class="toc-text">求解MeetingRoomII</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
@@ -287,9 +288,21 @@ return <span class="function"><span class="title">ar</span><span class="params">
 </div>
 
 
-  <div class="rsspart">
-	<a href="null" target="_blank" title="rss">RSS 訂閱</a>
-</div>
+  
+  <div class="tagcloudlist">
+    <p class="asidetitle">標簽雲</p>
+    <div class="tagcloudlist clearfix">
+       <a href="/tags/Borg/" style="font-size: 10px;">Borg</a> <a href="/tags/C4/" style="font-size: 10px;">C4</a> <a href="/tags/Details/" style="font-size: 13.33px;">Details</a> <a href="/tags/DistributedSystem/" style="font-size: 20px;">DistributedSystem</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/Google/" style="font-size: 10px;">Google</a> <a href="/tags/Hash/" style="font-size: 10px;">Hash</a> <a href="/tags/Heron/" style="font-size: 10px;">Heron</a> <a href="/tags/JDK-Details/" style="font-size: 10px;">JDK Details</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kafka/" style="font-size: 13.33px;">Kafka</a> <a href="/tags/Paxos/" style="font-size: 10px;">Paxos</a> <a href="/tags/Producer/" style="font-size: 10px;">Producer</a> <a href="/tags/Storm/" style="font-size: 10px;">Storm</a> <a href="/tags/Thread/" style="font-size: 10px;">Thread</a> <a href="/tags/bloomfilter/" style="font-size: 10px;">bloomfilter</a> <a href="/tags/cc/" style="font-size: 10px;">cc</a> <a href="/tags/树状数组/" style="font-size: 10px;">树状数组</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/翻译/" style="font-size: 16.67px;">翻译</a>
+    </div>
+  </div>
+
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">歸檔</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a><span class="archive-list-count">1</span></li></ul>
+  </div>
+
 
 </aside>
 </div>
