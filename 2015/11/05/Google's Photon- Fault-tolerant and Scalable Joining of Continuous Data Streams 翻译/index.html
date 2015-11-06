@@ -4,19 +4,12 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Future and FutureTask | 梦想</title>
+    <title>Google&#39;s Photon Fault-tolerant and Scalable Joining of Continuous Data Streams | 梦想</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="孟由">
     
-    <meta name="description" content="Java 中的Future以及FutureTask参考文献
-查阅sun.misc.Unsafe.compareAndSwapInt相关
-
-
-非阻塞同步算法与CAS(Compare and Swap)无锁算法： http://www.tuicool.com/articles/zuui6z
-
-
-Doug">
+    <meta name="description" content="Google’s Photon: Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译引言做的事情还是stream processing里的join。如果说主要的特色，那就是应用场景以及可靠性了。Photon是一个地理上分">
     
     
     
@@ -74,15 +67,15 @@ Doug">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/11/java_中的future以及futuretask/" title="Future and FutureTask" itemprop="url">Future and FutureTask</a>
+      <a href="/2015/11/05/Google's Photon- Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译/" title="Google&#39;s Photon Fault-tolerant and Scalable Joining of Continuous Data Streams" itemprop="url">Google&#39;s Photon Fault-tolerant and Scalable Joining of Continuous Data Streams</a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="孟由">孟由</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-10-10T16:00:00.000Z" itemprop="datePublished">2015-10-11</time>
-    更新日期:<time datetime="2015-10-20T06:28:00.000Z" itemprop="dateModified">2015-10-20</time>
+    <time datetime="2015-11-04T16:00:00.000Z" itemprop="datePublished">2015-11-05</time>
+    更新日期:<time datetime="2015-11-06T04:36:57.000Z" itemprop="dateModified">2015-11-06</time>
     
   </p>
 </header>
@@ -91,45 +84,43 @@ Doug">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_中的Future以及FutureTask"><span class="toc-number">1.</span> <span class="toc-text">Java 中的Future以及FutureTask</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文献"><span class="toc-number">1.1.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Google’s_Photon:_Fault-tolerant_and_Scalable_Joining_of_Continuous_Data_Streams_翻译"><span class="toc-number">1.</span> <span class="toc-text">Google’s Photon: Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用例分析"><span class="toc-number">1.2.</span> <span class="toc-text">用例分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题重描述"><span class="toc-number">1.2.1.</span> <span class="toc-text">问题重描述</span></a></li></ol></li></ol></li></ol>
 		</div>
 		
-		<h2 id="Java_中的Future以及FutureTask">Java 中的Future以及FutureTask</h2><h3 id="参考文献">参考文献</h3><ul>
-<li>查阅sun.misc.Unsafe.compareAndSwapInt相关</li>
-</ul>
-<ul>
-<li>非阻塞同步算法与CAS(Compare and Swap)无锁算法： <a href="http://www.tuicool.com/articles/zuui6z" target="_blank" rel="external">http://www.tuicool.com/articles/zuui6z</a></li>
-</ul>
-<ul>
-<li><p>Doug Lea的malloc ：<a href="http://article.yeeyan.org/view/25646/6380" target="_blank" rel="external">http://article.yeeyan.org/view/25646/6380</a></p>
-</li>
-<li><p>Doug Lea关于NIO的报告</p>
-</li>
-<li><p>一切其他的设计模式相关的报告 <a href="http://openhom" target="_blank" rel="external">http://openhom</a><br>e.cc/Gossip/DesignPattern</p>
-</li>
-<li><p>最经常被问到的一些线程问题 <a href="http://www.cnblogs.com/dolphin0520/p/3958019.html" target="_blank" rel="external">http://www.cnblogs.com/dolphin0520/p/3958019.html</a></p>
-</li>
-</ul>
+		<h1 id="Google’s_Photon:_Fault-tolerant_and_Scalable_Joining_of_Continuous_Data_Streams_翻译">Google’s Photon: Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译</h1><h2 id="引言">引言</h2><p>做的事情还是stream processing里的join。如果说主要的特色，那就是应用场景以及可靠性了。Photon是一个地理上分布的，低延时，高可靠，支持 at-least once以及nearly exactly once语义的 stream join系统。</p>
+<p>Photon用于Google的广告系统中，主要用来将query与user action进行join操作以期望获得多的广告相关信息（billing/business metrics）。性能达到100w/s且端到端的延时小于10s。</p>
+<p>弱弱的吹一句水，如果不是地域分离，我们蓝汛的日志都到了200w/s了。</p>
+<h2 id="用例分析">用例分析</h2><p>首先，join用户操作很重要，比如用户如下操作</p>
+<ol>
+<li>搜索关键词，即query，系统分配query_id，产生搜索结果</li>
+<li>用户看了一会，click了几个结果</li>
+<li>用户又看了一会，又click了几个结果</li>
+</ol>
+<p>Server显然知道每次操作，可以对这些操作生成日志，写入GFS，这没有问题。但问题在于我们如何将这三个信息有效的结合在一起？</p>
+<p>显然结合这两部操作可以获得更多信息（比如哪个搜索结果更符合等等）。但这两部分操作在时间上是分开进行的。将1-2，1-3结合很容易，可以直接在每次http请求的时候带上query内容，但如何将2-3迅速结合呢？都入库再查询？想想都慢。</p>
+<p>等灯等灯，Photon出场。就是用于解决这个问题的。</p>
+<h3 id="问题重描述">问题重描述</h3><p>我们将query log以及click log抽象成两条数据流，因此问题变成系统持续输入两条事件流，输出应该是将其join之后的结果。</p>
+<p>那么从数据库的角度从新理一遍吧：query以及click分为两张表，通过一个外键（foreign key）关联。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/JDK-Details/">JDK Details</a><a href="/tags/Java/">Java</a><a href="/tags/Thread/">Thread</a>
+  <span></span> <a href="/tags/Google/">Google</a><a href="/tags/Photon/">Photon</a><a href="/tags/翻译/">翻译</a>
   </div>
 
 
 <div class="article-categories">
   <span></span>
-  <a class="article-category-link" href="/categories/JDK-Details/">JDK Details</a>
+  <a class="article-category-link" href="/categories/Google/">Google</a>
 </div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/10/11/java_中的future以及futuretask/" data-title="Future and FutureTask | 梦想" data-tsina="undefined" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/11/05/Google's Photon- Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译/" data-title="Google&#39;s Photon Fault-tolerant and Scalable Joining of Continuous Data Streams | 梦想" data-tsina="undefined" class="share clearfix">
   </div>
 
 </div>
@@ -139,18 +130,18 @@ Doug">
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/10/20/HashAndRelatedCollections/" title="Hash and related Collections">
+ <a href="/2015/11/06/深入理解计算机系统笔记/" title="">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  Hash and related Collections</span>
+  (no title)</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/10/11/borg论文翻译及理解/"  title="Borg论文翻译及理解">
+<a href="/2015/11/05/随笔_增广贤文摘抄/"  title="增广贤文">
  <strong>NEXT:</strong><br/> 
- <span>Borg论文翻译及理解
+ <span>增广贤文
 </span>
 </a>
 </div>
@@ -163,7 +154,7 @@ Doug">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_中的Future以及FutureTask"><span class="toc-number">1.</span> <span class="toc-text">Java 中的Future以及FutureTask</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文献"><span class="toc-number">1.1.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Google’s_Photon:_Fault-tolerant_and_Scalable_Joining_of_Continuous_Data_Streams_翻译"><span class="toc-number">1.</span> <span class="toc-text">Google’s Photon: Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用例分析"><span class="toc-number">1.2.</span> <span class="toc-text">用例分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题重描述"><span class="toc-number">1.2.1.</span> <span class="toc-text">问题重描述</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">

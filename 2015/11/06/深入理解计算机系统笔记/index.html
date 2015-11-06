@@ -4,19 +4,15 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Future and FutureTask | 梦想</title>
+    <title>梦想</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="孟由">
     
-    <meta name="description" content="Java 中的Future以及FutureTask参考文献
-查阅sun.misc.Unsafe.compareAndSwapInt相关
+    <meta name="description" content="深入理解计算机系统笔记第一章操作系统的功能
 
-
-非阻塞同步算法与CAS(Compare and Swap)无锁算法： http://www.tuicool.com/articles/zuui6z
-
-
-Doug">
+防止硬件被失控的应用程序滥用
+向应用程序提供简单一致的机制控制复杂而大相径庭的硬件。">
     
     
     
@@ -74,15 +70,15 @@ Doug">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/11/java_中的future以及futuretask/" title="Future and FutureTask" itemprop="url">Future and FutureTask</a>
+      <a href="/2015/11/06/深入理解计算机系统笔记/" title="" itemprop="url"></a>
   </h1>
   <p class="article-author">By
     
       <a href="http://yoursite.com" title="孟由">孟由</a>
     </p>
   <p class="article-time">
-    <time datetime="2015-10-10T16:00:00.000Z" itemprop="datePublished">2015-10-11</time>
-    更新日期:<time datetime="2015-10-20T06:28:00.000Z" itemprop="dateModified">2015-10-20</time>
+    <time datetime="2015-11-06T01:43:56.000Z" itemprop="datePublished">2015-11-06</time>
+    更新日期:<time datetime="2015-11-03T02:52:21.000Z" itemprop="dateModified">2015-11-03</time>
     
   </p>
 </header>
@@ -91,45 +87,24 @@ Doug">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_中的Future以及FutureTask"><span class="toc-number">1.</span> <span class="toc-text">Java 中的Future以及FutureTask</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文献"><span class="toc-number">1.1.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#深入理解计算机系统笔记"><span class="toc-number">1.</span> <span class="toc-text">深入理解计算机系统笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章"><span class="toc-number">1.1.</span> <span class="toc-text">第一章</span></a></li></ol></li></ol>
 		</div>
 		
-		<h2 id="Java_中的Future以及FutureTask">Java 中的Future以及FutureTask</h2><h3 id="参考文献">参考文献</h3><ul>
-<li>查阅sun.misc.Unsafe.compareAndSwapInt相关</li>
-</ul>
+		<h1 id="深入理解计算机系统笔记">深入理解计算机系统笔记</h1><h2 id="第一章">第一章</h2><p>操作系统的功能</p>
 <ul>
-<li>非阻塞同步算法与CAS(Compare and Swap)无锁算法： <a href="http://www.tuicool.com/articles/zuui6z" target="_blank" rel="external">http://www.tuicool.com/articles/zuui6z</a></li>
-</ul>
-<ul>
-<li><p>Doug Lea的malloc ：<a href="http://article.yeeyan.org/view/25646/6380" target="_blank" rel="external">http://article.yeeyan.org/view/25646/6380</a></p>
-</li>
-<li><p>Doug Lea关于NIO的报告</p>
-</li>
-<li><p>一切其他的设计模式相关的报告 <a href="http://openhom" target="_blank" rel="external">http://openhom</a><br>e.cc/Gossip/DesignPattern</p>
-</li>
-<li><p>最经常被问到的一些线程问题 <a href="http://www.cnblogs.com/dolphin0520/p/3958019.html" target="_blank" rel="external">http://www.cnblogs.com/dolphin0520/p/3958019.html</a></p>
-</li>
+<li>防止硬件被失控的应用程序滥用</li>
+<li>向应用程序提供简单一致的机制控制复杂而大相径庭的硬件。</li>
 </ul>
   
 	</div>
 		<footer class="article-footer clearfix">
 
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/JDK-Details/">JDK Details</a><a href="/tags/Java/">Java</a><a href="/tags/Thread/">Thread</a>
-  </div>
-
-
-<div class="article-categories">
-  <span></span>
-  <a class="article-category-link" href="/categories/JDK-Details/">JDK Details</a>
-</div>
 
 
 
 <div class="article-share" id="share">
 
-  <div data-url="http://yoursite.com/2015/10/11/java_中的future以及futuretask/" data-title="Future and FutureTask | 梦想" data-tsina="undefined" class="share clearfix">
+  <div data-url="http://yoursite.com/2015/11/06/深入理解计算机系统笔记/" data-title="梦想" data-tsina="undefined" class="share clearfix">
   </div>
 
 </div>
@@ -138,19 +113,11 @@ Doug">
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2015/10/20/HashAndRelatedCollections/" title="Hash and related Collections">
-  <strong>PREVIOUS:</strong><br/>
-  <span>
-  Hash and related Collections</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2015/10/11/borg论文翻译及理解/"  title="Borg论文翻译及理解">
+<a href="/2015/11/05/Google's Photon- Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译/"  title="Google&#39;s Photon Fault-tolerant and Scalable Joining of Continuous Data Streams">
  <strong>NEXT:</strong><br/> 
- <span>Borg论文翻译及理解
+ <span>Google&#39;s Photon Fault-tolerant and Scalable Joining of Continuous Data Streams
 </span>
 </a>
 </div>
@@ -163,7 +130,7 @@ Doug">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java_中的Future以及FutureTask"><span class="toc-number">1.</span> <span class="toc-text">Java 中的Future以及FutureTask</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#参考文献"><span class="toc-number">1.1.</span> <span class="toc-text">参考文献</span></a></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#深入理解计算机系统笔记"><span class="toc-number">1.</span> <span class="toc-text">深入理解计算机系统笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#第一章"><span class="toc-number">1.1.</span> <span class="toc-text">第一章</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
