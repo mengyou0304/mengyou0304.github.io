@@ -75,7 +75,7 @@
     </p>
   <p class="article-time">
     <time datetime="2015-11-04T16:00:00.000Z" itemprop="datePublished">2015-11-05</time>
-    更新日期:<time datetime="2015-11-06T04:36:57.000Z" itemprop="dateModified">2015-11-06</time>
+    更新日期:<time datetime="2015-11-09T08:58:48.000Z" itemprop="dateModified">2015-11-09</time>
     
   </p>
 </header>
@@ -84,7 +84,7 @@
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Google’s_Photon:_Fault-tolerant_and_Scalable_Joining_of_Continuous_Data_Streams_翻译"><span class="toc-number">1.</span> <span class="toc-text">Google’s Photon: Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用例分析"><span class="toc-number">1.2.</span> <span class="toc-text">用例分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题重描述"><span class="toc-number">1.2.1.</span> <span class="toc-text">问题重描述</span></a></li></ol></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Google’s_Photon:_Fault-tolerant_and_Scalable_Joining_of_Continuous_Data_Streams_翻译"><span class="toc-number">1.</span> <span class="toc-text">Google’s Photon: Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用例分析"><span class="toc-number">1.2.</span> <span class="toc-text">用例分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题重描述"><span class="toc-number">1.2.1.</span> <span class="toc-text">问题重描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#挑战"><span class="toc-number">1.2.2.</span> <span class="toc-text">挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Contribution"><span class="toc-number">1.2.3.</span> <span class="toc-text">Contribution</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PAXOS-BASED_ID_REGISTRY"><span class="toc-number">1.3.</span> <span class="toc-text">PAXOS-BASED ID REGISTRY</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IdRegistry_Server_Architecture"><span class="toc-number">1.3.1.</span> <span class="toc-text">IdRegistry Server Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scalable_IdRegistry"><span class="toc-number">1.3.2.</span> <span class="toc-text">Scalable IdRegistry</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Server-side_Batching"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">Server-side Batching</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sharding"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">Sharding</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deleting_Old_Keys"><span class="toc-number">1.3.3.</span> <span class="toc-text">Deleting Old Keys</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SINGLE_DATACENTER_PIPELINE"><span class="toc-number">1.4.</span> <span class="toc-text">SINGLE DATACENTER PIPELINE</span></a></li></ol></li></ol>
 		</div>
 		
 		<h1 id="Google’s_Photon:_Fault-tolerant_and_Scalable_Joining_of_Continuous_Data_Streams_翻译">Google’s Photon: Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译</h1><h2 id="引言">引言</h2><p>做的事情还是stream processing里的join。如果说主要的特色，那就是应用场景以及可靠性了。Photon是一个地理上分布的，低延时，高可靠，支持 at-least once以及nearly exactly once语义的 stream join系统。</p>
@@ -100,8 +100,40 @@
 <p>显然结合这两部操作可以获得更多信息（比如哪个搜索结果更符合等等）。但这两部分操作在时间上是分开进行的。将1-2，1-3结合很容易，可以直接在每次http请求的时候带上query内容，但如何将2-3迅速结合呢？都入库再查询？想想都慢。</p>
 <p>等灯等灯，Photon出场。就是用于解决这个问题的。</p>
 <h3 id="问题重描述">问题重描述</h3><p>我们将query log以及click log抽象成两条数据流，因此问题变成系统持续输入两条事件流，输出应该是将其join之后的结果。</p>
-<p>那么从数据库的角度从新理一遍吧：query以及click分为两张表，通过一个外键（foreign key）关联。</p>
-  
+<p>那么从数据库的角度从新理一遍吧：query以及click分为两张表，通过一个外键（foreign key）关联。logstream就类似主表，而clickstream就类似外表，最后，join操作就是就是inner join。而结果就是join之后组合在一起的结果。</p>
+<h3 id="挑战">挑战</h3><ul>
+<li>Exactly Once语义</li>
+</ul>
+<p>谁用谁头疼，说起来简单地事情做起来其实很难的，尤其在高吞吐的环境下eactly once 是个异常坑爹的要求。</p>
+<p>Wall Street 要求real-time达到exactly Once，一两个小时之内达到完美exactly once。</p>
+<ul>
+<li>Data Center Level Fault Tolerance</li>
+</ul>
+<p>既然跨了data center，可能datacenter 由于各种原因挂掉1min~几天。很多系统GFS、Bigtable是支持部分节点终端的，但是还是无法抵御大规模datacenter级别的挂掉的。与此同时，如果集群挂掉还依靠人工手动在另一个机房搭建环境显然困难重重而且降低可用性。</p>
+<p>所以我们支持了机房级容灾。</p>
+<ul>
+<li>高扩扩展低延时</li>
+</ul>
+<p>系统标配，少废话。</p>
+<ul>
+<li>乱序 以及 主表数据延时</li>
+</ul>
+<p>多点发送必然存在乱序</p>
+<h3 id="Contribution">Contribution</h3><p>exactly once + 机房级容灾</p>
+<h2 id="PAXOS-BASED_ID_REGISTRY">PAXOS-BASED ID REGISTRY</h2><p>容错最简单的办法之一就是replication，因此可以相同的系统部署在不同的机房。对G的很多搜索以及广告服务这都是非常可行的，通过load balance自动将user request分发到最近可用的机器上。</p>
+<p>但如果对Photon执行replicatation，多套系统针对同一个数据源，同时执行。需要保证最终的记过只有一套，不然你多计费了，广告主是不会高兴的。因此需要replication之间进行去重，因此需要使一些关键数据能够在worker之间进行share，例如前N天的clickid，即IdRegistry。其中N可以根据存储数量以及 the cost of dropping events that are delayed by more than N days进行选择。注意N天之前的数据时必须被扔掉的，因为已经无法被判重复了。</p>
+<p>这样worker的逻辑就相对简单了，worker输出之前，判一下IdRegistry有没有eventid已经存在。如果不存在，需要在先写入eventid，然后输出，同时，IdRegistry需要保证写入同一个eventid的request 会失败。所以，这个问题被转化为另一个问题：</p>
+<ul>
+<li><p>IdRegistry需要在多个机房部署，并且可以同步写入（强一致写入类似的）。并且其容忍的可down机房数量需要可配置。</p>
+</li>
+<li><p>Worker需要实现conditional commits, 没有才能写入操作。</p>
+</li>
+</ul>
+<p>所以我们在Paxos的基础上实现了个IDRegistry。The algorithm guarantees synchronous replication of submitted values across the majority of replicas.<br><img src="http://7xl65g.com1.z0.glb.clouddn.com/photon_p1.png" alt="图1"></p>
+<p>在这里有一个photon Pipline的概念，在每个datacenter都有photon pipline。每个pipline处理（这里我理解的处理应该就是做join操作）所在的data center中的全部数据(因为在G，userlog 会被分发到地理隔离的不同的datacenter中)。</p>
+<p>Each pipeline keeps retrying until the event is joined (i.e., written to the IdRegistry), which guarantees that each event is processed at least once by the system with minimal loss.</p>
+<p>上面这句话写的很烂，尽力尝试，尽力尝试什么啊，你说清楚会死么。</p>
+<h3 id="IdRegistry_Server_Architecture">IdRegistry Server Architecture</h3><h3 id="Scalable_IdRegistry">Scalable IdRegistry</h3><h4 id="Server-side_Batching">Server-side Batching</h4><h4 id="Sharding">Sharding</h4><h3 id="Deleting_Old_Keys">Deleting Old Keys</h3><h2 id="SINGLE_DATACENTER_PIPELINE">SINGLE DATACENTER PIPELINE</h2>  
 	</div>
 		<footer class="article-footer clearfix">
 
@@ -130,18 +162,18 @@
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/11/06/深入理解计算机系统笔记/" title="">
+ <a href="/2015/11/05/随笔_增广贤文摘抄/" title="增广贤文">
   <strong>PREVIOUS:</strong><br/>
   <span>
-  (no title)</span>
+  增广贤文</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2015/11/05/随笔_增广贤文摘抄/"  title="增广贤文">
+<a href="/2015/10/20/HashAndRelatedCollections/"  title="Hash and related Collections">
  <strong>NEXT:</strong><br/> 
- <span>增广贤文
+ <span>Hash and related Collections
 </span>
 </a>
 </div>
@@ -154,7 +186,7 @@
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Google’s_Photon:_Fault-tolerant_and_Scalable_Joining_of_Continuous_Data_Streams_翻译"><span class="toc-number">1.</span> <span class="toc-text">Google’s Photon: Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用例分析"><span class="toc-number">1.2.</span> <span class="toc-text">用例分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题重描述"><span class="toc-number">1.2.1.</span> <span class="toc-text">问题重描述</span></a></li></ol></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Google’s_Photon:_Fault-tolerant_and_Scalable_Joining_of_Continuous_Data_Streams_翻译"><span class="toc-number">1.</span> <span class="toc-text">Google’s Photon: Fault-tolerant and Scalable Joining of Continuous Data Streams 翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#引言"><span class="toc-number">1.1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用例分析"><span class="toc-number">1.2.</span> <span class="toc-text">用例分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#问题重描述"><span class="toc-number">1.2.1.</span> <span class="toc-text">问题重描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#挑战"><span class="toc-number">1.2.2.</span> <span class="toc-text">挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Contribution"><span class="toc-number">1.2.3.</span> <span class="toc-text">Contribution</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PAXOS-BASED_ID_REGISTRY"><span class="toc-number">1.3.</span> <span class="toc-text">PAXOS-BASED ID REGISTRY</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IdRegistry_Server_Architecture"><span class="toc-number">1.3.1.</span> <span class="toc-text">IdRegistry Server Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Scalable_IdRegistry"><span class="toc-number">1.3.2.</span> <span class="toc-text">Scalable IdRegistry</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Server-side_Batching"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">Server-side Batching</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sharding"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">Sharding</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deleting_Old_Keys"><span class="toc-number">1.3.3.</span> <span class="toc-text">Deleting Old Keys</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SINGLE_DATACENTER_PIPELINE"><span class="toc-number">1.4.</span> <span class="toc-text">SINGLE DATACENTER PIPELINE</span></a></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
@@ -177,6 +209,8 @@
 			<li><a href="/categories/Kafka/" title="Kafka">Kafka<sup>2</sup></a></li>
 		
 			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
 		
 			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
 		
@@ -237,7 +271,7 @@
   <div class="tagcloudlist">
     <p class="asidetitle">標簽雲</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/Borg/" style="font-size: 10px;">Borg</a> <a href="/tags/C4/" style="font-size: 10px;">C4</a> <a href="/tags/Details/" style="font-size: 15px;">Details</a> <a href="/tags/DistributedSystem/" style="font-size: 20px;">DistributedSystem</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/Hash/" style="font-size: 10px;">Hash</a> <a href="/tags/Heron/" style="font-size: 10px;">Heron</a> <a href="/tags/JDK-Details/" style="font-size: 10px;">JDK Details</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Paxos/" style="font-size: 10px;">Paxos</a> <a href="/tags/Photon/" style="font-size: 10px;">Photon</a> <a href="/tags/Producer/" style="font-size: 10px;">Producer</a> <a href="/tags/Storm/" style="font-size: 10px;">Storm</a> <a href="/tags/Thread/" style="font-size: 10px;">Thread</a> <a href="/tags/bloomfilter/" style="font-size: 10px;">bloomfilter</a> <a href="/tags/cc/" style="font-size: 10px;">cc</a> <a href="/tags/树状数组/" style="font-size: 10px;">树状数组</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/翻译/" style="font-size: 20px;">翻译</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+       <a href="/tags/Borg/" style="font-size: 10px;">Borg</a> <a href="/tags/C4/" style="font-size: 10px;">C4</a> <a href="/tags/Details/" style="font-size: 15px;">Details</a> <a href="/tags/DistributedSystem/" style="font-size: 20px;">DistributedSystem</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/Hash/" style="font-size: 10px;">Hash</a> <a href="/tags/Heron/" style="font-size: 10px;">Heron</a> <a href="/tags/JDK-Details/" style="font-size: 10px;">JDK Details</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Paxos/" style="font-size: 10px;">Paxos</a> <a href="/tags/Photon/" style="font-size: 10px;">Photon</a> <a href="/tags/Producer/" style="font-size: 10px;">Producer</a> <a href="/tags/Storm/" style="font-size: 10px;">Storm</a> <a href="/tags/Thread/" style="font-size: 10px;">Thread</a> <a href="/tags/bloomfilter/" style="font-size: 10px;">bloomfilter</a> <a href="/tags/cc/" style="font-size: 10px;">cc</a> <a href="/tags/树状数组/" style="font-size: 10px;">树状数组</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/翻译/" style="font-size: 20px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     </div>
   </div>
 

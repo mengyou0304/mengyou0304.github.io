@@ -77,7 +77,7 @@ public Future&amp;lt;RecordMetadata&amp;gt; send">
     </p>
   <p class="article-time">
     <time datetime="2015-10-10T16:00:00.000Z" itemprop="datePublished">2015-10-11</time>
-    更新日期:<time datetime="2015-10-20T06:28:00.000Z" itemprop="dateModified">2015-10-20</time>
+    更新日期:<time datetime="2015-11-11T02:00:25.000Z" itemprop="dateModified">2015-11-11</time>
     
   </p>
 </header>
@@ -86,17 +86,16 @@ public Future&amp;lt;RecordMetadata&amp;gt; send">
 		
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">文章目錄</strong>
-		<ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kafka_新版Producer_Java版代码阅读"><span class="toc-number">1.</span> <span class="toc-text">Kafka 新版Producer Java版代码阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#如果我来做，怎么做？"><span class="toc-number">1.1.</span> <span class="toc-text">如果我来做，怎么做？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带着这几个问题，我们来看人家怎么做的"><span class="toc-number">2.</span> <span class="toc-text">带着这几个问题，我们来看人家怎么做的</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#基本逻辑"><span class="toc-number">2.0.1.</span> <span class="toc-text">基本逻辑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Accumulator"><span class="toc-number">2.0.2.</span> <span class="toc-text">Accumulator</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Buffered_pool"><span class="toc-number">2.0.3.</span> <span class="toc-text">Buffered pool</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MemoryRecords_&&_Compressor_&&_RecordBatch"><span class="toc-number">2.0.4.</span> <span class="toc-text">MemoryRecords && Compressor && RecordBatch</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#MemoryRecords"><span class="toc-number">2.0.4.1.</span> <span class="toc-text">MemoryRecords</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#RecordBatch"><span class="toc-number">2.0.4.2.</span> <span class="toc-text">RecordBatch</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Compressor"><span class="toc-number">2.0.4.3.</span> <span class="toc-text">Compressor</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#callback_&&_Future_&&_ProduceRequestResult_&&_FutureRecordMetadata"><span class="toc-number">2.0.5.</span> <span class="toc-text">callback && Future && ProduceRequestResult && FutureRecordMetadata</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#ProduceRequestResult_（short_for_PRResult）"><span class="toc-number">2.0.5.1.</span> <span class="toc-text">ProduceRequestResult （short for PRResult）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#FutureRecordMetadata_&&RecordMetadata"><span class="toc-number">2.0.5.2.</span> <span class="toc-text">FutureRecordMetadata &&RecordMetadata</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#前部分小结"><span class="toc-number">2.1.</span> <span class="toc-text">前部分小结</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Sender"><span class="toc-number">2.1.1.</span> <span class="toc-text">Sender</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#KafkaProducer"><span class="toc-number">2.1.2.</span> <span class="toc-text">KafkaProducer</span></a></li></ol></li></ol></li></ol>
+		<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Kafka_新版Producer_Java版代码阅读"><span class="toc-number">1.</span> <span class="toc-text">Kafka 新版Producer Java版代码阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#如果我来做，怎么做？"><span class="toc-number">1.1.</span> <span class="toc-text">如果我来做，怎么做？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带着这几个问题，我们来看人家怎么做的"><span class="toc-number">1.2.</span> <span class="toc-text">带着这几个问题，我们来看人家怎么做的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本逻辑"><span class="toc-number">1.2.1.</span> <span class="toc-text">基本逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Accumulator"><span class="toc-number">1.2.2.</span> <span class="toc-text">Accumulator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffered_pool"><span class="toc-number">1.2.3.</span> <span class="toc-text">Buffered pool</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MemoryRecords_&&_Compressor_&&_RecordBatch"><span class="toc-number">1.2.4.</span> <span class="toc-text">MemoryRecords && Compressor && RecordBatch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MemoryRecords"><span class="toc-number">1.2.5.</span> <span class="toc-text">MemoryRecords</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RecordBatch"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">RecordBatch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Compressor"><span class="toc-number">1.2.5.2.</span> <span class="toc-text">Compressor</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#callback_&&_Future_&&_ProduceRequestResult_&&_FutureRecordMetadata"><span class="toc-number">1.2.6.</span> <span class="toc-text">callback && Future && ProduceRequestResult && FutureRecordMetadata</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ProduceRequestResult_（short_for_PRResult）"><span class="toc-number">1.2.7.</span> <span class="toc-text">ProduceRequestResult （short for PRResult）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FutureRecordMetadata_&&RecordMetadata"><span class="toc-number">1.2.7.1.</span> <span class="toc-text">FutureRecordMetadata &&RecordMetadata</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前部分小结"><span class="toc-number">1.2.8.</span> <span class="toc-text">前部分小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sender"><span class="toc-number">1.2.9.</span> <span class="toc-text">Sender</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KafkaProducer"><span class="toc-number">1.2.10.</span> <span class="toc-text">KafkaProducer</span></a></li></ol></li></ol></li></ol>
 		</div>
 		
-		<h3 id="Kafka_新版Producer_Java版代码阅读">Kafka 新版Producer Java版代码阅读</h3><p>Kafka在0.8.2.1出了新版Producer，支持ack（仅Java版，因为通过JavaClient实现的）。因此对代码进行了简单阅读，并记录如下：</p>
+		<h1 id="Kafka_新版Producer_Java版代码阅读">Kafka 新版Producer Java版代码阅读</h1><p>Kafka在0.8.2.1出了新版Producer，支持ack（仅Java版，因为通过JavaClient实现的）。因此对代码进行了简单阅读，并记录如下：</p>
 <p>接口如下：</p>
 <pre><code><span class="keyword">public</span> <span class="keyword">Future</span>&lt;RecordMetadata&gt; send(ProducerRecord&lt;K,V&gt; <span class="keyword">record</span>, Callback callback) 
 </code></pre><p>封装一个Record之后，每次调用同时传入一个callback。该函数在Kafka返回结果时被调用。</p>
 <p>根据官方<a href="https://github.com/apache/kafka/blob/trunk/examples/src/main/java/kafka/examples/Producer.java" target="_blank" rel="external">example</a>的调用方式：</p>
 <figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> onCompletion(RecordMetadata metadata, Exception <span class="keyword">exception</span>) &#123;</span><br><span class="line">	<span class="keyword">if</span> (metadata != <span class="keyword">null</span>) &#123;</span><br><span class="line">    		<span class="comment">//means success</span></span><br><span class="line">    	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    		<span class="comment">//means fail</span></span><br><span class="line">      	<span class="keyword">exception</span>.printStackTrace();</span><br><span class="line">      	&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>======================</p>
-<h4 id="如果我来做，怎么做？">如果我来做，怎么做？</h4><p>我觉得如果我来设计，至少需要考虑如下几个问题：</p>
+<h2 id="如果我来做，怎么做？">如果我来做，怎么做？</h2><p>我觉得如果我来设计，至少需要考虑如下几个问题：</p>
 <ul>
 <li><p>发送的时候callback是否跟着发到Kafka Server？</p>
 </li>
@@ -107,9 +106,7 @@ public Future&amp;lt;RecordMetadata&amp;gt; send">
 <li><p>如果Callback不发送到KafkaServer，在客户端是怎样存储的？进程fail掉的时候是否会丢ack？</p>
 </li>
 </ul>
-<p>======================</p>
-<h3 id="带着这几个问题，我们来看人家怎么做的">带着这几个问题，我们来看人家怎么做的</h3><p>======================</p>
-<h5 id="基本逻辑">基本逻辑</h5><p>先从Kafka Producer的send方法看起，</p>
+<h2 id="带着这几个问题，我们来看人家怎么做的">带着这几个问题，我们来看人家怎么做的</h2><h3 id="基本逻辑">基本逻辑</h3><p>先从Kafka Producer的send方法看起，</p>
 <p>send的全部代码就是这样，简单来说做了这样几件事</p>
 <ol>
 <li>判断partition</li>
@@ -131,8 +128,7 @@ public Future&amp;lt;RecordMetadata&amp;gt; send">
 </code></pre></li>
 </ol>
 <p>看到这里感觉啥都没干啊，所以我们需要进一步看一下Acculator以及Sender究竟在做什么。</p>
-<p>======================</p>
-<h5 id="Accumulator">Accumulator</h5><p> 在Producer里通过Accumulator的append方法把消息加入异步发送队列，我们先看看Accumulator的实现。</p>
+<h3 id="Accumulator">Accumulator</h3><p> 在Producer里通过Accumulator的append方法把消息加入异步发送队列，我们先看看Accumulator的实现。</p>
 <pre><code><span class="keyword">private</span> <span class="keyword">final</span> BufferPool <span class="keyword">free</span>;
 <span class="keyword">private</span> <span class="keyword">final</span> ConcurrentMap&lt;TopicPartition, Deque&lt;RecordBatch&gt;&gt; batches;
 <span class="keyword">private</span> <span class="keyword">final</span> IncompleteRecordBatches incomplete;
@@ -195,9 +191,7 @@ public Future&amp;lt;RecordMetadata&amp;gt; send">
 <li>callback什么时候被调用的？</li>
 </ul>
 <p>根据这几个问题，我们逐一分析一下：</p>
-<p>======================</p>
-<h5 id="Buffered_pool">Buffered pool</h5><p>======================</p>
-<h5 id="MemoryRecords_&amp;&amp;_Compressor_&amp;&amp;_RecordBatch">MemoryRecords &amp;&amp; Compressor &amp;&amp; RecordBatch</h5><h6 id="MemoryRecords">MemoryRecords</h6><p>在accumulator中我们看到，MemoryRecord 对 bytebuffer进行了封装，而后RecordBatch对MemoeryRecord进行封装</p>
+<h3 id="Buffered_pool">Buffered pool</h3><h3 id="MemoryRecords_&amp;&amp;_Compressor_&amp;&amp;_RecordBatch">MemoryRecords &amp;&amp; Compressor &amp;&amp; RecordBatch</h3><h3 id="MemoryRecords">MemoryRecords</h3><p>在accumulator中我们看到，MemoryRecord 对 bytebuffer进行了封装，而后RecordBatch对MemoeryRecord进行封装</p>
 <pre><code><span class="label">MemoryRecords</span> records = MemoryRecords.emptyRecords(<span class="keyword">buffer, </span>compression, this.<span class="keyword">batchSize);
 </span><span class="label">RecordBatch</span> <span class="keyword">batch </span>= new RecordBatch(tp, records, time.milliseconds())<span class="comment">;</span>
 </code></pre><p>先看Memory Recored，Memory Record继承自Record接口，其定义4byte的size，8byte的offest所以每个Record size&lt;2^32 位 文件小于2^64 位。</p>
@@ -225,7 +219,7 @@ public Future&amp;lt;RecordMetadata&amp;gt; send">
     compressor.recordWritten(<span class="keyword">size</span> + Records.LOG_OVERHEAD);
     record.buffer().rewind();
 }
-</code></pre><h6 id="RecordBatch">RecordBatch</h6><p>先跳过Compressor，我们看一下MemoryRecord继续被向上封装成了RecordBatch。因为MemoryRecord只有对IO的操作，并没有对Kafka逻辑的支持，因此RecordBatch在其基础之上封装了一些计数参数之外还增加了几个变量：</p>
+</code></pre><h4 id="RecordBatch">RecordBatch</h4><p>先跳过Compressor，我们看一下MemoryRecord继续被向上封装成了RecordBatch。因为MemoryRecord只有对IO的操作，并没有对Kafka逻辑的支持，因此RecordBatch在其基础之上封装了一些计数参数之外还增加了几个变量：</p>
 <pre><code><span class="keyword">public</span> <span class="keyword">final</span> MemoryRecords records;
 <span class="keyword">public</span> <span class="keyword">final</span> TopicPartition topicPartition;
 <span class="keyword">public</span> <span class="keyword">final</span> ProduceRequestResult produceFuture;
@@ -238,10 +232,9 @@ public Future&amp;lt;RecordMetadata&amp;gt; send">
 <p>因此可以看到，callback信息是全部存在客户端的recordbatch里的，等到返回时再从thunks里取出来。</p>
 <p>再看一下被确认的done方法，当被确认时，recordbatch里所有信息被一一确认。所以也可以看出来是批量确认的。</p>
 <figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> done(<span class="keyword">long</span> baseOffset, RuntimeException exception) &#123;</span><br><span class="line">        <span class="keyword">this</span>.produceFuture.done(topicPartition, baseOffset, exception);</span><br><span class="line">        <span class="comment">// execute callbacks</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="built_in">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.thunks.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Thunk thunk = <span class="keyword">this</span>.thunks.<span class="built_in">get</span>(i);</span><br><span class="line">                <span class="keyword">if</span> (exception == <span class="keyword">null</span>)</span><br><span class="line">                    thunk.callback.onCompletion(thunk.future.<span class="built_in">get</span>(), <span class="keyword">null</span>);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    thunk.callback.onCompletion(<span class="keyword">null</span>, exception);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                <span class="built_in">log</span>.error(<span class="string">"Error executing user-provided callback on message for topic-partition &#123;&#125;:"</span>, topicPartition, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h6 id="Compressor">Compressor</h6><p>//TBD</p>
-<p>======================</p>
-<h5 id="callback_&amp;&amp;_Future_&amp;&amp;_ProduceRequestResult_&amp;&amp;_FutureRecordMetadata">callback &amp;&amp; Future &amp;&amp; ProduceRequestResult &amp;&amp; FutureRecordMetadata</h5><p>Futrue FutureTask Callable 的概念就不再复述了，请自行查阅。</p>
-<h6 id="ProduceRequestResult_（short_for_PRResult）">ProduceRequestResult （short for PRResult）</h6><p>ProduceRequestResult是象征意义上的返回结果，但事实上该Result是在Client端生成的，其构造函数只有一种空构造函数，参数只有这几个。</p>
+<h4 id="Compressor">Compressor</h4><p>//TBD</p>
+<h3 id="callback_&amp;&amp;_Future_&amp;&amp;_ProduceRequestResult_&amp;&amp;_FutureRecordMetadata">callback &amp;&amp; Future &amp;&amp; ProduceRequestResult &amp;&amp; FutureRecordMetadata</h3><p>Futrue FutureTask Callable 的概念就不再复述了，请自行查阅。</p>
+<h3 id="ProduceRequestResult_（short_for_PRResult）">ProduceRequestResult （short for PRResult）</h3><p>ProduceRequestResult是象征意义上的返回结果，但事实上该Result是在Client端生成的，其构造函数只有一种空构造函数，参数只有这几个。</p>
 <pre><code><span class="keyword">private</span> <span class="keyword">final</span> CountDownLatch latch = <span class="keyword">new</span> CountDownLatch(<span class="number">1</span>);
 <span class="keyword">private</span> <span class="keyword">volatile</span> TopicPartition topicPartition;
 <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">long</span> baseOffset = -<span class="number">1</span>L;
@@ -263,7 +256,7 @@ public Future&amp;lt;RecordMetadata&amp;gt; send">
 <pre><code><span class="tag">FutureRecordMetadata</span><span class="class">.get</span> 
 <span class="tag">KakfaProducer</span><span class="class">.flush</span>
 </code></pre><p>第一个是官方定义的清清楚楚的接口，第二个是flush，简单易懂，不再介绍。</p>
-<h6 id="FutureRecordMetadata_&amp;&amp;RecordMetadata">FutureRecordMetadata &amp;&amp;RecordMetadata</h6><p>如果说PRResult只是具有了一个阻塞功能的结果存储器，那么FutureRecordMetaData就是在其基础上有封装了执行过程。</p>
+<h4 id="FutureRecordMetadata_&amp;&amp;RecordMetadata">FutureRecordMetadata &amp;&amp;RecordMetadata</h4><p>如果说PRResult只是具有了一个阻塞功能的结果存储器，那么FutureRecordMetaData就是在其基础上有封装了执行过程。</p>
 <pre><code>    <span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">FutureRecordMetadata</span> <span class="keyword">implements</span> <span class="title">Future</span>&lt;<span class="title">RecordMetadata</span>&gt; </span>{
     <span class="keyword">private</span> <span class="keyword">final</span> ProduceRequestResult result;
 <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">long</span> relativeOffset;
@@ -279,7 +272,7 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
     <span class="keyword">return</span> new <span class="type">RecordMetadata</span>(<span class="literal">result</span>.topicPartition(), this.<span class="literal">result</span>.baseOffset(), this.relativeOffset);
 }
 </code></pre><p>======================               </p>
-<h4 id="前部分小结">前部分小结</h4><p>简要总结一下</p>
+<h3 id="前部分小结">前部分小结</h3><p>简要总结一下</p>
 <ol>
 <li>Accumulator：消息的总控端，负责对发送，接收进行实际控制，但并非线程类</li>
 <li>消息的封装，Batch封装（RecordBatch/MemoryRecords/Comporessor）</li>
@@ -288,8 +281,7 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
 </ol>
 <p>基本涉及了发送过程的全部静态实现，唯独缺少了多线程控制。当然，在这上面的实现中，也多次涉及到了sender.run(time) 以及sender.wakeup()等方法。</p>
 <p>所以在最后，我们来看看Sender的实现。</p>
-<p>======================</p>
-<h5 id="Sender">Sender</h5><p>Sender 主要持有如下对象</p>
+<h3 id="Sender">Sender</h3><p>Sender 主要持有如下对象</p>
 <pre><code><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Sender</span> <span class="keyword">implements</span> <span class="title">Runnable</span> {</span>
 
 
@@ -372,8 +364,7 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
     <span class="keyword">this</span>.<span class="keyword">client</span>.wakeup();
 }
 </code></pre><p>然后就没了，client是NetworkClient，封装了网络的NIOSelector的wakeup，我觉得这个问题还是开一篇单讲了。读者就就按照注释的意思理解吧。</p>
-<p>======================</p>
-<h5 id="KafkaProducer">KafkaProducer</h5><p>经历了这一切，我们从新回到KafkaProducer 来。似乎只剩下了一个close方法。<br>没啥好说的，就到这里吧。</p>
+<h3 id="KafkaProducer">KafkaProducer</h3><p>经历了这一切，我们从新回到KafkaProducer 来。似乎只剩下了一个close方法。<br>没啥好说的，就到这里吧。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -412,9 +403,9 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
 
 
 <div class="next">
-<a href="/2015/10/11/Gargage_Collection/"  title="不会暂停的垃圾回收器，C4">
+<a href="/2015/10/11/java_中的future以及futuretask/"  title="Future and FutureTask">
  <strong>NEXT:</strong><br/> 
- <span>不会暂停的垃圾回收器，C4
+ <span>Future and FutureTask
 </span>
 </a>
 </div>
@@ -427,7 +418,7 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
 
   <div id="toc" class="toc-aside">
   <strong class="toc-title">文章目錄</strong>
-  <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kafka_新版Producer_Java版代码阅读"><span class="toc-number">1.</span> <span class="toc-text">Kafka 新版Producer Java版代码阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#如果我来做，怎么做？"><span class="toc-number">1.1.</span> <span class="toc-text">如果我来做，怎么做？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带着这几个问题，我们来看人家怎么做的"><span class="toc-number">2.</span> <span class="toc-text">带着这几个问题，我们来看人家怎么做的</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#基本逻辑"><span class="toc-number">2.0.1.</span> <span class="toc-text">基本逻辑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Accumulator"><span class="toc-number">2.0.2.</span> <span class="toc-text">Accumulator</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Buffered_pool"><span class="toc-number">2.0.3.</span> <span class="toc-text">Buffered pool</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#MemoryRecords_&&_Compressor_&&_RecordBatch"><span class="toc-number">2.0.4.</span> <span class="toc-text">MemoryRecords && Compressor && RecordBatch</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#MemoryRecords"><span class="toc-number">2.0.4.1.</span> <span class="toc-text">MemoryRecords</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#RecordBatch"><span class="toc-number">2.0.4.2.</span> <span class="toc-text">RecordBatch</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#Compressor"><span class="toc-number">2.0.4.3.</span> <span class="toc-text">Compressor</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#callback_&&_Future_&&_ProduceRequestResult_&&_FutureRecordMetadata"><span class="toc-number">2.0.5.</span> <span class="toc-text">callback && Future && ProduceRequestResult && FutureRecordMetadata</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#ProduceRequestResult_（short_for_PRResult）"><span class="toc-number">2.0.5.1.</span> <span class="toc-text">ProduceRequestResult （short for PRResult）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#FutureRecordMetadata_&&RecordMetadata"><span class="toc-number">2.0.5.2.</span> <span class="toc-text">FutureRecordMetadata &&RecordMetadata</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#前部分小结"><span class="toc-number">2.1.</span> <span class="toc-text">前部分小结</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Sender"><span class="toc-number">2.1.1.</span> <span class="toc-text">Sender</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#KafkaProducer"><span class="toc-number">2.1.2.</span> <span class="toc-text">KafkaProducer</span></a></li></ol></li></ol></li></ol>
+  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Kafka_新版Producer_Java版代码阅读"><span class="toc-number">1.</span> <span class="toc-text">Kafka 新版Producer Java版代码阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#如果我来做，怎么做？"><span class="toc-number">1.1.</span> <span class="toc-text">如果我来做，怎么做？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带着这几个问题，我们来看人家怎么做的"><span class="toc-number">1.2.</span> <span class="toc-text">带着这几个问题，我们来看人家怎么做的</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#基本逻辑"><span class="toc-number">1.2.1.</span> <span class="toc-text">基本逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Accumulator"><span class="toc-number">1.2.2.</span> <span class="toc-text">Accumulator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Buffered_pool"><span class="toc-number">1.2.3.</span> <span class="toc-text">Buffered pool</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MemoryRecords_&&_Compressor_&&_RecordBatch"><span class="toc-number">1.2.4.</span> <span class="toc-text">MemoryRecords && Compressor && RecordBatch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MemoryRecords"><span class="toc-number">1.2.5.</span> <span class="toc-text">MemoryRecords</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RecordBatch"><span class="toc-number">1.2.5.1.</span> <span class="toc-text">RecordBatch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Compressor"><span class="toc-number">1.2.5.2.</span> <span class="toc-text">Compressor</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#callback_&&_Future_&&_ProduceRequestResult_&&_FutureRecordMetadata"><span class="toc-number">1.2.6.</span> <span class="toc-text">callback && Future && ProduceRequestResult && FutureRecordMetadata</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ProduceRequestResult_（short_for_PRResult）"><span class="toc-number">1.2.7.</span> <span class="toc-text">ProduceRequestResult （short for PRResult）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FutureRecordMetadata_&&RecordMetadata"><span class="toc-number">1.2.7.1.</span> <span class="toc-text">FutureRecordMetadata &&RecordMetadata</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#前部分小结"><span class="toc-number">1.2.8.</span> <span class="toc-text">前部分小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sender"><span class="toc-number">1.2.9.</span> <span class="toc-text">Sender</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KafkaProducer"><span class="toc-number">1.2.10.</span> <span class="toc-text">KafkaProducer</span></a></li></ol></li></ol></li></ol>
   </div>
 
 <div id="asidepart">
@@ -450,6 +441,8 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
 			<li><a href="/categories/Kafka/" title="Kafka">Kafka<sup>2</sup></a></li>
 		
 			<li><a href="/categories/算法/" title="算法">算法<sup>1</sup></a></li>
+		
+			<li><a href="/categories/读书笔记/" title="读书笔记">读书笔记<sup>1</sup></a></li>
 		
 			<li><a href="/categories/随笔/" title="随笔">随笔<sup>1</sup></a></li>
 		
@@ -510,7 +503,7 @@ public <span class="type">RecordMetadata</span> get() throws <span class="type">
   <div class="tagcloudlist">
     <p class="asidetitle">標簽雲</p>
     <div class="tagcloudlist clearfix">
-       <a href="/tags/Borg/" style="font-size: 10px;">Borg</a> <a href="/tags/C4/" style="font-size: 10px;">C4</a> <a href="/tags/Details/" style="font-size: 15px;">Details</a> <a href="/tags/DistributedSystem/" style="font-size: 20px;">DistributedSystem</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/Hash/" style="font-size: 10px;">Hash</a> <a href="/tags/Heron/" style="font-size: 10px;">Heron</a> <a href="/tags/JDK-Details/" style="font-size: 10px;">JDK Details</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Paxos/" style="font-size: 10px;">Paxos</a> <a href="/tags/Photon/" style="font-size: 10px;">Photon</a> <a href="/tags/Producer/" style="font-size: 10px;">Producer</a> <a href="/tags/Storm/" style="font-size: 10px;">Storm</a> <a href="/tags/Thread/" style="font-size: 10px;">Thread</a> <a href="/tags/bloomfilter/" style="font-size: 10px;">bloomfilter</a> <a href="/tags/cc/" style="font-size: 10px;">cc</a> <a href="/tags/树状数组/" style="font-size: 10px;">树状数组</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/翻译/" style="font-size: 20px;">翻译</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+       <a href="/tags/Borg/" style="font-size: 10px;">Borg</a> <a href="/tags/C4/" style="font-size: 10px;">C4</a> <a href="/tags/Details/" style="font-size: 15px;">Details</a> <a href="/tags/DistributedSystem/" style="font-size: 20px;">DistributedSystem</a> <a href="/tags/GC/" style="font-size: 10px;">GC</a> <a href="/tags/Google/" style="font-size: 15px;">Google</a> <a href="/tags/Hash/" style="font-size: 10px;">Hash</a> <a href="/tags/Heron/" style="font-size: 10px;">Heron</a> <a href="/tags/JDK-Details/" style="font-size: 10px;">JDK Details</a> <a href="/tags/JVM/" style="font-size: 10px;">JVM</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Kafka/" style="font-size: 15px;">Kafka</a> <a href="/tags/Paxos/" style="font-size: 10px;">Paxos</a> <a href="/tags/Photon/" style="font-size: 10px;">Photon</a> <a href="/tags/Producer/" style="font-size: 10px;">Producer</a> <a href="/tags/Storm/" style="font-size: 10px;">Storm</a> <a href="/tags/Thread/" style="font-size: 10px;">Thread</a> <a href="/tags/bloomfilter/" style="font-size: 10px;">bloomfilter</a> <a href="/tags/cc/" style="font-size: 10px;">cc</a> <a href="/tags/树状数组/" style="font-size: 10px;">树状数组</a> <a href="/tags/算法/" style="font-size: 10px;">算法</a> <a href="/tags/翻译/" style="font-size: 20px;">翻译</a> <a href="/tags/读书笔记/" style="font-size: 10px;">读书笔记</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
     </div>
   </div>
 
